@@ -1,6 +1,0 @@
-<Atlas><Texture filename="glassiccutter.tex" /><Elements>
-	<Element name="glassiccutter.tex" u1="0" u2="0.25" v1="0.5" v2="1" />
-	<Element name="glassiccutter_moonglass.tex" u1="0.25" u2="0.5" v1="0.5" v2="1" />
-	<Element name="glassiccutter_thulecite.tex" u1="0.5" u2="0.75" v1="0.5" v2="1" />
-	<Element name="glassiccutter_moonrock.tex" u1="0.75" u2="1" v1="0.5" v2="1" />
-</Elements></Atlas>
