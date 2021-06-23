@@ -8,9 +8,6 @@ table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
         Asset("ANIM", "anim/swap_goldenaxe_victorian.zip"),
         Asset("ANIM", "anim/goldenaxe_victorian.zip"),
         Asset("INV_IMAGE", "goldenaxe_victorian"),
-        
-        Asset("ATLAS", "images/inventoryimages/goldenaxe_victorian.xml"),
-        Asset("ATLAS_BUILD", "images/inventoryimages/goldenaxe_victorian.xml", 256),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "swap_goldenaxe_victorian", sym_name = "swap_goldenaxe"})
@@ -26,9 +23,6 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
     assets = {
         Asset("ANIM", "anim/swap_glassaxe_northern.zip"),
         Asset("INV_IMAGE", "glassaxe_northern"),
-        
-        Asset("ATLAS", "images/inventoryimages/moonglassaxe_northern.xml"),
-        Asset("ATLAS_BUILD", "images/inventoryimages/moonglassaxe_northern.xml", 256),
     },
     init_fn = function(inst)
         inst.AnimState:SetBank("goldenaxe")
@@ -45,9 +39,6 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
     assets = {
         Asset("ANIM", "anim/swap_glassaxe_victorian.zip"),
         Asset("INV_IMAGE", "glassaxe_victorian"),
-        
-        Asset("ATLAS", "images/inventoryimages/moonglassaxe_victorian.xml"),
-        Asset("ATLAS_BUILD", "images/inventoryimages/moonglassaxe_victorian.xml", 256),
     },
     init_fn = function(inst)
         inst.AnimState:SetBank("axe")
@@ -65,9 +56,6 @@ table.insert(pref, CreatePrefabSkin("moonglasshammer_forge", {
         Asset("ANIM", "anim/glasshammer_forge.zip"),
         Asset("ANIM", "anim/swap_glasshammer_forge.zip"),
         Asset("INV_IMAGE", "moonglasshammer_forge"),
-        
-        Asset("ATLAS", "images/inventoryimages/moonglasshammer_forge.xml"),
-        Asset("ATLAS_BUILD", "images/inventoryimages/moonglasshammer_forge.xml", 256),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "swap_glasshammer_forge", sym_name = "swap_glasshammer"})
@@ -83,9 +71,6 @@ table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
         Asset("ANIM", "anim/swap_glasspickaxe_northern.zip"),
         Asset("ANIM", "anim/glasspickaxe_northern.zip"),
         Asset("INV_IMAGE", "moonglasspickaxe_northern"),
-        
-        Asset("ATLAS", "images/inventoryimages/moonglasspickaxe_northern.xml"),
-        Asset("ATLAS_BUILD", "images/inventoryimages/moonglasspickaxe_northern.xml", 256),
     },
     init_fn = function(inst)
         inst.AnimState:SetBank("goldenpickaxe")
