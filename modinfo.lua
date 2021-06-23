@@ -1,17 +1,17 @@
-version = "1.3.4"
+version = "1.4"
 name = "[API]Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
-更新内容: 新增一些功能, 修复一个问题
+更新内容: 新功能 RegisterItemAtlas, InitCharacterAssets
 
 包含了皮肤组件和一套玻璃工具.
 ]]
 or
 "[Version: "..version..[[]
 
-Changelog: Added new functions. Fixed an issue in the Wardrobe.
+Changelog: New function: RegisterItemAtlas, InitCharacterAssets
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
