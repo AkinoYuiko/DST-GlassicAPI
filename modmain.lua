@@ -50,7 +50,7 @@ GlassicAPI.SetExclusiveToPlayer = function(player, name)
 end
 
 GlassicAPI.SetFloatData = function(inst, data)
-    if inst.components.floater then
+    if inst.components.floater and data then
         inst.components.floater.swap_data = data
     end
 end

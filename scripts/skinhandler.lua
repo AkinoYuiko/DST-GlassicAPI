@@ -104,16 +104,19 @@ end
 
 local function ApplyTempCharacter(base_fn, ...)
     if #HEADSKIN_CHARACTERS == 0 then return base_fn(...) end
-    local OFFICIAL_LIST = DST_CHARACTERLIST
     DST_CHARACTERLIST = ArrayUnion(DST_CHARACTERLIST, HEADSKIN_CHARACTERS)
     local ret = { base_fn(...) }
-    -- for i, v in ipairs_reverse(DST_CHARACTERLIST) do
-    --     if table.contains(HEADSKIN_CHARACTERS, v) then
-    --         table.remove(DST_CHARACTERLIST, i)
-    --     end
-    -- end
-    DST_CHARACTERLIST = OFFICIAL_LIST
+    for i = #DST_CHARACTERLIST, 1, -1 do
+        if table.contains(HEADSKIN_CHARACTERS, DST_CHARACTERLIST[i]) then
+            table.remove(DST_CHARACTERLIST, i)
+        end
+    end
     return unpack(ret)
+end
+
+local validate_spawn_prefab_request = ValidateSpawnPrefabRequest
+ValidateSpawnPrefabRequest = function(...)
+    return ApplyTempCharacter(validate_spawn_prefab_request, ...)
 end
 
 local LoadoutSelect = require("widgets/redux/loadoutselect")
