@@ -68,7 +68,7 @@ end
 
 GlassicAPI.SkinHandler.AddModSkins({
     goldenaxe = {"goldenaxe_victorian"},
-    moonglassaxe = {"moonglassaxe_northern","moonglassaxe_victorian"},
+    moonglassaxe = {"moonglassaxe_northern", "moonglassaxe_victorian"},
     moonglasspickaxe = {"moonglasspickaxe_northern"},
     moonglasshammer = {"moonglasshammer_forge"},
 })

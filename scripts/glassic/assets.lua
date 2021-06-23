@@ -1,24 +1,18 @@
-PrefabFiles = { "glassicskins" }
-
 Assets = {}
-local assets_table = {
+PrefabFiles = {
+    "glassicskins",
     "glassiccutter",
     "moonglasshammer",
     "moonglasspickaxe",
 }
 
-for _, v in ipairs(assets_table) do
-    table.insert(PrefabFiles, v)
-    table.insert(Assets, Asset("ATLAS", "images/inventoryimages/"..v..".xml"))
-    table.insert(Assets, Asset("ATLAS_BUILD", "images/inventoryimages/"..v..".xml", 256))
-end
-
-local GlassicAPI = GLOBAL.GlassicAPI
-GlassicAPI.RegisterAtlasFile("moonglasshammer")
-GlassicAPI.RegisterAtlasFile("moonglasspickaxe")
-GlassicAPI.RegisterAtlasFile("goldenaxe_victorian")
-GlassicAPI.RegisterAtlasFile("moonglassaxe_northern")
-GlassicAPI.RegisterAtlasFile("moonglassaxe_victorian")
-GlassicAPI.RegisterAtlasFile("moonglasshammer_forge")
-GlassicAPI.RegisterAtlasFile("moonglasspickaxe_northern")
-GlassicAPI.RegisterAtlasFile("glassiccutter")
+-- GlassicAPI.RegisterItemAtlas("ga_inventoryimages")
+local RegisterItemAtlas = GlassicAPI.RegisterItemAtlas
+RegisterItemAtlas("inventoryimages/glassiccutter")
+RegisterItemAtlas("inventoryimages/moonglasshammer")
+RegisterItemAtlas("inventoryimages/moonglasspickaxe")
+RegisterItemAtlas("inventoryimages/goldenaxe_victorian")
+RegisterItemAtlas("inventoryimages/moonglassaxe_northern")
+RegisterItemAtlas("inventoryimages/moonglassaxe_victorian")
+RegisterItemAtlas("inventoryimages/moonglasshammer_forge")
+RegisterItemAtlas("inventoryimages/moonglasspickaxe_northern")

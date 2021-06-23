@@ -1,14 +1,15 @@
-local GlassicAPI = {}
+local _G = GLOBAL
+local unpack = _G.unpack
 
+GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
 
 local SLAXML = require("slaxml")
-GlassicAPI.RegisterAtlasFile = function(filename, is_full_path, should_hash)
-    if not is_full_path then
-        filename = GLOBAL.resolvefilepath("images/inventoryimages/"..(filename:find(".xml") and filename or filename..".xml"))
-    end
+GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
+    path_to_file = _G.resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
+
     local images = {}
-    local file = GLOBAL.io.open(filename, "r")
+    local file = _G.io.open(path_to_file, "r")
     local parser = SLAXML:parser({
         attribute = function(name, value)
             if name == "name" then
@@ -19,21 +20,29 @@ GlassicAPI.RegisterAtlasFile = function(filename, is_full_path, should_hash)
     parser:parse(file:read("*a"))
     file:close()
 
+    if assets_table then
+        table.insert(assets_table, Asset( "ATLAS", path_to_file))
+        table.insert(assets_table, Asset( "ATLAS_BUILD", path_to_file, 256))
+    end
+
     for _, image in ipairs(images) do
-        print(image)
-        RegisterInventoryItemAtlas(filename, image)
-        if should_hash ~= false then
-            RegisterInventoryItemAtlas(filename, GLOBAL.hash(image))
-        end
+        RegisterInventoryItemAtlas(path_to_file, image)
+        RegisterInventoryItemAtlas(path_to_file, _G.hash(image))
     end
 end
 
-GlassicAPI.RegisterAtlas = function(atlas, image, should_hash)
-    -- if not prefab then return end
-    RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/inventoryimages/"..atlas..".xml"), (image ~= nil and image or atlas)..".tex")
-    if should_hash then
-        RegisterInventoryItemAtlas(GLOBAL.resolvefilepath("images/inventoryimages/"..atlas..".xml"), GLOBAL.hash((image ~= nil and image or atlas)..".tex"))
-    end
+GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
+    table.insert(assets_table, Asset( "ATLAS", "bigportraits/"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "bigportraits/"..char_name.."_none.xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/names_"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/map_icons/"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/avatars/avatar_"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
+    table.insert(assets_table, Asset( "ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
+
+    AddMinimapAtlas("images/map_icons/"..char_name..".xml")
+    AddModCharacter(char_name, char_gender)
 end
 
 GlassicAPI.SetExclusiveToPlayer = function(player, name)
@@ -54,12 +63,12 @@ GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
             inst.components.floater:SwitchToFloatAnim()
         end
     end
-    return GLOBAL.unpack(ret)
+    return unpack(ret)
 end
 
 GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_name)
     
-    if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
+    if inst.components.placer == nil and not _G.TheWorld.ismastersim then return end
 
     inst.skinname = skin_name
     inst.AnimState:SetBuild(build_name)
@@ -87,13 +96,14 @@ GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_na
     end
 end
 
-local create_env = GLOBAL.CreateEnvironment
-GLOBAL.CreateEnvironment = function(...)
-    local env = create_env(...)
-    env.GlassicAPI = GlassicAPI
-    return env
+local initialize_modmain = _G.ModManager.InitializeModMain
+_G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
+    if mainfile == "modmain.lua" then
+        env.GlassicAPI = GlassicAPI
+    end
+    return initialize_modmain(self, _modname, env, mainfile, ...)
 end
-GLOBAL.GlassicAPI = GlassicAPI
+_G.GlassicAPI = GlassicAPI
 
 modimport("scripts/glassic/assets.lua")
 modimport("scripts/glassic/actions.lua")
@@ -101,4 +111,4 @@ modimport("scripts/glassic/recipes.lua")
 modimport("scripts/glassic/widgets.lua")
 modimport("scripts/glassic/prefabskin.lua")
 
-modimport("strings/"..(table.contains({"zh","chs","cht"}, GLOBAL.LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
+modimport("strings/"..(table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
