@@ -43,6 +43,14 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
     AddModCharacter(char_name, char_gender)
 end
 
+GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
+    local file = "images/"..path_to_file..".xml"
+    if assets_table then
+        table.insert(assets_table, Asset( "ATLAS", file))
+    end
+    AddMinimapAtlas(file)
+end
+
 GlassicAPI.SetExclusiveToPlayer = function(player, name)
     return not player or player.prefab == name
 end
