@@ -54,6 +54,10 @@ GlassicAPI.SetExclusiveToPlayer = function(player, name)
     return not player or player.prefab == name
 end
 
+GlassicAPI.SetExclusiveToTag = function(player, tag)
+    return not player or player:HasTag(tag)
+end
+
 GlassicAPI.SetFloatData = function(inst, data)
     if inst.components.floater and data then
         inst.components.floater.swap_data = data
