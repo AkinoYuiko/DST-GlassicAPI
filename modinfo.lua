@@ -1,4 +1,4 @@
-version = "1.4.2"
+version = "1.4.3"
 name = "[API]Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and

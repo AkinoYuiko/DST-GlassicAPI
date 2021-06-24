@@ -11,7 +11,7 @@ table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "swap_goldenaxe_victorian", sym_name = "swap_goldenaxe"})
-        GlassicAPI.BasicInitFn(inst, "goldenaxe_victorian", "swap_goldenaxe_victorian", "swap_goldenaxe")
+        GlassicAPI.BasicInitFn(inst, "goldenaxe_victorian", "swap_goldenaxe_victorian", "swap_goldenaxe_victorian", "swap_goldenaxe")
     end,
 	skin_tags = { "GOLDENAXE", },
 }))
