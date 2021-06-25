@@ -1,11 +1,11 @@
-version = "1.5"
+version = "1.5.1"
 name = "[API]Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 新功能: InitMinimapAtlas
+- 修复月灵刀攻击蜘蛛巢不产生月灵的问题
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- New function: InitMinimapAtlas
+- Fixed issue that Gestalt not be summoned on attacking Spider Dens.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
