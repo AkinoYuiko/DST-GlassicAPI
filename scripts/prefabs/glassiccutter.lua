@@ -108,17 +108,11 @@ end
 
 local function onattack_moonglass(inst, attacker, target)
     if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        -- local target = data.target
         if target and target ~= attacker and target:IsValid() then
-            if target.components.health == nil or not target.components.health:IsDead() and not target:HasTag("structure") and not target:HasTag("wall") then
-
-        --     -- In combat, this is when we're just launching a projectile, so don't spawn a gestalt yet
-        --     if data.weapon ~= nil and data.projectile == nil 
-        --             and (data.weapon.components.projectile ~= nil
-        --                 or data.weapon.components.complexprojectile ~= nil
-        --                 or data.weapon.components.weapon:CanRangedAttack()) then
-        --         return
-        --     end
+            if (target.components.health == nil or not target.components.health:IsDead()) and
+                (target:HasTag("spiderden") or not target:HasTag("structure")) and
+                not target:HasTag("wall")
+                then
 
                 local x, y, z = target.Transform:GetWorldPosition()
 
