@@ -4,12 +4,13 @@ local assets =
     Asset("ANIM", "anim/glassiccutter_moonglass.zip"),
     Asset("ANIM", "anim/glassiccutter_thulecite.zip"),
     Asset("ANIM", "anim/glassiccutter_moonrock.zip"),
-    -- Asset("ANIM", "anim/swap_glasscutter.zip"),
-    Asset("ANIM", "anim/swap_glassiccutter.zip"),
-    Asset("ANIM", "anim/swap_glassiccutter_moonglass.zip"),
-    Asset("ANIM", "anim/swap_glassiccutter_thulecite.zip"),
-    Asset("ANIM", "anim/swap_glassiccutter_moonrock.zip"),
+
     Asset("ANIM", "anim/floating_items.zip"),
+}
+
+local prefabs = {
+    "alterguardianhat_projectile",
+    "lanternlight"
 }
 
 local function turn_on(inst, owner)
@@ -54,7 +55,7 @@ local function onequip(inst, owner)
     --     owner:PushEvent("equipskinneditem", inst:GetSkinName())
     --     owner.AnimState:OverrideItemSkinSymbol("swap_object", skin_build, "swap_glasscutter", inst.GUID, "swap_glasscutter")
     -- else
-    owner.AnimState:OverrideSymbol("swap_object", "swap_glassiccutter"..get_item_type(inst), "swap_glassiccutter")
+    owner.AnimState:OverrideSymbol("swap_object", "glassiccutter"..get_item_type(inst), "swap_glassiccutter")
     -- end
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
@@ -196,36 +197,16 @@ local function OnChangeImage(inst)
     end
     -- float swap data --
     if inst.components.floater then
-        inst.components.floater.swap_data = {sym_build = "swap_glassiccutter"..get_item_type(inst), sym_name = "swap_glassiccutter", bank = "glassiccutter",anim="idle"}
+        inst.components.floater.swap_data = {sym_build = "glassiccutter"..get_item_type(inst), sym_name = "swap_glassiccutter"}
     end
     -- If equipped --
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
-        owner.AnimState:OverrideSymbol("swap_object", "swap_glassiccutter"..get_item_type(inst), "swap_glassiccutter")
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter"..get_item_type(inst), "swap_glassiccutter")
     end
 end
 
--- local tag_table = {
---     "_moonglass",
---     "_thulecite",
---     "_moonrock"
--- }
--- local function OnChangeTag(inst)
---     for _,v in pairs(tag_table) do
---         if inst:HasTag(v) then inst:RemoveTag(v) end
---     end
---     if not inst.components.container:IsEmpty() then
---         inst:AddTag(get_item_type(inst))
---     end
--- end
-
 local function DisplayNameFn(inst)
-    -- body
-    -- for _,v in pairs(tag_table) do
-    --     if inst:HasTag(v) then
-    --         return STRINGS.NAMES[string.upper(inst.prefab..v)]
-    --     end
-    -- end
     local build = inst.AnimState:GetBuild()
     return STRINGS.NAMES[string.upper(build ~= nil and build or inst.prefab)]
 end
@@ -250,7 +231,6 @@ elseif data.item.prefab == "thulecite" then
     end
     -- anim and image --
     OnChangeImage(inst)
-    -- OnChangeTag(inst)
 end
 
 local function OnAmmoUnloaded(inst, data)
@@ -260,7 +240,6 @@ local function OnAmmoUnloaded(inst, data)
     turn_off(inst)
     -- anim and image --
     OnChangeImage(inst)
-    -- OnChangeTag(inst)
 end
 
 
@@ -280,11 +259,7 @@ local function fn()
     inst:AddTag("sharp")
     inst:AddTag("pointy")
 
-    -- local floater_swap_data = {sym_build = "swap_darklotus", sym_name = "swap_machete", bank = "blacklotus", anim="idle_dark"}
-
-    -- MakeInventoryFloatable(inst, "med", 0.05, {1.21, 0.4, 1.21}, true, -22, floater_swap_data)
-    local floater_swap_data = {sym_build = "swap_glassiccutter", bank = "glassiccutter", anim="idle"}
-    MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, floater_swap_data)
+    MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter"})
 
     inst.entity:SetPristine()
     inst.displaynamefn = DisplayNameFn
@@ -319,4 +294,4 @@ local function fn()
     return inst
 end
 
-return Prefab("glassiccutter", fn, assets)
+return Prefab("glassiccutter", fn, assets, prefabs)
