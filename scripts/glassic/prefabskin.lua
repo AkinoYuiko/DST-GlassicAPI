@@ -27,11 +27,11 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 
 -- Walking Cane fix
 
-local old_cane_init_fn = cane_init_fn
-cane_init_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_init_fn, ...) end
+-- local old_cane_init_fn = cane_init_fn
+-- cane_init_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_init_fn, ...) end
 
-local old_cane_clear_fn = cane_clear_fn
-cane_clear_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_clear_fn, ...) end
+-- local old_cane_clear_fn = cane_clear_fn
+-- cane_clear_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_clear_fn, ...) end
 
 -- Golden Axe Victorian
 local _goldenaxe_clear_fn = goldenaxe_clear_fn
