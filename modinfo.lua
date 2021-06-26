@@ -1,11 +1,11 @@
-version = "1.5.1"
+version = "1.5.2"
 name = "[API]Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复月灵刀攻击蜘蛛巢不产生月灵的问题
+- 移除手杖皮肤修复 (Klei 已经解决所以不用我们擦屁股了)
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Fixed issue that Gestalt not be summoned on attacking Spider Dens.
+- Remove Walking Cane skin fix (Klei has done so we don't need to do that).
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
