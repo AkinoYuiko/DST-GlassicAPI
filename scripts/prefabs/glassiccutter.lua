@@ -10,7 +10,8 @@ local assets =
 
 local prefabs = {
     "alterguardianhat_projectile",
-    "lanternlight"
+    "lanternlight",
+	"electrichitsparks"
 }
 
 local function turn_on(inst, owner)
@@ -18,8 +19,8 @@ local function turn_on(inst, owner)
     if not inst.components.container:FindItem(function(inst) return inst:HasTag("spore") end) then return end
     if inst._light == nil or not inst._light:IsValid() then
         inst._light = SpawnPrefab("lanternlight")
-        inst._light.Light:SetFalloff(.5)
-        inst._light.Light:SetIntensity(.8)
+        inst._light.Light:SetFalloff(0.5)
+        inst._light.Light:SetIntensity(0.8)
         inst._light.Light:SetRadius(1)
         if inst.components.container:FindItem(function(inst) return inst.prefab == "spore_medium" end) then
             inst._light.Light:SetColour(197/255, 126/255, 126/255)
@@ -50,29 +51,21 @@ local function get_item_type(inst)
 end
 
 local function onequip(inst, owner)
-    -- local skin_build = inst:GetSkinBuild()
-    -- if skin_build ~= nil then
-    --     owner:PushEvent("equipskinneditem", inst:GetSkinName())
-    --     owner.AnimState:OverrideItemSkinSymbol("swap_object", skin_build, "swap_glasscutter", inst.GUID, "swap_glasscutter")
-    -- else
     owner.AnimState:OverrideSymbol("swap_object", "glassiccutter"..get_item_type(inst), "swap_glassiccutter")
-    -- end
+
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
 
     if inst.components.container ~= nil then
         inst.components.container:Open(owner)
     end
+
     turn_on(inst, owner)
 end
 
 local function onunequip(inst, owner)
     owner.AnimState:Hide("ARM_carry")
     owner.AnimState:Show("ARM_normal")
-    -- local skin_build = inst:GetSkinBuild()
-    -- if skin_build ~= nil then
-    --     owner:PushEvent("unequipskinneditem", inst:GetSkinName())
-    -- end
 
     if inst.components.container ~= nil then
         inst.components.container:Close()
@@ -117,9 +110,8 @@ local function onattack_moonglass(inst, attacker, target)
 
                 local x, y, z = target.Transform:GetWorldPosition()
 
-                local gestalt = SpawnPrefab("alterguardianhat_projectile") -- 这一行改成复制的月灵
+                local gestalt = SpawnPrefab("alterguardianhat_projectile") 
                 if attacker.components.combat then
-                    -- local props = {"damagemultiplier", "externaldamagemultipliers", "damagebonus", "customdamagemultfn"}
                     local props = {"externaldamagemultipliers", "damagebonus"}
                     for _, v in ipairs(props) do
                         gestalt.components.combat[v] = attacker.components.combat[v]
@@ -275,6 +267,7 @@ local function fn()
     inst:AddComponent("container")
     inst.components.container:WidgetSetup("glassiccutter")
     inst.components.container.canbeopened = false
+
     inst:ListenForEvent("itemget", OnAmmoLoaded)
     inst:ListenForEvent("itemlose", OnAmmoUnloaded)
 

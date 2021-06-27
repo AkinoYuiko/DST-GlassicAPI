@@ -1,7 +1,9 @@
 local assets =
 {
-    Asset( "ANIM", "anim/glasspickaxe.zip"),
-    Asset("ANIM", "anim/swap_glasspickaxe.zip"),
+    Asset( "ANIM", "anim/glasspickaxe.zip" ),
+    Asset( "ANIM", "anim/swap_glasspickaxe.zip" ),
+
+	Asset( "ANIM", "anim/floating_items.zip" ),
 }
 
 local function onattack_moonglass(inst, attacker, target)
@@ -72,8 +74,6 @@ local function fn()
     inst:AddComponent("inspectable")
 
     inst:AddComponent("inventoryitem")
-    -- inst.components.inventoryitem.imagename = "moonglasspickaxe"
-    -- inst.components.inventoryitem.atlasname = resolvefilepath("images/inventoryimages/moonglasstools.xml")
 
     inst:AddComponent("equippable")
 
