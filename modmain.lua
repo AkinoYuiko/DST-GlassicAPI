@@ -51,12 +51,17 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     AddMinimapAtlas(file)
 end
 
-GlassicAPI.SetExclusiveToPlayer = function(player, name)
-    return not player or player.prefab == name
+GlassicAPI.SetExclusiveToPlayer = function(name)
+	return function(player)
+		return not player or player.prefab == name
+	end
 end
 
-GlassicAPI.SetExclusiveToTag = function(player, tag)
-    return not player or player:HasTag(tag)
+
+GlassicAPI.SetExclusiveToTag = function(tag)
+	return function(player)
+	    return not player or player:HasTag(tag)
+	end
 end
 
 GlassicAPI.SetFloatData = function(inst, data)
