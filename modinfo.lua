@@ -1,11 +1,11 @@
-version = "1.5.4"
+version = "1.5.5"
 name = "[API]Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复 InitCharacterAssets 的问题
+- 更改了 SetExclusiveToPlayer/Tag 的写法
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Fixed an issue with InitCharacterAssets.
+- Update SetExclusiveToPlayer, SetExclusiveToTag
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
