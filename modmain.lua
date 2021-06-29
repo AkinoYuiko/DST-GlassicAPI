@@ -1,5 +1,7 @@
 local _G = GLOBAL
+local STRINGS = _G.STRINGS
 local unpack = _G.unpack
+local io = _G.io
 
 GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
@@ -9,7 +11,7 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     path_to_file = _G.resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
 
     local images = {}
-    local file = _G.io.open(path_to_file, "r")
+    local file = io.open(path_to_file, "r")
     local parser = SLAXML:parser({
         attribute = function(name, value)
             if name == "name" then
@@ -109,6 +111,70 @@ GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_na
         inst:RemoveEventCallback("equipped", onequipfn)
         inst:RemoveEventCallback("stoprowing", onequipfn) -- IA compatible after stopping rowing.
     end
+end
+
+local function merge_internal(target, strings)
+    for k, v in pairs(strings) do
+        if type(v) == "table" then
+            if not target[k] then
+                target[k] = {}
+            end
+            merge_internal(target[k], v)
+        else
+            target[k] = v
+        end
+    end
+end
+GlassicAPI.MergeStringsToGLOBAL = function(strings)
+    merge_internal(STRINGS, strings)
+end
+
+local _languages = {
+	zh = "chinese_s", -- Chinese
+	sc = "chinese_s", -- Simplified Chinese
+    chs = "chinese_s", -- Chinese Mod (workshop 367546858)
+}
+GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
+    local Translator = _G.LanguageTranslator
+    local _defaultlang = Translator.defaultlang
+    local lang = override_lang or _defaultlang
+    if not _languages[lang] then return end
+    local filepath = base_path.."/".._languages[lang]..".po"
+    if not _G.resolvefilepath_soft(filepath) then
+        print("Could not find a language file matching "..filepath.." in any of the search paths.")
+        return
+    end
+    Translator:LoadPOFile(filepath, lang.."_temp")
+    _G.TranslateStringTable(STRINGS)
+    Translator.languages[lang.."_temp"] = nil
+    Translator.defaultlang = _defaultlang
+end
+
+local function write_for_strings(base, data, file)
+    for k, v in pairs(data) do
+        local path = base.."."..k
+		if type(v) == "table" then
+			write_for_strings(path, v, file)
+        else
+            file:write('#. '..path.."\n")
+            file:write('msgctxt "'..path..'"\n')
+            file:write('msgid "'..v..'"\n')
+            file:write('msgstr ""\n\n')
+        end
+	end
+end
+GlassicAPI.MakePOTFromStrings = function(file, strings)
+    file:write("msgid \"\"\n")
+    file:write("msgstr \"\"\n")
+	file:write("\"Application: Dont' Starve\\n\"")
+	file:write("\n")
+	file:write("\"POT Version: 2.0\\n\"")
+	file:write("\n")
+	file:write("\n")
+
+    write_for_strings("STRINGS", strings, file)
+
+	file:close()
 end
 
 local initialize_modmain = _G.ModManager.InitializeModMain
