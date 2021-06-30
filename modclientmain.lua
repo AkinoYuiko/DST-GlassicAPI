@@ -1,8 +1,8 @@
 if GLOBAL.TheNet:GetIsClient() or GLOBAL.TheNet:GetIsServer() then return end
 
-local SkinHandler = require("skinhandler")
+modimport("modmain")
 
-SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 255, 1 }, "reward")
+GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 255, 1 }, "reward")
 
 local STRINGS = GLOBAL.STRINGS
 if table.contains({"zh", "chs", "cht"}, GLOBAL.LanguageTranslator.defaultlang) then

@@ -61,7 +61,6 @@ GlassicAPI.SetExclusiveToPlayer = function(name)
 	end
 end
 
-
 GlassicAPI.SetExclusiveToTag = function(tag)
 	return function(player)
 	    return not player or player:HasTag(tag)
@@ -220,6 +219,8 @@ _G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
     return initialize_modmain(self, _modname, env, mainfile, ...)
 end
 _G.GlassicAPI = GlassicAPI
+
+if is_mim_enabled then return end
 
 local main_files = {
 	"assets",
