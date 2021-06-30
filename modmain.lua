@@ -214,7 +214,7 @@ end
 
 GlassicAPI.ImportFromMain = function(table)
 	for _,v in ipairs(table) do
-		modimport("main/"..v..".lua")
+		modimport("main/"..v)
 	end
 end
 
