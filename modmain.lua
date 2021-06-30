@@ -212,6 +212,12 @@ GlassicAPI.MakePOTFromStrings = function(file, strings)
 	file:close()
 end
 
+GlassicAPI.ImportFromMain = function(table)
+	for _,v in ipairs(table) do
+		modimport("main/"..v..".lua")
+	end
+end
+
 local initialize_modmain = _G.ModManager.InitializeModMain
 _G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
     if mainfile == "modmain.lua" then
@@ -221,7 +227,7 @@ _G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
 end
 _G.GlassicAPI = GlassicAPI
 
-local import_main = {
+local glassic_main = {
 	"assets",
 	"actions",
 	"recipes",
@@ -229,8 +235,6 @@ local import_main = {
 	"prefabskin"
 }
 
-for _,v in ipairs(import_main) do
-	modimport("main/"..v..".lua")
-end
+GlassicAPI.ImportFromMain(glassic_main)
 
 modimport("strings/"..(table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
