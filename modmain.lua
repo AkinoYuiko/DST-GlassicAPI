@@ -221,10 +221,16 @@ _G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
 end
 _G.GlassicAPI = GlassicAPI
 
-modimport("main/assets.lua")
-modimport("main/actions.lua")
-modimport("main/recipes.lua")
-modimport("main/widgets.lua")
-modimport("main/prefabskin.lua")
+local import_main = {
+	"assets",
+	"actions",
+	"recipes",
+	"widgets",
+	"prefabskin"
+}
+
+for _,v in ipairs(import_main) do
+	modimport("main/"..v..".lua")
+end
 
 modimport("strings/"..(table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
