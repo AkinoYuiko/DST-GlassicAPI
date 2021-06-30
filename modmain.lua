@@ -1,6 +1,8 @@
 local _G = GLOBAL
 local STRINGS = _G.STRINGS
+local Translator = _G.LanguageTranslator
 local unpack = _G.unpack
+local tonumber = _G.tonumber
 local io = _G.io
 
 GlassicAPI = {}
@@ -113,20 +115,22 @@ GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_na
     end
 end
 
-local function merge_internal(target, strings)
+local function merge_internal(target, strings, no_override)
     for k, v in pairs(strings) do
         if type(v) == "table" then
             if not target[k] then
                 target[k] = {}
             end
-            merge_internal(target[k], v)
+            merge_internal(target[k], v, no_override)
         else
-            target[k] = v
+            if not (no_override and target[k] ~= nil) then
+                target[k] = v
+            end
         end
     end
 end
-GlassicAPI.MergeStringsToGLOBAL = function(strings)
-    merge_internal(STRINGS, strings)
+GlassicAPI.MergeStringsToGLOBAL = function(strings, custom_field, no_override)
+    merge_internal(custom_field or STRINGS, strings, no_override)
 end
 
 local _languages = {
@@ -135,7 +139,6 @@ local _languages = {
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
-    local Translator = _G.LanguageTranslator
     local _defaultlang = Translator.defaultlang
     local lang = override_lang or _defaultlang
     if not _languages[lang] then return end
@@ -148,6 +151,38 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     _G.TranslateStringTable(STRINGS)
     Translator.languages[lang.."_temp"] = nil
     Translator.defaultlang = _defaultlang
+end
+
+local function write_speech(file, base_strings, strings, indent)
+    indent = indent or 1
+    local str = ""
+    for i = 1, indent do
+        str = str .. "\t"
+    end
+    for k, v in pairs(strings) do
+        if type(v) == "table" then
+            file:write(str .. k .. " =\n" .. str .. "{\n")
+            write_speech(file, base_strings and base_strings[k], v, indent + 1)
+            file:write(str .. "},\n")
+        else
+            local comment = base_strings and base_strings[k] and "" or "-- "
+            v = Translator:ConvertEscapeCharactersToString(v)
+            if tonumber(k) then
+                file:write(str .. comment .. v .. "\",\n" )
+            else
+                file:write(str .. comment .. k .. " = \"" .. v .. "\",\n" )
+            end
+        end
+    end
+end
+GlassicAPI.MergeSpeechFile = function(base_strings, file, source)
+    local speech = require(source or "speech_wilson")
+    file:write("return {\n")
+    merge_internal(speech, base_strings)
+    write_speech(file, base_strings, speech)
+    file:write("}")
+    file:write("\n")
+    file:close()
 end
 
 local function write_for_strings(base, data, file)
