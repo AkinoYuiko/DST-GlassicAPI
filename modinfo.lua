@@ -1,11 +1,11 @@
-version = "1.5.6"
+version = "1.6"
 name = "[API] Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 优化了物品读取信息
+- 新增翻译文本处理接口
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Optimized item assets loading.
+- Add translation api.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
