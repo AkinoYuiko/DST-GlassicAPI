@@ -193,7 +193,7 @@ local function write_for_strings(base, data, file)
         else
             file:write('#. '..path.."\n")
             file:write('msgctxt "'..path..'"\n')
-            file:write('msgid "'..v..'"\n')
+            file:write('msgid "'..Translator:ConvertEscapeCharactersToString(v)..'"\n')
             file:write('msgstr ""\n\n')
         end
 	end
