@@ -1,7 +1,7 @@
 local assets =
 {
     Asset("ANIM", "anim/glasshammer.zip"),
-    Asset("ANIM", "anim/swap_glasshammer.zip"),
+    -- Asset("ANIM", "anim/swap_glasshammer.zip"),
 
     Asset("ANIM", "anim/floating_items.zip"),
 }
@@ -13,7 +13,7 @@ local function onattack_moonglass(inst, attacker, target)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "swap_glasshammer", "swap_glasshammer")
+    owner.AnimState:OverrideSymbol("swap_object", "glasshammer", "swap_glasshammer")
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
 end
@@ -39,8 +39,7 @@ local function fn()
 
     inst:AddTag("hammer")
 
-    local swap_data = {sym_build = "swap_glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"}
-    MakeInventoryFloatable(inst, "med", 0.05, {0.7, 0.4, 0.7}, true, -13, swap_data)
+    MakeInventoryFloatable(inst, "med", 0.05, {0.7, 0.4, 0.7}, true, -13, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
     -- inst.components.floater:SetBankSwapOnFloat(true, -13, swap_data)
 
     --tool (from tool component) added to pristine state for optimization
