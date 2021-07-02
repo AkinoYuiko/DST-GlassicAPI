@@ -1,12 +1,11 @@
-version = "1.7.1"
+version = "2.0"
 name = "[API] Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 新增了自定义品质背景图的功能
-- 更新了玻璃制品品质的背景图
+- 本模组包含的皮肤改用dyn格式.
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -14,8 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Added custom rarity frame BG feature
-- Updated Glassic rarity's frame BG
+- Rework skins' anim as dyn format.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
