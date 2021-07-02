@@ -1,9 +1,9 @@
 local assets =
 {
     Asset("ANIM", "anim/glassiccutter.zip"),
-    Asset("ANIM", "anim/glassiccutter_moonglass.zip"),
-    Asset("ANIM", "anim/glassiccutter_thulecite.zip"),
-    Asset("ANIM", "anim/glassiccutter_moonrock.zip"),
+    -- Asset("ANIM", "anim/glassiccutter_moonglass.zip"),
+    -- Asset("ANIM", "anim/glassiccutter_thulecite.zip"),
+    -- Asset("ANIM", "anim/glassiccutter_moonrock.zip"),
 
     Asset("ANIM", "anim/floating_items.zip"),
 }
@@ -43,15 +43,16 @@ local function turn_off(inst)
     end
 end
 
-local function get_item_type(inst)
+local function get_item_type(inst, noprefix)
     return inst.components.container and (
-        (inst.components.container:Has("moonglass",1) and "_moonglass") or
-        (inst.components.container:Has("thulecite",1) and "_thulecite") or
-        (inst.components.container:Has("moonrocknugget",1) and "_moonrock")) or ""
+        (inst.components.container:Has("moonglass",1) and (noprefix and "moonglass" or "_moonglass")) or
+        (inst.components.container:Has("thulecite",1) and (noprefix and "thulecite" or "_thulecite")) or
+        (inst.components.container:Has("moonrocknugget",1) and (noprefix and "moonrock" or "_moonrock"))) or
+		(noprefix and "none" or "")
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "glassiccutter"..get_item_type(inst), "swap_glassiccutter")
+    owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
 
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
@@ -182,19 +183,20 @@ end
 
 local function OnChangeImage(inst)
     -- AnimState --
-    inst.AnimState:SetBuild("glassiccutter"..get_item_type(inst))
+    -- inst.AnimState:SetBuild("glassiccutter"..get_item_type(inst))
+    inst.AnimState:PlayAnimation(get_item_type(inst, true))
     -- Image --
     if inst.components.inventoryitem then
         inst.components.inventoryitem:ChangeImageName("glassiccutter"..get_item_type(inst))
     end
     -- float swap data --
     if inst.components.floater then
-        inst.components.floater.swap_data = {sym_build = "glassiccutter"..get_item_type(inst), sym_name = "swap_glassiccutter"}
+        inst.components.floater.swap_data = { sym_build = "glassiccutter", sym_name = "swap_glassiccutter"..get_item_type(inst), anim = get_item_type(inst, true)}
     end
     -- If equipped --
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
-        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter"..get_item_type(inst), "swap_glassiccutter")
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
     end
 end
 
@@ -246,12 +248,12 @@ local function fn()
 
     inst.AnimState:SetBank("glassiccutter")
     inst.AnimState:SetBuild("glassiccutter")
-    inst.AnimState:PlayAnimation("idle")
+    inst.AnimState:PlayAnimation("none")
 
     inst:AddTag("sharp")
     inst:AddTag("pointy")
 
-    MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter"})
+    MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter", sym_name = "swap_glassiccutter", anim = "none" } )
 
     inst.entity:SetPristine()
     inst.displaynamefn = DisplayNameFn
