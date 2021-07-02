@@ -5,9 +5,8 @@ table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        -- Asset("ANIM", "anim/swap_goldenaxe_victorian.zip"),
-        Asset("ANIM", "anim/goldenaxe_victorian.zip"),
-        Asset("INV_IMAGE", "goldenaxe_victorian"),
+		Asset( "DYNAMIC_ANIM", "anim/dynamic/goldenaxe_victorian.zip" ),
+		Asset( "PKGREF", "anim/dynamic/goldenaxe_victorian.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "goldenaxe_victorian", sym_name = "swap_goldenaxe"})
@@ -21,8 +20,8 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/glassaxe_northern.zip"),
-        Asset("INV_IMAGE", "glassaxe_northern"),
+		Asset( "DYNAMIC_ANIM", "anim/dynamic/glassaxe_northern.zip" ),
+		Asset( "PKGREF", "anim/dynamic/glassaxe_northern.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_northern", sym_name = "swap_glassaxe", bank = "glassaxe"})
@@ -36,8 +35,8 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/glassaxe_victorian.zip"),
-        Asset("INV_IMAGE", "glassaxe_victorian"),
+		Asset( "DYNAMIC_ANIM", "anim/dynamic/glassaxe_victorian.zip" ),
+		Asset( "PKGREF", "anim/dynamic/glassaxe_victorian.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_victorian", sym_name = "swap_glassaxe", bank = "glassaxe"})
@@ -51,9 +50,8 @@ table.insert(pref, CreatePrefabSkin("moonglasshammer_forge", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/glasshammer_forge.zip"),
-        -- Asset("ANIM", "anim/swap_glasshammer_forge.zip"),
-        Asset("INV_IMAGE", "moonglasshammer_forge"),
+		Asset( "DYNAMIC_ANIM", "anim/dynamic/glasshammer_forge.zip" ),
+		Asset( "PKGREF", "anim/dynamic/glasshammer_forge.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer_forge", sym_name = "swap_glasshammer", bank = "glasshammer"})
@@ -67,8 +65,8 @@ table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/glasspickaxe_northern.zip"),
-        Asset("INV_IMAGE", "moonglasspickaxe_northern"),
+		Asset( "DYNAMIC_ANIM", "anim/dynamic/glasspickaxe_northern.zip" ),
+		Asset( "PKGREF", "anim/dynamic/glasspickaxe_northern.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe_northern", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
