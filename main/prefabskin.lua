@@ -1,7 +1,7 @@
 GLOBAL.setfenv(1, GLOBAL)
 
 -- Glassic rarity EXAMPLE
-GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 255, 1 }, "reward")
+GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 255, 1 }, "glassic", "glassic_rarities")
 -- STRINGS.UI.RARITY.Glassic = "Glassic" -- Display Name
 
 -- Here is official rarity and colour

@@ -1,6 +1,7 @@
 local SKIN_AFFINITY_INFO = require("skin_affinity_info")
 local ALL_MOD_SKINS = {}
 local HEADSKIN_CHARACTERS = {}
+local OVERRIDE_RARITY_DATA = {}
 
 local function GetPlayerFromID(id)
     if type(id) == "table" then return id end
@@ -170,15 +171,29 @@ local function AddModSkins(data)
     end
 end
 
-local function SetRarity(rarity, order, color, frame_symbol)
+local AccountItemFrame = require("widgets/redux/accountitemframe")
+local set_rarity = AccountItemFrame._SetRarity
+AccountItemFrame._SetRarity = function(self, rarity, ...)
+    local mod_rarity_data = OVERRIDE_RARITY_DATA[rarity]
+    if mod_rarity_data then
+        local build = mod_rarity_data.build or "frame_BG"
+        local symbol = mod_rarity_data.symbol or mod_rarity_data.build and rarity or GetFrameSymbolForRarity(rarity)
+        self:GetAnimState():OverrideSymbol("SWAP_frameBG", build, symbol)
+    else
+        return set_rarity(self, rarity, ...)
+    end
+end
+
+local function SetRarity(rarity, order, color, frame_symbol, override_build)
     RARITY_ORDER[rarity] = order
     SKIN_RARITY_COLORS[rarity] = color
-    local get_frame_symbol_for_rarity = GetFrameSymbolForRarity
-    GetFrameSymbolForRarity = function(_rarity, ...)
-        if _rarity == rarity then
-            return frame_symbol
-        end
-        return get_frame_symbol_for_rarity(_rarity, ...)
+    if frame_symbol or override_build then
+        OVERRIDE_RARITY_DATA[rarity] = {
+            symbol = frame_symbol,
+            build = override_build
+        }
+    else
+        OVERRIDE_RARITY_DATA[rarity] = nil
     end
 end
 
