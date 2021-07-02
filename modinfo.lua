@@ -1,11 +1,11 @@
-version = "1.6.2"
+version = "1.7"
 name = "[API] Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 合并了 Glassic Cutter 的动画包
+- 更新了玻璃工具的动画包和规范
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +13,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Update Glassic Cutter's anim pack.
+- Update all glass tools' anim.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]

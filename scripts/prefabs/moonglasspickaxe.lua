@@ -1,7 +1,7 @@
 local assets =
 {
     Asset( "ANIM", "anim/glasspickaxe.zip" ),
-    Asset( "ANIM", "anim/swap_glasspickaxe.zip" ),
+    -- Asset( "ANIM", "anim/swap_glasspickaxe.zip" ),
 
 	Asset( "ANIM", "anim/floating_items.zip" ),
 }
@@ -14,7 +14,7 @@ local function onattack_moonglass(inst, attacker, target)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "swap_glasspickaxe", "swap_glasspickaxe")
+    owner.AnimState:OverrideSymbol("swap_object", "glasspickaxe", "swap_glasspickaxe")
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
 end
@@ -37,7 +37,7 @@ local function fn()
     inst.AnimState:SetBank("glasspickaxe")
     inst.AnimState:SetBuild("glasspickaxe")
     inst.AnimState:PlayAnimation("idle")
-    inst.AnimState:SetManualBB(20,-70,210,170)
+    -- inst.AnimState:SetManualBB(20,-70,210,170)
 
     inst:AddTag("sharp")
 
@@ -82,7 +82,7 @@ local function fn()
 
     MakeHauntableLaunch(inst)
 
-    inst.components.floater:SetBankSwapOnFloat(true, -11, {sym_build = "swap_glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
+    inst.components.floater:SetBankSwapOnFloat(true, -11, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
 
     return inst
 end

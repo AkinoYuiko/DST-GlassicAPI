@@ -51,18 +51,18 @@ if not rawget(_G, "moonglassaxe_clear_fn") then
 end
 
 -- Moon Glass Hammer
-moonglasshammer_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, "swap_"..( build_name or skin_name ), symbol_name or "swap_glasshammer") end
+moonglasshammer_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, build_name or skin_name, symbol_name or "swap_glasshammer") end
 moonglasshammer_clear_fn = function(inst)
-    inst.AnimState:SetBank("glasshammer")
-    GlassicAPI.SetFloatData(inst, {sym_build = "swap_glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
+    -- inst.AnimState:SetBank("glasshammer")
+    GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
     basic_clear_fn(inst, "glasshammer")
 end
 
 -- Moon Glass Pickaxe
-moonglasspickaxe_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, "swap_"..( build_name or skin_name) , symbol_name or "swap_glasspickaxe") end
+moonglasspickaxe_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, build_name or skin_name, symbol_name or "swap_glasspickaxe") end
 moonglasspickaxe_clear_fn = function(inst)
-    inst.AnimState:SetBank("glasspickaxe")
-    GlassicAPI.SetFloatData(inst, {sym_build = "swap_glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
+    -- inst.AnimState:SetBank("glasspickaxe")
+    GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
     basic_clear_fn(inst, "glasspickaxe")
 end
 

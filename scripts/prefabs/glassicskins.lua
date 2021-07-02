@@ -5,13 +5,13 @@ table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/swap_goldenaxe_victorian.zip"),
+        -- Asset("ANIM", "anim/swap_goldenaxe_victorian.zip"),
         Asset("ANIM", "anim/goldenaxe_victorian.zip"),
         Asset("INV_IMAGE", "goldenaxe_victorian"),
     },
     init_fn = function(inst)
-        GlassicAPI.SetFloatData(inst, {sym_build = "swap_goldenaxe_victorian", sym_name = "swap_goldenaxe"})
-        GlassicAPI.BasicInitFn(inst, "goldenaxe_victorian", "swap_goldenaxe_victorian", "swap_goldenaxe_victorian", "swap_goldenaxe")
+        GlassicAPI.SetFloatData(inst, {sym_build = "goldenaxe_victorian", sym_name = "swap_goldenaxe"})
+        GlassicAPI.BasicInitFn(inst, "goldenaxe_victorian", "goldenaxe_victorian", "goldenaxe_victorian", "swap_goldenaxe")
     end,
 	skin_tags = { "GOLDENAXE", },
 }))
@@ -21,13 +21,12 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/swap_glassaxe_northern.zip"),
+        Asset("ANIM", "anim/glassaxe_northern.zip"),
         Asset("INV_IMAGE", "glassaxe_northern"),
     },
     init_fn = function(inst)
-        inst.AnimState:SetBank("goldenaxe")
-        GlassicAPI.SetFloatData(inst, {sym_build = "swap_moonglassaxe_northern", sym_name = "swap_goldenaxe",bank = "goldenaxe"})
-        moonglassaxe_init_fn(inst, "moonglassaxe_northern", "swap_moonglassaxe_northern", "swap_goldenaxe")
+        GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_northern", sym_name = "swap_glassaxe", bank = "glassaxe"})
+        moonglassaxe_init_fn(inst, "moonglassaxe_northern", "glassaxe_northern", "swap_glassaxe")
     end,
 	skin_tags = { "MOONGLASSAXE", },
 }))
@@ -37,13 +36,12 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/swap_glassaxe_victorian.zip"),
+        Asset("ANIM", "anim/glassaxe_victorian.zip"),
         Asset("INV_IMAGE", "glassaxe_victorian"),
     },
     init_fn = function(inst)
-        inst.AnimState:SetBank("axe")
-        GlassicAPI.SetFloatData(inst, {sym_build = "swap_moonglassaxe_victorian", sym_name = "swap_axe",bank = "axe"})
-        moonglassaxe_init_fn(inst, "moonglassaxe_victorian", "swap_moonglassaxe_victorian", "swap_axe")
+        GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_victorian", sym_name = "swap_glassaxe", bank = "glassaxe"})
+        moonglassaxe_init_fn(inst, "moonglassaxe_victorian", "glassaxe_victorian", "swap_glassaxe")
     end,
 	skin_tags = { "MOONGLASSAXE", },
 }))
@@ -54,12 +52,13 @@ table.insert(pref, CreatePrefabSkin("moonglasshammer_forge", {
     rarity = "Glassic",
     assets = {
         Asset("ANIM", "anim/glasshammer_forge.zip"),
-        Asset("ANIM", "anim/swap_glasshammer_forge.zip"),
+        -- Asset("ANIM", "anim/swap_glasshammer_forge.zip"),
         Asset("INV_IMAGE", "moonglasshammer_forge"),
     },
     init_fn = function(inst)
-        GlassicAPI.SetFloatData(inst, {sym_build = "swap_glasshammer_forge", sym_name = "swap_glasshammer"})
-        moonglasshammer_init_fn(inst, "moonglasshammer_forge", "glasshammer_forge") end,
+        GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer_forge", sym_name = "swap_glasshammer", bank = "glasshammer"})
+        moonglasshammer_init_fn(inst, "moonglasshammer_forge", "glasshammer_forge")
+    end,
 	skin_tags = { "MOONGLASSHAMMER", },
 }))
 
@@ -68,14 +67,12 @@ table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
 	type = "item",
     rarity = "Glassic",
     assets = {
-        Asset("ANIM", "anim/swap_glasspickaxe_northern.zip"),
         Asset("ANIM", "anim/glasspickaxe_northern.zip"),
         Asset("INV_IMAGE", "moonglasspickaxe_northern"),
     },
     init_fn = function(inst)
-        inst.AnimState:SetBank("goldenpickaxe")
-        GlassicAPI.SetFloatData(inst, {sym_build = "swap_moonglasspickaxe_northern", sym_name = "swap_goldenpickaxe",bank = "goldenpickaxe"})
-        moonglasspickaxe_init_fn(inst, "moonglasspickaxe_northern", "moonglasspickaxe_northern", "swap_goldenpickaxe")
+        GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe_northern", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
+        moonglasspickaxe_init_fn(inst, "moonglasspickaxe_northern", "glasspickaxe_northern")
     end,
 	skin_tags = { "MOONGLASSPICKAXE", },
 }))
