@@ -167,7 +167,7 @@ local function write_speech(file, base_strings, strings, indent)
             local comment = base_strings and base_strings[k] and "" or "-- "
             v = Translator:ConvertEscapeCharactersToString(v)
             if tonumber(k) then
-                file:write(str .. comment .. v .. "\",\n" )
+                file:write(str .. comment .. "\"" .. v .. "\",\n" )
             else
                 file:write(str .. comment .. k .. " = \"" .. v .. "\",\n" )
             end
