@@ -183,21 +183,24 @@ local function onattack_none(inst, attacker, target)
 end
 
 local function OnChangeImage(inst)
+	local tail = get_item_type(inst)
+	local anim = get_item_type(inst, true)
     -- AnimState --
-    inst.AnimState:PlayAnimation(get_item_type(inst, true))
+    inst.AnimState:PlayAnimation(anim)
     -- Image --
     if inst.components.inventoryitem then
-        inst.components.inventoryitem:ChangeImageName("glassiccutter"..get_item_type(inst))
+        inst.components.inventoryitem:ChangeImageName("glassiccutter"..tail)
     end
     -- float swap data --
     if inst.components.floater then
-        inst.components.floater.swap_data = { sym_build = "glassiccutter", sym_name = "swap_glassiccutter"..get_item_type(inst), anim = get_item_type(inst, true)}
+        inst.components.floater.swap_data = { sym_build = "glassiccutter", sym_name = "swap_glassiccutter"..tail, anim = anim}
     end
-    -- If equipped --
+    -- Equipped --
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
-        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..tail)
     end
+    inst._nametail:set(tail)
 end
 
 local function OnAmmoLoaded(inst, data)
@@ -205,7 +208,7 @@ local function OnAmmoLoaded(inst, data)
         inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
         inst.components.equippable.walkspeedmult = 1
-elseif data.item.prefab == "thulecite" then
+    elseif data.item.prefab == "thulecite" then
         inst.components.weapon:SetDamage(TUNING.RUINS_BAT_DAMAGE)
         inst.components.weapon:SetOnAttack(onattack_thulecite)
         inst.components.equippable.walkspeedmult = 1.1
@@ -231,6 +234,14 @@ local function OnAmmoUnloaded(inst, data)
     OnChangeImage(inst)
 end
 
+local function displaynamefn(inst)
+    return STRINGS.NAMES[string.upper("glassiccutter"..(type(inst._nametail:value()) == "string" and inst._nametail:value() or ""))]
+end
+
+local function OnLoad(inst)
+    inst._nametail:set(get_item_type(inst))
+end
+
 local function fn()
     local inst = CreateEntity()
 
@@ -250,14 +261,9 @@ local function fn()
     MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter", sym_name = "swap_glassiccutter", anim = "none" } )
 
     inst.entity:SetPristine()
-    
-    inst.displaynamefn = function(inst)
-        local tail = ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_moonglass.tex") and "_MOONGLASS" )
-                or ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_moonrock.tex") and "_MOONROCK" )
-                or ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_thulecite.tex") and "_THULECITE" )
-                or ""
-        return STRINGS.NAMES[string.upper(inst.prefab)..tail]
-    end
+
+    inst.displaynamefn = displaynamefn
+    inst._nametail = net_string(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
         return inst
@@ -286,6 +292,8 @@ local function fn()
     inst.components.equippable.walkspeedmult = 1
 
     MakeHauntableLaunch(inst)
+
+    inst.OnLoad = OnLoad
 
     return inst
 end
