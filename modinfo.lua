@@ -1,10 +1,11 @@
-version = "2.0"
+version = "2.0.1"
 name = "[API] Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 修复玻璃制刀名字显示问题.
 - 本模组包含的皮肤改用dyn格式.
 
 包含了皮肤组件和一套玻璃工具.
@@ -13,6 +14,7 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
+- Fix issue with Glassic Cutter's display name.
 - Rework skins' anim as dyn format.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.

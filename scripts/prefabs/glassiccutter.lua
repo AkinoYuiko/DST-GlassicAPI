@@ -184,7 +184,6 @@ end
 
 local function OnChangeImage(inst)
     -- AnimState --
-    -- inst.AnimState:SetBuild("glassiccutter"..get_item_type(inst))
     inst.AnimState:PlayAnimation(get_item_type(inst, true))
     -- Image --
     if inst.components.inventoryitem then
@@ -199,11 +198,6 @@ local function OnChangeImage(inst)
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
         owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
     end
-end
-
-local function DisplayNameFn(inst)
-    local build = inst.AnimState:GetBuild()
-    return STRINGS.NAMES[string.upper(build ~= nil and build or inst.prefab)]
 end
 
 local function OnAmmoLoaded(inst, data)
@@ -237,7 +231,6 @@ local function OnAmmoUnloaded(inst, data)
     OnChangeImage(inst)
 end
 
-
 local function fn()
     local inst = CreateEntity()
 
@@ -257,7 +250,14 @@ local function fn()
     MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter", sym_name = "swap_glassiccutter", anim = "none" } )
 
     inst.entity:SetPristine()
-    inst.displaynamefn = DisplayNameFn
+    
+    inst.displaynamefn = function(inst)
+        local tail = ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_moonglass.tex") and "_MOONGLASS" )
+                or ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_moonrock.tex") and "_MOONROCK" )
+                or ( inst.replica.inventoryitem:GetImage() == hash("glassiccutter_thulecite.tex") and "_THULECITE" )
+                or ""
+        return STRINGS.NAMES[string.upper(inst.prefab)..tail]
+    end
 
     if not TheWorld.ismastersim then
         return inst
