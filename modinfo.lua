@@ -1,5 +1,5 @@
-version = "2.0.1"
-name = "[API] Glassic API"
+version = "2.0.2"
+name = "Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
