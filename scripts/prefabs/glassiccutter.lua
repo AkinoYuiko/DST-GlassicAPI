@@ -112,7 +112,7 @@ local function onattack_moonglass(inst, attacker, target)
 
                 local x, y, z = target.Transform:GetWorldPosition()
 
-                local gestalt = SpawnPrefab("alterguardianhat_projectile") 
+                local gestalt = SpawnPrefab("alterguardianhat_projectile")
                 if attacker.components.combat then
                     local props = {"externaldamagemultipliers", "damagebonus"}
                     for _, v in ipairs(props) do
@@ -161,7 +161,7 @@ local function onattack_moonrock(inst, attacker, target)
                     target._glassiccutter_speedmulttask:Cancel()
                 end
                 target._glassiccutter_speedmulttask = target:DoTaskInTime(TUNING.SLINGSHOT_AMMO_MOVESPEED_DURATION, function(i) i.components.locomotor:RemoveExternalSpeedMultiplier(i, debuffkey) i._glassiccutter_speedmulttask = nil end)
-        
+
                 target.components.locomotor:SetExternalSpeedMultiplier(target, debuffkey, TUNING.SLINGSHOT_AMMO_MOVESPEED_MULT)
             end
             try_consume(inst, 0.5, "moonrocknugget")
@@ -182,6 +182,13 @@ local function onattack_none(inst, attacker, target)
     end
 end
 
+local GLASSIC_NAMES = {
+    "_moonglass",
+    "_moonrock",
+    "_thulecite"
+}
+local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
+
 local function OnChangeImage(inst)
 	local tail = get_item_type(inst)
 	local anim = get_item_type(inst, true)
@@ -200,7 +207,7 @@ local function OnChangeImage(inst)
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
         owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..tail)
     end
-    inst._nametail:set(tail)
+    inst._nametail:set(GLASSIC_IDS[tail] or 0)
 end
 
 local function OnAmmoLoaded(inst, data)
@@ -235,11 +242,11 @@ local function OnAmmoUnloaded(inst, data)
 end
 
 local function displaynamefn(inst)
-    return STRINGS.NAMES[string.upper("glassiccutter"..(type(inst._nametail:value()) == "string" and inst._nametail:value() or ""))]
+    return STRINGS.NAMES[string.upper("glassiccutter"..(GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
 local function OnLoad(inst)
-    inst._nametail:set(get_item_type(inst))
+    inst._nametail:set(GLASSIC_IDS[get_item_type(inst)] or 0)
 end
 
 local function fn()
@@ -263,7 +270,7 @@ local function fn()
     inst.entity:SetPristine()
 
     inst.displaynamefn = displaynamefn
-    inst._nametail = net_string(inst.GUID, "glassiccutter._nametail")
+    inst._nametail = net_tinybyte(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
         return inst

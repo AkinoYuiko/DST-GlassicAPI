@@ -1,10 +1,12 @@
-version = "2.1"
+version = "2.1.1"
 name = "Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 玻璃制刀名字显示改用net_tinybyte传递
+
 - 新增BasicOnequipFn
 - 更新BasicInitFn
 
@@ -14,6 +16,8 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
+- Use net_tinybype instead to display Glassic Cutter's name.
+
 - Add BasicOnequipFn
 - Update BasicInitFn
 
