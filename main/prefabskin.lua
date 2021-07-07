@@ -42,7 +42,10 @@ end
 
 -- Moon Glass Axe
 if not rawget(_G, "moonglassaxe_clear_fn") then
-    moonglassaxe_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, build_name or skin_name, symbol_name or "swap_glassaxe") end
+    moonglassaxe_init_fn = function(inst, skinname, override_build)
+        GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+        GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glassaxe")
+    end
     moonglassaxe_clear_fn = function(inst)
         inst.AnimState:SetBank("glassaxe")
         GlassicAPI.SetFloatData(inst, { sym_build = "swap_glassaxe" })
@@ -51,7 +54,10 @@ if not rawget(_G, "moonglassaxe_clear_fn") then
 end
 
 -- Moon Glass Hammer
-moonglasshammer_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, build_name or skin_name, symbol_name or "swap_glasshammer") end
+moonglasshammer_init_fn = function(inst, skinname, override_build)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasshammer")
+end
 moonglasshammer_clear_fn = function(inst)
     -- inst.AnimState:SetBank("glasshammer")
     GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
@@ -59,7 +65,10 @@ moonglasshammer_clear_fn = function(inst)
 end
 
 -- Moon Glass Pickaxe
-moonglasspickaxe_init_fn = function(inst, skin_name, build_name, symbol_name) GlassicAPI.BasicInitFn(inst, skin_name, build_name or skin_name, build_name or skin_name, symbol_name or "swap_glasspickaxe") end
+moonglasspickaxe_init_fn = function(inst, skinname, override_build)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasspickaxe")
+end
 moonglasspickaxe_clear_fn = function(inst)
     -- inst.AnimState:SetBank("glasspickaxe")
     GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})

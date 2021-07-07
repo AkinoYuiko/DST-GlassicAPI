@@ -84,12 +84,42 @@ GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
     return unpack(ret)
 end
 
-GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_name)
+GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
+
+    local function onequiphandfn(inst, data)
+        data.owner.AnimState:OverrideSymbol("swap_object", build, symbol)
+    end
+
+    local function onequipbodyfn(inst, data)
+        data.owner.AnimState:OverrideSymbol("swap_body", build, "swap_body")
+    end
+
+    local function onequiphatfn(inst, data)
+        data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat")
+    end
+
+    if not _G.TheWorld.ismastersim then return end
+
+    local onequipfn = ( slot == "hand" and onequiphandfn )
+                        or ( slot == "body" and onequipbodyfn )
+                        or ( slot == "hat" and onequiphatfn )
+                        or nil
+    inst:ListenForEvent("equipped", onequipfn)
+    if slot == "hand" then
+        inst:ListenForEvent("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
+    end
+    inst.OnSkinChange = function(inst) 
+        inst:RemoveEventCallback("equipped", onequipfn)
+        inst:RemoveEventCallback("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
+    end
+end
+
+GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
     
     if inst.components.placer == nil and not _G.TheWorld.ismastersim then return end
 
-    inst.skinname = skin_name
-    inst.AnimState:SetBuild(build_name)
+    inst.skinname = skinname
+    inst.AnimState:SetBuild(override_build or skinname)
 
     if inst.components.inventoryitem ~= nil then
         inst.components.inventoryitem:ChangeImageName(inst:GetSkinName())
@@ -102,16 +132,6 @@ GlassicAPI.BasicInitFn = function(inst, skin_name, build_name, sym_build, sym_na
         end
     end
 
-    local function onequipfn(inst, data)
-        data.owner.AnimState:OverrideSymbol("swap_object", sym_build, sym_name)
-    end
-
-    inst:ListenForEvent("equipped", onequipfn)
-    inst:ListenForEvent("stoprowing", onequipfn) -- IA compatible after stopping rowing.
-    inst.OnSkinChange = function(inst) 
-        inst:RemoveEventCallback("equipped", onequipfn)
-        inst:RemoveEventCallback("stoprowing", onequipfn) -- IA compatible after stopping rowing.
-    end
 end
 
 local function merge_internal(target, strings, no_override)
