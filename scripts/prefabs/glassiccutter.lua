@@ -1,11 +1,6 @@
 local assets =
 {
     Asset("ANIM", "anim/glassiccutter.zip"),
-    -- Asset("ANIM", "anim/test.zip"),
-    -- Asset("ANIM", "anim/glassiccutter_moonglass.zip"),
-    -- Asset("ANIM", "anim/glassiccutter_thulecite.zip"),
-    -- Asset("ANIM", "anim/glassiccutter_moonrock.zip"),
-
     Asset("ANIM", "anim/floating_items.zip"),
 }
 
