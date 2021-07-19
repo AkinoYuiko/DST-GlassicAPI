@@ -105,7 +105,13 @@ end
 
 local function ApplyTempCharacter(base_fn, ...)
     if #HEADSKIN_CHARACTERS == 0 then return base_fn(...) end
-    DST_CHARACTERLIST = ArrayUnion(DST_CHARACTERLIST, HEADSKIN_CHARACTERS)
+    local added_characters = {}
+    for _, v in ipairs(HEADSKIN_CHARACTERS) do
+        if not table.contains(DST_CHARACTERLIST, v) then
+            table.insert(added_characters, v)
+            table.insert(DST_CHARACTERLIST, v)
+        end
+    end
     local ret = { base_fn(...) }
     for i = #DST_CHARACTERLIST, 1, -1 do
         if table.contains(HEADSKIN_CHARACTERS, DST_CHARACTERLIST[i]) then
