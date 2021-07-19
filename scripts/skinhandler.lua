@@ -150,9 +150,13 @@ SkinPresetsPopup._ctor = function(self, ...)
     return unpack(ret)
 end
 
+local function IsCharacter(prefab)
+    return table.contains(GetActiveCharacterList(), prefab)
+end
+
 local function AddModSkins(data)
     for base_prefab, prefab_skins in pairs(data) do
-        if prefab_skins.is_char and not table.contains(HEADSKIN_CHARACTERS, base_prefab) then
+        if IsCharacter(base_prefab) and not table.contains(HEADSKIN_CHARACTERS, base_prefab) then
             table.insert(HEADSKIN_CHARACTERS, base_prefab)
         end
         if not PREFAB_SKINS[base_prefab] then
@@ -160,7 +164,7 @@ local function AddModSkins(data)
         end
         for _, skin_data in ipairs(prefab_skins) do
             local skin_name = type(skin_data) == "table" and skin_data.name or skin_data
-            if prefab_skins.is_char and skin_name ~= base_prefab.."_none" then
+            if IsCharacter(base_prefab) and skin_name ~= base_prefab.."_none" then
                 if not SKIN_AFFINITY_INFO[base_prefab] then
                     SKIN_AFFINITY_INFO[base_prefab] = {}
                 end
