@@ -1,10 +1,12 @@
-version = "2.2"
+version = "2.3"
 name = "Glassic API"
 author = locale == "zh" and "丁香女子学校" or "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 更新 UpvalueHacker.
+
 - 皮肤组件现在可以自动判断基础实体名是否是人物.
 
 包含了皮肤组件和一套玻璃工具.
@@ -13,6 +15,8 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
+- Update UpvalueHacker.
+
 - Update SkinHandler. Characters no longer need "is_char = true".
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
