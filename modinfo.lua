@@ -1,6 +1,6 @@
 version = "2.3"
 name = "Glassic API"
-author = "丁香女子学校"
+author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
