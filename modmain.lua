@@ -172,6 +172,16 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     Translator.defaultlang = _defaultlang
 end
 
+-- Basically Translator.ConvertEscapeCharactersToString, but replace "\"s first
+GlassicAPI.ConvertEscapeCharactersToString = function(str)
+	local newstr = string.gsub(str, "\\", "\\\\")
+    newstr = string.gsub(newstr, "\n", "\\n")
+	newstr = string.gsub(newstr, "\r", "\\r")
+	newstr = string.gsub(newstr, "\"", "\\\"")
+
+	return newstr
+end
+
 local function write_speech(file, base_strings, strings, indent)
     indent = indent or 1
     local str = ""
@@ -185,7 +195,7 @@ local function write_speech(file, base_strings, strings, indent)
             file:write(str .. "},\n")
         else
             local comment = base_strings and base_strings[k] and "" or "-- "
-            v = Translator:ConvertEscapeCharactersToString(v)
+            v = GlassicAPI:ConvertEscapeCharactersToString(v)
             if tonumber(k) then
                 file:write(str .. comment .. "\"" .. v .. "\",\n" )
             else
@@ -212,7 +222,7 @@ local function write_for_strings(base, data, file)
         else
             file:write('#. '..path.."\n")
             file:write('msgctxt "'..path..'"\n')
-            file:write('msgid "'..Translator:ConvertEscapeCharactersToString(v)..'"\n')
+            file:write('msgid "'..GlassicAPI:ConvertEscapeCharactersToString(v)..'"\n')
             file:write('msgstr ""\n\n')
         end
 	end
