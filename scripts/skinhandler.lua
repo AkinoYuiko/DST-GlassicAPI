@@ -3,6 +3,8 @@ local ALL_MOD_SKINS = {}
 local HEADSKIN_CHARACTERS = {}
 local OVERRIDE_RARITY_DATA = {}
 
+local CHARACTER_EXCLUSIVE_SKINS = {}
+
 local function GetPlayerFromID(id)
     if type(id) == "table" then return id end
     for _, player in ipairs(AllPlayers) do
@@ -24,13 +26,30 @@ local function RemoveModSkin(skin_name)
     ALL_MOD_SKINS[skin_name] = nil
 end
 
-local function IsModSkin(name)
-    return ALL_MOD_SKINS[name] ~= nil
+local function IsModSkin(skin_name)
+    return ALL_MOD_SKINS[skin_name] ~= nil
 end
 
-local function IsValidModSkin(name, userid)
-    local test_fn = ALL_MOD_SKINS[name]
+local function IsValidModSkin(skin_name, userid)
+    local test_fn = ALL_MOD_SKINS[skin_name]
     return test_fn and (test_fn == true or test_fn(GetPlayerFromID(userid)))
+end
+
+local function SetCharacterExclusiveSkin(skin_name, characters)
+    CHARACTER_EXCLUSIVE_SKINS[skin_name] = type(characters) == "string" and {characters} or characters
+end
+
+local function DoesCharacterHasSkin(skin_name, character)
+    if IsModSkin(skin_name) then
+        local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
+        if characters then
+            character = type(character) == "table" and character.prefab or character
+            if character then
+                return table.contains(characters, character)
+            end
+        end
+    end
+    return true
 end
 
 -- skin index for networking between server and clients
@@ -55,23 +74,29 @@ InventoryProxy.GetFullInventory = function(...)
 end
 
 local check_ownership = InventoryProxy.CheckOwnership
-InventoryProxy.CheckOwnership = function(self, name, ...)
-    if IsValidModSkin(name) then
+InventoryProxy.CheckOwnership = function(self, skin, ...)
+    if IsValidModSkin(skin) then
         return true
     end
-    return check_ownership(self, name, ...)
+    return check_ownership(self, skin, ...)
 end
 
 local check_client_ownership = InventoryProxy.CheckClientOwnership
-InventoryProxy.CheckClientOwnership = function(self, userid, name, ...)
-    if IsValidModSkin(name, userid) then
+InventoryProxy.CheckClientOwnership = function(self, userid, skin, ...)
+    if not DoesCharacterHasSkin(skin, GetPlayerFromID(userid)) then
+        return false
+    end
+    if IsValidModSkin(skin, userid) then
         return true
     end
-    return check_client_ownership(self, userid, name, ...)
+    return check_client_ownership(self, userid, skin, ...)
 end
 
 local check_ownership_get_latest = InventoryProxy.CheckOwnershipGetLatest
 InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
+    if not DoesCharacterHasSkin(item_type, ThePlayer) then
+        return false
+    end
     if IsValidModSkin(item_type, ThePlayer) then
         return true, -2333
     end
@@ -79,9 +104,9 @@ InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
 end
 
 local spawn_prefab = SpawnPrefab
-SpawnPrefab = function(name, skin, ...)
-    local ent = spawn_prefab(name, skin, ...)
-    if IsModSkin(skin) then
+SpawnPrefab = function(name, skin, skin_id, creator, ...)
+    local ent = spawn_prefab(name, skin, skin_id, creator, ...)
+    if IsModSkin(skin) and DoesCharacterHasSkin(skin, GetPlayerFromID(creator)) then
         local init_fn = Prefabs[skin].init_fn
         if init_fn then init_fn(ent) end
     end
@@ -150,6 +175,22 @@ SkinPresetsPopup._ctor = function(self, ...)
     return unpack(ret)
 end
 
+local DefaultSkinSelectionPopup = require("screens/redux/defaultskinselection")
+local DefaultSkinSelectionPopup_GetSkinsList = DefaultSkinSelectionPopup.GetSkinsList
+DefaultSkinSelectionPopup.GetSkinsList = function(self, ...)
+    local player_prefab = self.character
+    local check_ownership = InventoryProxy.CheckOwnership
+    InventoryProxy.CheckOwnership = function(self, name, ...)
+        if not DoesCharacterHasSkin(name, player_prefab) then
+            return false
+        end
+        return check_ownership(self, name, ...)
+    end
+    local ret = { DefaultSkinSelectionPopup_GetSkinsList(self, ...) }
+    InventoryProxy.CheckOwnership = check_ownership
+    return unpack(ret)
+end
+
 local function IsCharacter(prefab)
     return table.contains(GetActiveCharacterList(), prefab)
 end
@@ -176,6 +217,7 @@ local function AddModSkins(data)
                 table.insert(PREFAB_SKINS[base_prefab], skin_name)
             end
             AddModSkin(skin_name, type(skin_data) == "table" and skin_data.test_fn)
+            SetCharacterExclusiveSkin(skin_name, type(skin_data) == "table" and skin_data.exclusive_char)
         end
         IndexSkinIDs(base_prefab)
     end
@@ -208,12 +250,15 @@ local function SetRarity(rarity, order, color, frame_symbol, override_build)
 end
 
 return {
-    GetModSkins     = GetModSkins,
-    AddModSkin      = AddModSkin,
-    RemoveModSkin   = RemoveModSkin,
-    IsModSkin       = IsModSkin,
-    IsValidModSkin  = IsValidModSkin,
+    GetModSkins                 = GetModSkins,
+    AddModSkin                  = AddModSkin,
+    RemoveModSkin               = RemoveModSkin,
+    IsModSkin                   = IsModSkin,
+    IsValidModSkin              = IsValidModSkin,
 
-    AddModSkins     = AddModSkins,  -- to import skin data
-    SetRarity       = SetRarity,
+    SetCharacterExclusiveSkin   = SetCharacterExclusiveSkin,
+    DoesCharacterHasSkin        = DoesCharacterHasSkin,
+
+    AddModSkins                 = AddModSkins,  -- to import skin data
+    SetRarity                   = SetRarity,
 }

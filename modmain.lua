@@ -25,8 +25,8 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     file:close()
 
     if assets_table then
-        table.insert(assets_table, Asset( "ATLAS", path_to_file))
-        table.insert(assets_table, Asset( "ATLAS_BUILD", path_to_file, 256))
+        table.insert(assets_table, Asset("ATLAS", path_to_file))
+        table.insert(assets_table, Asset("ATLAS_BUILD", path_to_file, 256))
     end
 
     for _, image in ipairs(images) do
@@ -36,13 +36,13 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
 end
 
 GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
-    table.insert(assets_table, Asset( "ATLAS", "bigportraits/"..char_name..".xml"))
-    table.insert(assets_table, Asset( "ATLAS", "bigportraits/"..char_name.."_none.xml"))
-    table.insert(assets_table, Asset( "ATLAS", "images/names_"..char_name..".xml"))
-    table.insert(assets_table, Asset( "ATLAS", "images/avatars/avatar_"..char_name..".xml"))
-    table.insert(assets_table, Asset( "ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
-    table.insert(assets_table, Asset( "ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
-    table.insert(assets_table, Asset( "ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name.."_none.xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/names_"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
 
     AddModCharacter(char_name, char_gender)
 end
@@ -50,7 +50,7 @@ end
 GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     local file = "images/"..path_to_file..".xml"
     if assets_table then
-        table.insert(assets_table, Asset( "ATLAS", file))
+        table.insert(assets_table, Asset("ATLAS", file))
     end
     AddMinimapAtlas(file)
 end
@@ -58,6 +58,12 @@ end
 GlassicAPI.SetExclusiveToPlayer = function(name)
 	return function(player)
 		return not player or player.prefab == name
+	end
+end
+
+GlassicAPI.SetExclusiveToPlayers = function(table)
+	return function(player)
+		return not player or table.contains(table, player.prefab)
 	end
 end
 

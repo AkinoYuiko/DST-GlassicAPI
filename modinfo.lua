@@ -1,11 +1,12 @@
-version = "2.4"
+version = "2.5"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复翻译模块.
+- 添加 exclusive_char 方便处理角色专属皮肤.
+- 角色专属皮肤适配初始道具选择.
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -13,7 +14,8 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Fixed translate function.
+- Added "exclusive_char" for exclusive item skins.
+- Update for starting item skins.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
