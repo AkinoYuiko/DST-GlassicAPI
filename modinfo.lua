@@ -1,12 +1,13 @@
-version = "2.5.2"
+version = "2.5.3"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 更新 SetFloatData.
+- 修复 ConvertEscapeCharactersToString 存在的问题.
 
+- 更新 SetFloatData.
 - 扫把兼容有皮肤的模组角色.
 - 添加 exclusive_char 方便处理角色专属皮肤.
 - 角色专属皮肤适配初始道具选择.
@@ -17,8 +18,9 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Update SetFloatData.
+- Fixed issue about ConvertEscapeCharactersToString.
 
+- Update SetFloatData.
 - "reskin_tool" compatible with mod characters.
 - Added "exclusive_char" for exclusive item skins.
 - Update for starting item skins.
