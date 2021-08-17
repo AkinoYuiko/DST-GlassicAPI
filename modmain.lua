@@ -73,9 +73,9 @@ GlassicAPI.SetExclusiveToTag = function(tag)
 	end
 end
 
-GlassicAPI.SetFloatData = function(inst, data)
-    if inst.components.floater and data then
-        inst.components.floater.swap_data = data
+GlassicAPI.SetFloatData = function(inst, swap_data)
+    if inst.components.floater and swap_data then
+        inst.components.floater.swap_data = swap_data
     end
 end
 
