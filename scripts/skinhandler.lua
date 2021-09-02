@@ -6,7 +6,9 @@ local OVERRIDE_RARITY_DATA = {}
 local CHARACTER_EXCLUSIVE_SKINS = {}
 
 local function GetPlayerFromID(id)
-    if type(id) == "table" then return id end
+    if type(id) == "table" then
+        return id.prefab and id or nil
+    end
     for _, player in ipairs(AllPlayers) do
         if player.userid == id then
             return player
