@@ -2,8 +2,6 @@ local assets =
 {
     Asset("ANIM", "anim/glasshammer.zip"),
     -- Asset("ANIM", "anim/swap_glasshammer.zip"),
-
-    Asset("ANIM", "anim/floating_items.zip"),
 }
 local function onattack_moonglass(inst, attacker, target)
     inst.components.weapon.attackwear = target ~= nil and target:IsValid() 

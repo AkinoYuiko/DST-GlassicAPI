@@ -2,8 +2,6 @@ local assets =
 {
     Asset( "ANIM", "anim/glasspickaxe.zip" ),
     -- Asset( "ANIM", "anim/swap_glasspickaxe.zip" ),
-
-	Asset( "ANIM", "anim/floating_items.zip" ),
 }
 
 local function onattack_moonglass(inst, attacker, target)
