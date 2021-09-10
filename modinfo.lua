@@ -1,12 +1,13 @@
-version = "2.5.4"
+version = "2.5.5"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 尝试修复人物专属皮肤的一个小问题.
+- 移除 Assets 中的"floating_items.zip".
 
+- 尝试修复人物专属皮肤的一个小问题.
 - 修复 ConvertEscapeCharactersToString 存在的问题.
 - 更新 SetFloatData.
 - 扫把兼容有皮肤的模组角色.
@@ -19,8 +20,9 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Attempt to fix issue with character-exclusive skins.
+- Removed "floating_items.zip" in assets.
 
+- Attempt to fix issue with character-exclusive skins.
 - Fixed issue about ConvertEscapeCharactersToString.
 - Update SetFloatData.
 - "reskin_tool" compatible with mod characters.
