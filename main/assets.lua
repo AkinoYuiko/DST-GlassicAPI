@@ -1,4 +1,5 @@
 PrefabFiles = {
+    "glassic_gestalt_flash",
     "glassicskins",
     "glassiccutter",
     "moonglasshammer",

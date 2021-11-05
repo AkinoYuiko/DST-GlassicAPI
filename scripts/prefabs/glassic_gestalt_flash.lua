@@ -1,0 +1,163 @@
+local assets = {
+    -- Asset("ANIM", "anim/brightmare_gestalt.zip"),
+    Asset("ANIM", "anim/glassic_gestalt_flash_fx.zip"),
+
+}
+
+local prefabs = {
+    "gestalt_flash_fx",
+    "electrichitsparks",
+}
+
+local function doattack(inst, target)
+    if inst.components.combat:CanTarget(target) then
+        inst.components.combat:DoAttack(target)
+    end
+
+end
+
+local function onattackother(inst, data)
+    local target = data.target
+    if target and target:IsValid() and inst:IsValid() then
+        if inst.components.electricattacks then
+            SpawnPrefab("electrichitsparks"):AlignToTarget(target, inst, true)
+        end
+
+        local atk_fx = SpawnPrefab("gestalt_flash_fx")
+        
+
+        local x, y, z = target.Transform:GetWorldPosition()
+        local radius = target:GetPhysicsRadius(.5)
+        local angle = (inst.Transform:GetRotation() - 90) * DEGREES
+        atk_fx.Transform:SetPosition(x + math.sin(angle) * radius, 0, z + math.cos(angle) * radius)
+
+    end
+end
+
+local props = {"externaldamagemultipliers", "damagebonus"}
+local function SetTarget(inst, owner, target)
+    if owner then
+        for _, v in ipairs(props) do
+            inst.components.combat[v] = owner.components.combat[v]
+        end
+        inst.components.combat.damagemultiplier = math.max(1, (owner.components.combat.damagemultiplier or 1))
+        if owner.components.electricattacks then
+            inst:AddComponent("electricattacks")
+        end
+
+        inst:ListenForEvent("onattackother", onattackother)
+
+        inst.entity:SetParent(target.entity)
+        inst:DoTaskInTime( 0 * FRAMES , doattack, target)
+    end
+    -- inst:ListenForEvent("death", function()
+    --     inst:Remove()
+    -- end, target)
+end
+
+local function fn()
+    local inst = CreateEntity()
+
+    inst.entity:AddTransform()
+    -- inst.entity:AddNetwork()
+    inst.entity:AddAnimState()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+    
+    inst:AddComponent("combat")
+    inst.components.combat:SetDefaultDamage(TUNING.ALTERGUARDIANHAT_GESTALT_DAMAGE)
+    inst.components.combat:SetRange(TUNING.GESTALTGUARD_ATTACK_RANGE)
+
+    inst.SetTarget = SetTarget
+
+    inst:DoTaskInTime( 0.5 , function(inst) inst:Remove() end)
+
+    return inst
+end
+
+
+local function PlaySound(inst, sound)
+    inst.SoundEmitter:PlaySound(sound)
+end
+
+local function MakeFx(t)
+
+    local function startfx(proxy, name)
+
+        local inst = CreateEntity(t.name)
+
+        inst.entity:AddTransform()
+        inst.entity:AddAnimState()
+
+        --[[Non-networked entity]]
+        inst.entity:SetCanSleep(false)
+        inst.persists = false
+
+        inst.Transform:SetFromProxy(proxy.GUID)
+
+        if t.sound ~= nil then
+            inst.entity:AddSoundEmitter()
+            inst:DoTaskInTime(t.sounddelay or 0, PlaySound, t.sound)
+        end
+
+        inst.AnimState:SetBank(t.bank)
+        inst.AnimState:SetBuild(t.build)
+        inst.AnimState:PlayAnimation(FunctionOrValue(t.anim)) -- THIS IS A CLIENT SIDE FUNCTION
+        inst.AnimState:SetMultColour(0.85, 0.85, 0.85, 0.85)
+        inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
+
+        if t.transform ~= nil then
+            inst.AnimState:SetScale(t.transform:Get())
+        end
+
+        if t.fn ~= nil then
+            if t.fntime ~= nil then
+                inst:DoTaskInTime(t.fntime, t.fn)
+            else
+                t.fn(inst)
+            end
+        end
+    end
+
+    local function fx_fn()
+        local inst = CreateEntity()
+
+        inst.entity:AddTransform()
+        inst.entity:AddNetwork()
+
+        if not TheNet:IsDedicated() then
+            inst:DoTaskInTime(0, startfx, inst)
+        end
+
+        inst:AddTag("FX")
+
+        inst.entity:SetPristine()
+
+        if not TheWorld.ismastersim then
+            return inst
+        end
+
+        inst.persists = false
+        inst:DoTaskInTime(1, inst.Remove)
+
+        return inst
+
+    end
+
+    return Prefab(t.name, fx_fn)
+end
+
+local gestalt_flash_fx =
+{
+    name = "gestalt_flash_fx",
+    bank = "gestalt_flash_fx",
+    build = "glassic_gestalt_flash_fx",
+    anim = function() return "idle_med_"..math.random(3) end,
+    sound = "wanda2/characters/wanda/watch/weapon/nightmare_FX",
+    fn = function(inst) inst.AnimState:SetFinalOffset(1) end,
+}
+
+return Prefab("glassic_gestalt_flash", fn, assets, prefabs),
+        MakeFx(gestalt_flash_fx)

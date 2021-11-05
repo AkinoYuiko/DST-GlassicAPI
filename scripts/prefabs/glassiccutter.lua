@@ -104,35 +104,10 @@ local function onattack_moonglass(inst, attacker, target)
                 not target:HasTag("wall")
                 then
 
-                local x, y, z = target.Transform:GetWorldPosition()
-
-                local gestalt = SpawnPrefab("alterguardianhat_projectile")
-                if attacker.components.combat then
-                    local props = {"externaldamagemultipliers", "damagebonus"}
-                    for _, v in ipairs(props) do
-                        gestalt.components.combat[v] = attacker.components.combat[v]
-                    end
-                    gestalt.components.combat.damagemultiplier = math.max(1,(attacker.components.combat.damagemultiplier or 1))
-                    if attacker.components.electricattacks then
-                        gestalt:AddComponent("electricattacks")
-                        gestalt:ListenForEvent("onattackother", function(_inst, _data)
-                            local target = _data.target
-                            if _inst:IsValid() and target ~= nil and target:IsValid() then
-                                SpawnPrefab("electrichitsparks"):AlignToTarget(target, _inst, true)
-                            end
-                        end)
-                    end
-                end
-                local r = GetRandomMinMax(1.5, 2.5)
-                local delta_angle = GetRandomMinMax(-90, 90)
-                local angle = (attacker:GetAngleToPoint(x, y, z) + delta_angle) * DEGREES
-                gestalt.Transform:SetPosition(x + r * math.cos(angle), y, z + r * -math.sin(angle))
-                gestalt:ForceFacePoint(x, y, z)
-                gestalt:SetTargetPosition(Vector3(x, y, z))
-                gestalt.components.follower:SetLeader(attacker)
+				SpawnPrefab("glassic_gestalt_flash"):SetTarget(attacker, target)
             end
 
-            try_consume(inst, 0.33, "moonglass")
+            try_consume(inst, 0.25, "moonglass")
             auto_refill(inst, attacker, "moonglass")
         end
     end
@@ -141,7 +116,7 @@ end
 local function onattack_thulecite(inst, attacker, target)
     if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
         if target ~= nil and target:IsValid() then
-            try_consume(inst, 0.03, "thulecite")
+            try_consume(inst, 0.032, "thulecite")
             auto_refill(inst, attacker, "thulecite")
         end
     end
@@ -158,14 +133,14 @@ local function onattack_moonrock(inst, attacker, target)
 
                 target.components.locomotor:SetExternalSpeedMultiplier(target, debuffkey, TUNING.SLINGSHOT_AMMO_MOVESPEED_MULT)
             end
-            try_consume(inst, 0.5, "moonrocknugget")
+            try_consume(inst, 0.32, "moonrocknugget")
             auto_refill(inst, attacker, "moonrocknugget")
         end
     end
 end
 local function onattack_none(inst, attacker, target)
     if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        if target ~= nil and target:IsValid() and math.random() < 0.05 then
+        if target ~= nil and target:IsValid() and math.random() < 0.0233 then
             if inst.components.inventoryitem.owner ~= nil then
                 inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
             end
