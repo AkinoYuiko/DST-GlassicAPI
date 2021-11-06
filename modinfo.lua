@@ -1,10 +1,12 @@
-version = "2.6"
+version = "2.6.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 修复新攻击特效在客户端没有自动移除的问题.
+
 - 重做月灵刀的攻击特效.
 - 调整了玻璃制刀各个形态消耗碎片的概率.
 
@@ -14,6 +16,8 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
+- Fix an issue where fx won't remove automatically on client-side.
+
 - Rework Gestalt Cutter FX.
 - Adjust chance to consume items in Glassic Cutter.
 

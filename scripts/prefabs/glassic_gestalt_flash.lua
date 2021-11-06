@@ -1,3 +1,5 @@
+require "prefabutil"
+
 local assets = {
     -- Asset("ANIM", "anim/brightmare_gestalt.zip"),
     Asset("ANIM", "anim/glassic_gestalt_flash_fx.zip"),
@@ -12,6 +14,8 @@ local prefabs = {
 local function doattack(inst, target)
     if inst.components.combat:CanTarget(target) then
         inst.components.combat:DoAttack(target)
+
+        return true
     end
 
 end
@@ -31,6 +35,8 @@ local function onattackother(inst, data)
         local angle = (inst.Transform:GetRotation() - 90) * DEGREES
         atk_fx.Transform:SetPosition(x + math.sin(angle) * radius, 0, z + math.cos(angle) * radius)
 
+        -- inst:DoTaskInTime(0, inst.Remove)
+
     end
 end
 
@@ -48,7 +54,9 @@ local function SetTarget(inst, owner, target)
         inst:ListenForEvent("onattackother", onattackother)
 
         inst.entity:SetParent(target.entity)
-        inst:DoTaskInTime( 0 * FRAMES , doattack, target)
+        -- inst.Transform:SetPosition(target:GetPosition():Get())
+
+        inst:DoTaskInTime( 0 , doattack, target)
     end
     -- inst:ListenForEvent("death", function()
     --     inst:Remove()
@@ -59,9 +67,7 @@ local function fn()
     local inst = CreateEntity()
 
     inst.entity:AddTransform()
-    -- inst.entity:AddNetwork()
-    inst.entity:AddAnimState()
-
+    
     if not TheWorld.ismastersim then
         return inst
     end
@@ -102,11 +108,13 @@ local function MakeFx(t)
             inst:DoTaskInTime(t.sounddelay or 0, PlaySound, t.sound)
         end
 
-        inst.AnimState:SetBank(t.bank)
-        inst.AnimState:SetBuild(t.build)
-        inst.AnimState:PlayAnimation(FunctionOrValue(t.anim)) -- THIS IS A CLIENT SIDE FUNCTION
-        inst.AnimState:SetMultColour(0.85, 0.85, 0.85, 0.85)
-        inst.AnimState:SetBloomEffectHandle("shaders/anim.ksh")
+        local anim_state = inst.AnimState
+        anim_state:SetBank(t.bank)
+        anim_state:SetBuild(t.build)
+        anim_state:PlayAnimation(FunctionOrValue(t.anim)) -- THIS IS A CLIENT SIDE FUNCTION
+        anim_state:SetMultColour(0.85, 0.85, 0.85, 0.85)
+        anim_state:SetBloomEffectHandle("shaders/anim.ksh")
+        anim_state:SetSortOrder(3)
 
         if t.transform ~= nil then
             inst.AnimState:SetScale(t.transform:Get())
@@ -119,6 +127,8 @@ local function MakeFx(t)
                 t.fn(inst)
             end
         end
+
+        inst:ListenForEvent("animover", inst.Remove)
     end
 
     local function fx_fn()
