@@ -1,12 +1,13 @@
-version = "2.6.4"
+version = "2.6.5"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复动画位置问题.
+- 月灵刀攻击暗影怪物时不消耗碎片.
 
+- 修复动画位置问题.
 - 修复一个主客机不同步的问题.
 - 修复新攻击特效在客户端没有自动移除的问题.
 - 重做月灵刀的攻击特效.
@@ -18,8 +19,9 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
-- Fix an issue where fx won't show at right position.
+- Gestalt Cutter won't consume Moon Glass on shadow creatures.
 
+- Fix an issue where fx won't show at right position.
 - Fix an issue about syncing between server and client.
 - Fix an issue where fx won't remove automatically on client-side.
 - Rework Gestalt Cutter FX.
