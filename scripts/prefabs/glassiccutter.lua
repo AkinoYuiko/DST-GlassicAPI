@@ -107,9 +107,7 @@ local function onattack_moonglass(inst, attacker, target)
 				SpawnPrefab("glassic_gestalt_flash"):SetTarget(attacker, target)
             end
 
-            if not (target:HasTag("shadowcreature") or target:HasTag("nightmarecreature")) then
-                try_consume(inst, 0.25, "moonglass")
-            end
+            try_consume(inst, 0.25, "moonglass")
             auto_refill(inst, attacker, "moonglass")
         end
     end

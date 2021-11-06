@@ -12,7 +12,7 @@ local prefabs = {
 }
 
 local function doattack(inst, target)
-    if inst.components.combat:CanTarget(target) then
+    if inst.components.combat:CanHitTarget(target) then
         inst.components.combat:DoAttack(target)
 
         return true
