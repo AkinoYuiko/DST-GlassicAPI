@@ -38,7 +38,7 @@ local function turn_off(inst)
     end
 end
 
-local function get_item_type(inst, noprefix)
+local function GetItemType(inst, noprefix)
     return inst.components.container and (
         (inst.components.container:Has("moonglass",1) and (noprefix and "moonglass" or "_moonglass")) or
         (inst.components.container:Has("thulecite",1) and (noprefix and "thulecite" or "_thulecite")) or
@@ -47,7 +47,13 @@ local function get_item_type(inst, noprefix)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
+    local skin_build = inst:GetSkinBuild()
+    if skin_build then
+        -- owner:PushEvent("equipskinneditem", inst:GetSkinName())
+        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter"..GetItemType(inst))
+    else
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..GetItemType(inst))
+    end
 
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
@@ -62,6 +68,11 @@ end
 local function onunequip(inst, owner)
     owner.AnimState:Hide("ARM_carry")
     owner.AnimState:Show("ARM_normal")
+
+    -- local skin_build = inst:GetSkinBuild()
+    -- if skin_build then
+    --     owner:PushEvent("unequipskinneditem", inst:GetSkinName())
+    -- end
 
     if inst.components.container ~= nil then
         inst.components.container:Close()
@@ -104,7 +115,7 @@ local function onattack_moonglass(inst, attacker, target)
                 not target:HasTag("wall")
                 then
 
-				SpawnPrefab("glassic_gestalt_flash"):SetTarget(attacker, target)
+				SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
             end
 
             try_consume(inst, 0.25, "moonglass")
@@ -159,22 +170,23 @@ local GLASSIC_NAMES = {
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
 local function OnChangeImage(inst)
-	local tail = get_item_type(inst)
-	local anim = get_item_type(inst, true)
+	local tail = GetItemType(inst)
+	local anim = GetItemType(inst, true)
+    local skin_build = inst:GetSkinBuild() or inst.prefab
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
     if inst.components.inventoryitem then
-        inst.components.inventoryitem:ChangeImageName("glassiccutter"..tail)
+        inst.components.inventoryitem:ChangeImageName( skin_build .. tail )
     end
     -- float swap data --
     if inst.components.floater then
-        inst.components.floater.swap_data = { sym_build = "glassiccutter", sym_name = "swap_glassiccutter"..tail, anim = anim}
+        inst.components.floater.swap_data = { sym_build = skin_build, sym_name = "swap_glassiccutter" .. tail, anim = anim}
     end
     -- Equipped --
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
-        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..tail)
+        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. tail)
     end
     inst._nametail:set(GLASSIC_IDS[tail] or 0)
 end
@@ -211,11 +223,11 @@ local function OnAmmoUnloaded(inst, data)
 end
 
 local function displaynamefn(inst)
-    return STRINGS.NAMES[string.upper("glassiccutter"..(GLASSIC_NAMES[inst._nametail:value()] or ""))]
+    return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
 local function OnLoad(inst)
-    inst._nametail:set(GLASSIC_IDS[get_item_type(inst)] or 0)
+    inst._nametail:set(GLASSIC_IDS[GetItemType(inst)] or 0)
 end
 
 local function fn()
@@ -269,6 +281,8 @@ local function fn()
 
     MakeHauntableLaunch(inst)
 
+    inst.GetItemType = GetItemType
+    inst.OnChangeImage = OnChangeImage
     inst.OnLoad = OnLoad
 
     return inst

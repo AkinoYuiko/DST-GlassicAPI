@@ -2,7 +2,7 @@ require "prefabutil"
 
 local assets = {
     -- Asset("ANIM", "anim/brightmare_gestalt.zip"),
-    Asset("ANIM", "anim/glassic_gestalt_flash_fx.zip"),
+    Asset("ANIM", "anim/glassic_flash_fx.zip"),
 
 }
 
@@ -14,28 +14,21 @@ local prefabs = {
 local function doattack(inst, target)
     if inst.components.combat:CanHitTarget(target) then
         inst.components.combat:DoAttack(target)
-
-        return true
     end
-
 end
 
 local function onattackother(inst, data)
     local target = data.target
-    local owner = inst.entity:GetParent()
     if target and target:IsValid() and inst:IsValid() then
         if inst.components.electricattacks then
             SpawnPrefab("electrichitsparks"):AlignToTarget(target, inst, true)
         end
 
         local atk_fx = SpawnPrefab("gestalt_flash_fx")
-        
-
         local x, y, z = target.Transform:GetWorldPosition()
-        local radius = target:GetPhysicsRadius(.5)
-        local angle = ((owner or inst).Transform:GetRotation() - 90) * DEGREES
+        local radius = target:GetPhysicsRadius(0.5)
+        local angle = ((inst.entity:GetParent() or inst).Transform:GetRotation() - 90) * DEGREES
         atk_fx.Transform:SetPosition(x + math.sin(angle) * radius, 0, z + math.cos(angle) * radius)
-
     end
 end
 
@@ -54,7 +47,7 @@ local function SetTarget(inst, owner, target)
 
         inst.entity:SetParent(owner.entity)
 
-        inst:DoTaskInTime( 0 , doattack, target)
+        inst:DoTaskInTime(0 , doattack, target)
     end
 end
 
@@ -73,7 +66,7 @@ local function fn()
 
     inst.SetTarget = SetTarget
 
-    inst:DoTaskInTime( 0.5 , function(inst) inst:Remove() end)
+    inst:DoTaskInTime(0.5 , function(inst) inst:Remove() end)
 
     return inst
 end
@@ -112,10 +105,6 @@ local function MakeFx(t)
         anim_state:SetMultColour(0.85, 0.85, 0.85, 0.85)
         anim_state:SetBloomEffectHandle("shaders/anim.ksh")
         anim_state:SetSortOrder(3)
-
-        if t.transform ~= nil then
-            inst.AnimState:SetScale(t.transform:Get())
-        end
 
         if t.fn ~= nil then
             if t.fntime ~= nil then
@@ -160,11 +149,11 @@ local gestalt_flash_fx =
 {
     name = "gestalt_flash_fx",
     bank = "gestalt_flash_fx",
-    build = "glassic_gestalt_flash_fx",
+    build = "glassic_flash_fx",
     anim = function() return "idle_med_"..math.random(3) end,
     sound = "wanda2/characters/wanda/watch/weapon/nightmare_FX",
     fn = function(inst) inst.AnimState:SetFinalOffset(1) end,
 }
 
-return Prefab("glassic_gestalt_flash", fn, assets, prefabs),
+return Prefab("glassic_flash", fn, assets, prefabs),
         MakeFx(gestalt_flash_fx)

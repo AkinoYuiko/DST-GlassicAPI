@@ -25,14 +25,16 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 -- 	-- #40E0D0 reserved skin colour
 -- }
 
--- Walking Cane fix
+local function refresh_floater(inst)
+    if inst.components.floater ~= nil then
+        if inst.components.floater:IsFloating() then
+            inst.components.floater:SwitchToDefaultAnim(true)
+            inst.components.floater:SwitchToFloatAnim()
+        end
+    end
+end
 
--- local old_cane_init_fn = cane_init_fn
--- cane_init_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_init_fn, ...) end
-
--- local old_cane_clear_fn = cane_clear_fn
--- cane_clear_fn = function(inst, ...) return GlassicAPI.PostInitFloater(inst, old_cane_clear_fn, ...) end
-
+-- [[ Glassic Item Skins ]] --
 -- Golden Axe Victorian
 local _goldenaxe_clear_fn = goldenaxe_clear_fn
 goldenaxe_clear_fn = function(inst, ...)
@@ -59,7 +61,6 @@ moonglasshammer_init_fn = function(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasshammer")
 end
 moonglasshammer_clear_fn = function(inst)
-    -- inst.AnimState:SetBank("glasshammer")
     GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
     basic_clear_fn(inst, "glasshammer")
 end
@@ -70,11 +71,23 @@ moonglasspickaxe_init_fn = function(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasspickaxe")
 end
 moonglasspickaxe_clear_fn = function(inst)
-    -- inst.AnimState:SetBank("glasspickaxe")
     GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
     basic_clear_fn(inst, "glasspickaxe")
 end
 
+glassiccutter_init_fn = function(inst, skinname, override_build)
+    inst.skinname = skinname
+    inst.AnimState:SetBuild(override_build or skinname)
+    inst:OnChangeImage()
+    refresh_floater(inst)
+end
+glassiccutter_clear_fn = function(inst)
+    inst.AnimState:SetBuild("glassiccutter")
+    inst:OnChangeImage()
+    refresh_floater(inst)
+end
+
+-- [[ Set Skins ]] --
 GlassicAPI.SkinHandler.AddModSkins({
     goldenaxe = {"goldenaxe_victorian"},
     moonglassaxe = {"moonglassaxe_northern", "moonglassaxe_victorian"},
