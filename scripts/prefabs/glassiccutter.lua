@@ -165,7 +165,8 @@ end
 local GLASSIC_NAMES = {
     "_moonglass",
     "_moonrock",
-    "_thulecite"
+    "_thulecite",
+    "_dream"
 }
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
@@ -173,11 +174,12 @@ local function OnChangeImage(inst)
 	local tail = GetItemType(inst)
 	local anim = GetItemType(inst, true)
     local skin_build = inst:GetSkinBuild() or inst.prefab
+    local display_name = inst:GetSkinBuild() and tail == "_moonglass" and "_dream"
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
     if inst.components.inventoryitem then
-        inst.components.inventoryitem:ChangeImageName( skin_build .. tail )
+        inst.components.inventoryitem:ChangeImageName(table.concat({skin_build, tail}))
     end
     -- float swap data --
     if inst.components.floater then
@@ -188,7 +190,7 @@ local function OnChangeImage(inst)
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
         owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. tail)
     end
-    inst._nametail:set(GLASSIC_IDS[tail] or 0)
+    inst._nametail:set(GLASSIC_IDS[(display_name or tail)] or 0)
 end
 
 local function OnAmmoLoaded(inst, data)
