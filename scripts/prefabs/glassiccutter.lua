@@ -179,7 +179,7 @@ local function OnChangeImage(inst)
     inst.AnimState:PlayAnimation(anim)
     -- Image --
     if inst.components.inventoryitem then
-        inst.components.inventoryitem:ChangeImageName(table.concat({skin_build, tail}))
+        inst.components.inventoryitem:ChangeImageName( skin_build .. tail )
     end
     -- float swap data --
     if inst.components.floater then
