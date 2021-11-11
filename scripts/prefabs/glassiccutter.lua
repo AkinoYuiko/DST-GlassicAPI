@@ -288,6 +288,8 @@ local function fn()
     inst.OnChangeImage = OnChangeImage
     inst.OnLoad = OnLoad
 
+    inst:DoTaskInTime(1, OnChangeImage)
+
     return inst
 end
 

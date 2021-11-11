@@ -1,10 +1,12 @@
-version = "2.7"
+version = "2.7.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 【梦想一心】更新dyn格式材质.
+
 - 玻璃制刀新皮肤【梦想一心】.
 
 包含了皮肤组件和一套玻璃工具.
@@ -13,6 +15,8 @@ or
 "[Version: "..version..[[]
 
 Changelog: 
+- Set dynamic anim format for "Musou Isshin".
+
 - New skin for Glassic Cutter "Musou Isshin".
 
 Included Skin Handler API and Moon Glass Tools / Weapon.

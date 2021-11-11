@@ -81,9 +81,9 @@ table.insert(pref, CreatePrefabSkin("glassiccutter_dream", {
     type = "item",
     rarity = "Glassic",
     assets = {
-        Asset( "ANIM", "anim/glassiccutter_dream.zip" ),
-        -- Asset( "DYNAMIC_ANIM", "anim/dynamic/glassiccutter_dream.zip" ),
-        -- Asset( "PKGREF", "anim/dynamic/glassiccutter_dream.dyn" ),
+        -- Asset( "ANIM", "anim/glassiccutter_dream.zip" ),
+        Asset( "DYNAMIC_ANIM", "anim/dynamic/glassiccutter_dream.zip" ),
+        Asset( "PKGREF", "anim/dynamic/glassiccutter_dream.dyn" ),
     },
     init_fn = function(inst)
         glassiccutter_init_fn(inst, "glassiccutter_dream")
