@@ -76,6 +76,7 @@ moonglasspickaxe_clear_fn = function(inst)
 end
 
 glassiccutter_init_fn = function(inst, skinname, override_build)
+    if not TheWorld.ismastersim then return end
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
     inst:OnChangeImage()
@@ -89,6 +90,7 @@ end
 
 -- [[ Set Skins ]] --
 GlassicAPI.SkinHandler.AddModSkins({
+    glassiccutter = {"glassiccutter_dream"},
     goldenaxe = {"goldenaxe_victorian"},
     moonglassaxe = {"moonglassaxe_northern", "moonglassaxe_victorian"},
     moonglasspickaxe = {"moonglasspickaxe_northern"},

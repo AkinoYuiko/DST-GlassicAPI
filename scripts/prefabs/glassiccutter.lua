@@ -4,9 +4,10 @@ local assets =
 }
 
 local prefabs = {
-    "alterguardianhat_projectile",
     "lanternlight",
-	"electrichitsparks"
+    "glassic_flash",
+	"electrichitsparks",
+    "alterguardianhat_projectile",
 }
 
 local function turn_on(inst, owner)
@@ -173,7 +174,7 @@ local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 local function OnChangeImage(inst)
 	local tail = GetItemType(inst)
 	local anim = GetItemType(inst, true)
-    local skin_build = inst:GetSkinBuild() or inst.prefab
+    local skin_build = inst:GetSkinBuild() or "glassiccutter"
     local display_name = inst:GetSkinBuild() and tail == "_moonglass" and "_dream"
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)

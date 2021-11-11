@@ -106,12 +106,8 @@ local function MakeFx(t)
         anim_state:SetBloomEffectHandle("shaders/anim.ksh")
         anim_state:SetSortOrder(3)
 
-        if t.fn ~= nil then
-            if t.fntime ~= nil then
-                inst:DoTaskInTime(t.fntime, t.fn)
-            else
-                t.fn(inst)
-            end
+        if t.fn then
+            t.fn(inst)
         end
 
         inst:ListenForEvent("animover", inst.Remove)

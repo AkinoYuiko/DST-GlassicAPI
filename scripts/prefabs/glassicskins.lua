@@ -76,11 +76,12 @@ table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
 }))
 
 
-table.insert(pref, CreatePrefabSkin("glassiccutter", {
+table.insert(pref, CreatePrefabSkin("glassiccutter_dream", {
     base_prefab = "glassiccutter",
     type = "item",
     rarity = "Glassic",
     assets = {
+        Asset( "ANIM", "anim/glassiccutter_dream.zip" ),
         -- Asset( "DYNAMIC_ANIM", "anim/dynamic/glassiccutter_dream.zip" ),
         -- Asset( "PKGREF", "anim/dynamic/glassiccutter_dream.dyn" ),
     },
