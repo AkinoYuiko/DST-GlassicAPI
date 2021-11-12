@@ -108,58 +108,59 @@ local function try_consume(inst, chance, item_type)
     end
 end
 
+local function try_consume_and_refill(inst, owner, item_prefab, chance)
+    try_consume(inst, chance, item_prefab)
+    auto_refill(inst, owner, item_prefab)
+end
+
+local function onattack_base_check(attacker, target)
+    return attacker and (attacker.components.health == nil or not attacker.components.health:IsDead())
+        and target and target ~= attacker and target:IsValid()
+end
+
 local function onattack_moonglass(inst, attacker, target)
-    if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        if target and target ~= attacker and target:IsValid() then
-            if (target.components.health == nil or not target.components.health:IsDead()) and
-                (target:HasTag("spiderden") or not target:HasTag("structure")) and
-                not target:HasTag("wall")
-                then
+    if onattack_base_check(attacker, target) then
+        if (target.components.health == nil or not target.components.health:IsDead()) and
+            (target:HasTag("spiderden") or not target:HasTag("structure")) and
+            not target:HasTag("wall")
+            then
 
-                SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
-            end
-
-            try_consume(inst, 0.25, "moonglass")
-            auto_refill(inst, attacker, "moonglass")
+            SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
         end
+
+        try_consume_and_refill(inst, attacker, "moonglass", 0.25)
     end
 end
 
 local function onattack_thulecite(inst, attacker, target)
-    if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        if target ~= nil and target:IsValid() then
-            try_consume(inst, 0.032, "thulecite")
-            auto_refill(inst, attacker, "thulecite")
-        end
+    if onattack_base_check(attacker, target) then
+        try_consume_and_refill(inst, attacker, "thulecite", 0.032)
     end
 end
 local function onattack_moonrock(inst, attacker, target)
-    if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        if target ~= nil and target:IsValid() then
-            local debuffkey = inst.prefab
-            if target.components.locomotor ~= nil then
-                if target._glassiccutter_speedmulttask ~= nil then
-                    target._glassiccutter_speedmulttask:Cancel()
-                end
-                target._glassiccutter_speedmulttask = target:DoTaskInTime(TUNING.SLINGSHOT_AMMO_MOVESPEED_DURATION, function(i) i.components.locomotor:RemoveExternalSpeedMultiplier(i, debuffkey) i._glassiccutter_speedmulttask = nil end)
-
-                target.components.locomotor:SetExternalSpeedMultiplier(target, debuffkey, TUNING.SLINGSHOT_AMMO_MOVESPEED_MULT)
+    if onattack_base_check(attacker, target) then
+        if target.components.burnable then
+            if target.components.burnable:IsBurning() then
+                target.components.burnable:Extinguish()
+            elseif target.components.burnable:IsSmoldering() then
+                target.components.burnable:SmotherSmolder()
             end
-            try_consume(inst, 0.32, "moonrocknugget")
-            auto_refill(inst, attacker, "moonrocknugget")
         end
+        if target.components.freezable then
+            target.components.freezable:AddColdness(0.67)
+            target.components.freezable:SpawnShatterFX()
+        end
+        try_consume_and_refill(inst, attacker, "moonrocknugget", 0.5)
     end
 end
 local function onattack_none(inst, attacker, target)
-    if attacker ~= nil and (attacker.components.health == nil or not attacker.components.health:IsDead()) then
-        if target ~= nil and target:IsValid() and math.random() < 0.0233 then
-            if inst.components.inventoryitem.owner ~= nil then
-                inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
-            end
-            inst.components.container:Close()
-            inst.components.container:DropEverything()
-            inst:Remove()
+    if onattack_base_check(attacker, target) and math.random() < 0.0233 then
+        if inst.components.inventoryitem.owner ~= nil then
+            inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end
+        inst.components.container:Close()
+        inst.components.container:DropEverything()
+        inst:Remove()
     end
 end
 
@@ -204,7 +205,7 @@ local function OnAmmoLoaded(inst, data)
         inst.components.weapon:SetOnAttack(onattack_thulecite)
         inst.components.equippable.walkspeedmult = 1.1
     elseif data.item.prefab == "moonrocknugget" then
-        inst.components.weapon:SetDamage(TUNING.RUINS_BAT_DAMAGE)
+        inst.components.weapon:SetDamage(TUNING.ALTERGUARDIANHAT_GESTALT_DAMAGE)
         inst.components.weapon:SetOnAttack(onattack_moonrock)
         inst.components.equippable.walkspeedmult = 1
     elseif data.item:HasTag("spore") then
