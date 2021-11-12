@@ -229,10 +229,6 @@ local function displaynamefn(inst)
     return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
-local function OnLoad(inst)
-    inst._nametail:set(GLASSIC_IDS[GetItemType(inst)] or 0)
-end
-
 local function fn()
     local inst = CreateEntity()
 
@@ -286,9 +282,6 @@ local function fn()
 
     inst.GetItemType = GetItemType
     inst.OnChangeImage = OnChangeImage
-    inst.OnLoad = OnLoad
-
-    inst:DoTaskInTime(1, OnChangeImage)
 
     return inst
 end
