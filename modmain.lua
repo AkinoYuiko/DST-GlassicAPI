@@ -56,21 +56,21 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
 end
 
 GlassicAPI.SetExclusiveToPlayer = function(name)
-	return function(player)
-		return not player or player.prefab == name
-	end
+    return function(player)
+        return not player or player.prefab == name
+    end
 end
 
 GlassicAPI.SetExclusiveToPlayers = function(table)
-	return function(player)
-		return not player or table.contains(table, player.prefab)
-	end
+    return function(player)
+        return not player or table.contains(table, player.prefab)
+    end
 end
 
 GlassicAPI.SetExclusiveToTag = function(tag)
-	return function(player)
-	    return not player or player:HasTag(tag)
-	end
+    return function(player)
+        return not player or player:HasTag(tag)
+    end
 end
 
 GlassicAPI.SetFloatData = function(inst, swap_data)
@@ -159,8 +159,8 @@ GlassicAPI.MergeStringsToGLOBAL = function(strings, custom_field, no_override)
 end
 
 local _languages = {
-	zh = "chinese_s", -- Chinese
-	sc = "chinese_s", -- Simplified Chinese
+    zh = "chinese_s", -- Chinese
+    sc = "chinese_s", -- Simplified Chinese
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
@@ -180,12 +180,12 @@ end
 
 -- Basically Translator.ConvertEscapeCharactersToString, but replace "\"s first
 GlassicAPI.ConvertEscapeCharactersToString = function(str)
-	local newstr = string.gsub(str, "\\", "\\\\")
+    local newstr = string.gsub(str, "\\", "\\\\")
     newstr = string.gsub(newstr, "\n", "\\n")
-	newstr = string.gsub(newstr, "\r", "\\r")
-	newstr = string.gsub(newstr, "\"", "\\\"")
+    newstr = string.gsub(newstr, "\r", "\\r")
+    newstr = string.gsub(newstr, "\"", "\\\"")
 
-	return newstr
+    return newstr
 end
 
 local function write_speech(file, base_strings, strings, indent)
@@ -223,28 +223,28 @@ end
 local function write_for_strings(base, data, file)
     for k, v in pairs(data) do
         local path = base.."."..k
-		if type(v) == "table" then
-			write_for_strings(path, v, file)
+        if type(v) == "table" then
+            write_for_strings(path, v, file)
         else
             file:write('#. '..path.."\n")
             file:write('msgctxt "'..path..'"\n')
             file:write('msgid "'..GlassicAPI.ConvertEscapeCharactersToString(v)..'"\n')
             file:write('msgstr ""\n\n')
         end
-	end
+    end
 end
 GlassicAPI.MakePOTFromStrings = function(file, strings)
     file:write("msgid \"\"\n")
     file:write("msgstr \"\"\n")
-	file:write("\"Application: Dont' Starve\\n\"")
-	file:write("\n")
-	file:write("\"POT Version: 2.0\\n\"")
-	file:write("\n")
-	file:write("\n")
+    file:write("\"Application: Dont' Starve\\n\"")
+    file:write("\n")
+    file:write("\"POT Version: 2.0\\n\"")
+    file:write("\n")
+    file:write("\n")
 
     write_for_strings("STRINGS", strings, file)
 
-	file:close()
+    file:close()
 end
 
 local initialize_modmain = _G.ModManager.InitializeModMain
@@ -259,11 +259,11 @@ _G.GlassicAPI = GlassicAPI
 if is_mim_enabled then return end
 
 local main_files = {
-	"assets",
-	"actions",
-	"recipes",
-	"widgets",
-	"prefabskin",
+    "assets",
+    "actions",
+    "recipes",
+    "widgets",
+    "prefabskin",
     "reskin_tool_postinit"
 }
 

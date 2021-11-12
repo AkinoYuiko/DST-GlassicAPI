@@ -6,7 +6,7 @@ local assets =
 local prefabs = {
     "lanternlight",
     "glassic_flash",
-	"electrichitsparks",
+    "electrichitsparks",
     "alterguardianhat_projectile",
 }
 
@@ -21,9 +21,9 @@ local function turn_on(inst, owner)
         if inst.components.container:FindItem(function(inst) return inst.prefab == "spore_medium" end) then
             inst._light.Light:SetColour(197/255, 126/255, 126/255)
         elseif inst.components.container:FindItem(function(inst) return inst.prefab == "spore_small" end) then
-			inst._light.Light:SetColour(146/255, 225/255, 146/255)
+            inst._light.Light:SetColour(146/255, 225/255, 146/255)
         elseif inst.components.container:FindItem(function(inst) return inst.prefab == "spore_tall" end) then
-			inst._light.Light:SetColour(111/255, 111/255, 227/255)
+            inst._light.Light:SetColour(111/255, 111/255, 227/255)
         end
     end
 
@@ -44,7 +44,7 @@ local function GetItemType(inst, noprefix)
         (inst.components.container:Has("moonglass",1) and (noprefix and "moonglass" or "_moonglass")) or
         (inst.components.container:Has("thulecite",1) and (noprefix and "thulecite" or "_thulecite")) or
         (inst.components.container:Has("moonrocknugget",1) and (noprefix and "moonrock" or "_moonrock"))) or
-		(noprefix and "none" or "")
+        (noprefix and "none" or "")
 end
 
 local function onequip(inst, owner)
@@ -116,7 +116,7 @@ local function onattack_moonglass(inst, attacker, target)
                 not target:HasTag("wall")
                 then
 
-				SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
+                SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
             end
 
             try_consume(inst, 0.25, "moonglass")
@@ -172,8 +172,8 @@ local GLASSIC_NAMES = {
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
 local function OnChangeImage(inst)
-	local tail = GetItemType(inst)
-	local anim = GetItemType(inst, true)
+    local tail = GetItemType(inst)
+    local anim = GetItemType(inst, true)
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
     local display_name = inst:GetSkinBuild() and tail == "_moonglass" and "_dream"
     -- AnimState --
@@ -262,7 +262,7 @@ local function fn()
 
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
-	inst.components.weapon:SetOnAttack(onattack_none)
+    inst.components.weapon:SetOnAttack(onattack_none)
 
     inst:AddComponent("container")
     inst.components.container:WidgetSetup("glassiccutter")

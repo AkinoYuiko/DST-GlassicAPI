@@ -72,7 +72,7 @@ local allowed_items = {
 
 for _, v in ipairs(allowed_items) do
     ENV.AddPrefabPostInit(v, function(inst)
-		inst:AddTag("reloaditem_ammo")
+        inst:AddTag("reloaditem_ammo")
         inst:AddComponent("glassiccutter_ammo")
     end)
 end

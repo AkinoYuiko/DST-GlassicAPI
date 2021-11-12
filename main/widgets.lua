@@ -23,5 +23,5 @@ function params.glassiccutter.itemtestfn(container, item, slot)
         "thulecite",
         "moonrocknugget",
     }
-	return item:HasTag("spore") or table.contains(allowed_items, item.prefab)
+    return item:HasTag("spore") or table.contains(allowed_items, item.prefab)
 end

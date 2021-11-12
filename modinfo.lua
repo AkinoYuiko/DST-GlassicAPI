@@ -38,5 +38,5 @@ server_filter_tags = {}
 
 folder_name = folder_name or "workshop-"
 if not folder_name:find("workshop-") then
-	name = name .. " - DEV"
+    name = name .. " - DEV"
 end
