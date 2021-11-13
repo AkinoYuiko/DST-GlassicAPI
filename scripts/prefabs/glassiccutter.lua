@@ -149,7 +149,7 @@ local function onattack_moonrock(inst, attacker, target)
         local freezable = target.components.freezable
         if freezable then
             -- Adjust coldness by players' damage multiplier. The lower multiplier, the higher coldness, max to 2x.
-            local extraresistmult = freezable.extraresist / (2 * freezable.resistance) + 1
+            local extraresistmult = (freezable.extraresist or 0) / (2 * freezable.resistance) + 1
             local playermult = math.min(2, 1 / (attacker.components.combat.damagemultiplier or 1))
             freezable:AddColdness(0.8 * extraresistmult * playermult )
             freezable:SpawnShatterFX()

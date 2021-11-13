@@ -1,12 +1,13 @@
-version = "2.8.2"
+version = "2.8.3"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 尝试调整霜灵刀的冰冻效率计算方法.
+- 修复一个崩溃问题.
 
+- 尝试调整霜灵刀的冰冻效率计算方法.
 - 重做霜灵刀的效果为冰冻敌人.
 
 包含了皮肤组件和一套玻璃工具.
@@ -15,8 +16,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- Adjust the efficiency of freezing of Frost Cutter.
+- Fix crash on attacking non-freeze-extraresistance mobs with Frost Cutter.
 
+- Adjust the efficiency of freezing of Frost Cutter.
 - Reworked Frost Cutter's effect to freeze enemy
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
