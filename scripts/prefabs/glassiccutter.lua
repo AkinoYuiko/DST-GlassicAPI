@@ -146,15 +146,19 @@ local function onattack_moonrock(inst, attacker, target)
                 target.components.burnable:SmotherSmolder()
             end
         end
-        if target.components.freezable then
-            target.components.freezable:AddColdness(0.8 * math.min(2, 1 / (attacker.components.combat.damagemultiplier or 1)))
-            target.components.freezable:SpawnShatterFX()
+        local freezable = target.components.freezable
+        if freezable then
+            -- Adjust coldness by players' damage multiplier. The lower multiplier, the higher coldness, max to 2x.
+            local extraresistmult = freezable.extraresist / (2 * freezable.resistance) + 1
+            local playermult = math.min(2, 1 / (attacker.components.combat.damagemultiplier or 1))
+            freezable:AddColdness(0.8 * extraresistmult * playermult )
+            freezable:SpawnShatterFX()
         end
         try_consume_and_refill(inst, attacker, "moonrocknugget", 0.5)
     end
 end
 local function onattack_none(inst, attacker, target)
-    if onattack_base_check(attacker, target) and math.random() < 0.0233 then
+    if onattack_base_check(attacker, target) and math.random() < 0.01 then
         if inst.components.inventoryitem.owner ~= nil then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end
