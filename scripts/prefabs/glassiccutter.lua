@@ -147,7 +147,7 @@ local function onattack_moonrock(inst, attacker, target)
             end
         end
         if target.components.freezable then
-            target.components.freezable:AddColdness(0.67)
+            target.components.freezable:AddColdness(0.8 * math.min(2, 1 / (attacker.components.combat.damagemultiplier or 1)))
             target.components.freezable:SpawnShatterFX()
         end
         try_consume_and_refill(inst, attacker, "moonrocknugget", 0.5)
