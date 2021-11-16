@@ -239,6 +239,10 @@ local function displaynamefn(inst)
     return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
+local function descriptionfn(inst, viewer)
+    return GetString(viewer.prefab, "DESCRIBE", string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or "")) )
+end
+
 local function fn()
     local inst = CreateEntity()
 
@@ -282,6 +286,7 @@ local function fn()
     inst:AddComponent("inspectable")
 
     inst:AddComponent("inventoryitem")
+    inst.components.inspectable.descriptionfn = descriptionfn
 
     inst:AddComponent("equippable")
     inst.components.equippable:SetOnEquip(onequip)
