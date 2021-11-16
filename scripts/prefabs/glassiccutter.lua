@@ -172,7 +172,9 @@ local GLASSIC_NAMES = {
     "_moonglass",
     "_moonrock",
     "_thulecite",
-    "_dream"
+    "_dream",
+    "_excalibur",
+    "_frostmourning"
 }
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
@@ -180,7 +182,10 @@ local function OnChangeImage(inst)
     local tail = GetItemType(inst)
     local anim = GetItemType(inst, true)
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
-    local display_name = inst:GetSkinBuild() and tail == "_moonglass" and "_dream"
+    local display_name = inst:GetSkinBuild() and
+                        (( tail == "_moonglass" and "_dream" ) or
+                        ( tail == "_thulecite" and "_excalibur" ) or
+                        ( tail == "_moonrock" and "_frostmourning" ))
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
