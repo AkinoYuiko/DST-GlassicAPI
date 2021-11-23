@@ -269,5 +269,5 @@ local main_files = {
 
 for _,v in pairs(main_files) do modimport("main/"..v) end
 
-modimport("strings/"..(table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
+modimport("strings/" .. (table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en") .. ".lua")
 
