@@ -1,12 +1,13 @@
-version = "2.8.6"
+version = "2.8.7"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 新增【玻璃制刀】不同形态的描述文本.
+- 调整了部分语言文本.
 
+- 新增【玻璃制刀】不同形态的描述文本.
 - 调整了部分语言文本.
 - 修复一个崩溃问题.
 - 尝试调整霜灵刀的冰冻效率计算方法.
@@ -18,8 +19,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- New descriptions for Glassic Cutter with different slotted items.
+- Change part of translate strings.
 
+- New descriptions for Glassic Cutter with different slotted items.
 - Change part of translate strings.
 - Fix crash on attacking non-freeze-extraresistance mobs with Frost Cutter.
 - Adjust the efficiency of freezing of Frost Cutter.
