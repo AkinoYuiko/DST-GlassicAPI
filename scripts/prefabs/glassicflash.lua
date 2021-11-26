@@ -1,5 +1,3 @@
-require "prefabutil"
-
 local assets = {
     Asset("ANIM", "anim/glassic_flash_fx.zip"),
 }
@@ -64,7 +62,7 @@ local function fn()
 
     inst.SetTarget = SetTarget
 
-    inst:DoTaskInTime(0.5 , function(inst) inst:Remove() end)
+    inst:DoTaskInTime(0.5, function(inst) inst:Remove() end)
 
     return inst
 end
@@ -91,7 +89,7 @@ local function MakeFx(t)
 
         inst.Transform:SetFromProxy(proxy.GUID)
 
-        if t.sound ~= nil then
+        if t.sound then
             inst.entity:AddSoundEmitter()
             inst:DoTaskInTime(t.sounddelay or 0, PlaySound, t.sound)
         end

@@ -1,12 +1,12 @@
-local ENV = env
+local AddRecipe = AddRecipe
 GLOBAL.setfenv(1, GLOBAL)
 
 -- 月镐和月锤 --
-ENV.AddRecipe("moonglasspickaxe",
+AddRecipe("moonglasspickaxe",
 {Ingredient("twigs", 2), Ingredient("moonglass", 3)},
 RECIPETABS.CELESTIAL, TECH.CELESTIAL_THREE, nil, nil, true)
 
-ENV.AddRecipe("moonglasshammer",
+AddRecipe("moonglasshammer",
 {Ingredient("twigs", 3), Ingredient("cutgrass", 6), Ingredient("moonglass", 3)},
 RECIPETABS.CELESTIAL, TECH.CELESTIAL_THREE, nil, nil, true)
 

@@ -1,3 +1,5 @@
+modimport("main/tuning")
+
 PrefabFiles = {
     "glassicflash",
     "glassicskins",
@@ -5,6 +7,7 @@ PrefabFiles = {
     "moonglasshammer",
     "moonglasspickaxe",
 }
+
 Assets = {
     Asset("ANIM", "anim/glassic_rarities.zip"),
 }

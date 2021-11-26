@@ -25,7 +25,7 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_northern", sym_name = "swap_glassaxe", bank = "glassaxe"})
-        moonglassaxe_init_fn(inst, "moonglassaxe_northern", "glassaxe_northern")
+        ga_moonglassaxe_init_fn(inst, "moonglassaxe_northern", "glassaxe_northern")
     end,
     skin_tags = { "MOONGLASSAXE" },
 }))
@@ -40,7 +40,7 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_victorian", sym_name = "swap_glassaxe", bank = "glassaxe"})
-        moonglassaxe_init_fn(inst, "moonglassaxe_victorian", "glassaxe_victorian")
+        ga_moonglassaxe_init_fn(inst, "moonglassaxe_victorian", "glassaxe_victorian")
     end,
     skin_tags = { "MOONGLASSAXE" },
 }))
@@ -81,7 +81,6 @@ table.insert(pref, CreatePrefabSkin("glassiccutter_dream", {
     type = "item",
     rarity = "Glassic",
     assets = {
-        -- Asset( "ANIM", "anim/glassiccutter_dream.zip" ),
         Asset( "DYNAMIC_ANIM", "anim/dynamic/glassiccutter_dream.zip" ),
         Asset( "PKGREF", "anim/dynamic/glassiccutter_dream.dyn" ),
     },

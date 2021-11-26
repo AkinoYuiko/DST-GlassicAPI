@@ -1,4 +1,4 @@
-local ENV = env
+local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
 local function ga_can_cast_fn(doer, target, pos)
@@ -33,7 +33,7 @@ local function ga_can_cast_fn(doer, target, pos)
     return false
 end
 
-ENV.AddPrefabPostInit("reskin_tool", function(inst)
+AddPrefabPostInit("reskin_tool", function(inst)
     if not TheWorld.ismastersim then return end
     if inst.components.spellcaster then
         inst.components.spellcaster:SetCanCastFn(ga_can_cast_fn)

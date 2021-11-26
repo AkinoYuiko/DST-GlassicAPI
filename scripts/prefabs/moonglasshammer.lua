@@ -3,10 +3,10 @@ local assets =
     Asset("ANIM", "anim/glasshammer.zip"),
 }
 local function onattack_moonglass(inst, attacker, target)
-    inst.components.weapon.attackwear = target ~= nil and target:IsValid() 
+    inst.components.weapon.attackwear = target and target:IsValid() 
         and (target:HasTag("shadow") or target:HasTag("shadowminion") or target:HasTag("shadowchesspiece") or target:HasTag("stalker") or target:HasTag("stalkerminion"))
-        and TUNING.MOONGLASSAXE.SHADOW_WEAR
-        or TUNING.MOONGLASSAXE.ATTACKWEAR
+        and TUNING.MOONGLASSHAMMER.SHADOW_WEAR
+        or TUNING.MOONGLASSHAMMER.ATTACKWEAR
 end
 
 local function onequip(inst, owner)
@@ -51,20 +51,20 @@ local function fn()
     end
 
     inst:AddComponent("weapon")
-    inst.components.weapon:SetDamage(TUNING.AXE_DAMAGE)
+    inst.components.weapon:SetDamage(TUNING.MOONGLASSHAMMER.DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_moonglass)
 
     inst:AddComponent("inventoryitem")
     
     inst:AddComponent("tool")
-    inst.components.tool:SetAction(ACTIONS.HAMMER, 2)
+    inst.components.tool:SetAction(ACTIONS.HAMMER, TUNING.MOONGLASSHAMMER.EFFECTIVENESS)
     
     inst:AddComponent("finiteuses")
-    inst.components.finiteuses:SetMaxUses(60)
-    inst.components.finiteuses:SetUses(60)
+    inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASS_HAMMER_USES)
+    inst.components.finiteuses:SetUses(TUNING.MOONGLASS_HAMMER_USES)
 
     inst.components.finiteuses:SetOnFinished(inst.Remove)
-    inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, 1)
+    inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, TUNING.MOONGLASSHAMMER.CONSUMPTION)
 
     MakeHauntableLaunch(inst)
 

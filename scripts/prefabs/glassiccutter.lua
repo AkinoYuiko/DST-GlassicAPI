@@ -7,7 +7,6 @@ local prefabs = {
     "lanternlight",
     "glassic_flash",
     "electrichitsparks",
-    "alterguardianhat_projectile",
 }
 
 local function turn_on(inst, owner)
@@ -31,7 +30,7 @@ local function turn_on(inst, owner)
 end
 
 local function turn_off(inst)
-    if inst._light ~= nil then
+    if inst._light then
         if inst._light:IsValid() then
             inst._light:Remove()
         end
@@ -59,7 +58,7 @@ local function onequip(inst, owner)
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
 
-    if inst.components.container ~= nil then
+    if inst.components.container then
         inst.components.container:Open(owner)
     end
 
@@ -75,7 +74,7 @@ local function onunequip(inst, owner)
     --     owner:PushEvent("unequipskinneditem", inst:GetSkinName())
     -- end
 
-    if inst.components.container ~= nil then
+    if inst.components.container then
         inst.components.container:Close()
     end
     turn_off(inst)
@@ -128,13 +127,13 @@ local function onattack_moonglass(inst, attacker, target)
             SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
         end
 
-        try_consume_and_refill(inst, attacker, "moonglass", 0.25)
+        try_consume_and_refill(inst, attacker, "moonglass", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS)
     end
 end
 
 local function onattack_thulecite(inst, attacker, target)
     if onattack_base_check(attacker, target) then
-        try_consume_and_refill(inst, attacker, "thulecite", 0.032)
+        try_consume_and_refill(inst, attacker, "thulecite", TUNING.GLASSICCUTTER.CONSUME_CHANCE.THULECITE)
     end
 end
 local function onattack_moonrock(inst, attacker, target)
@@ -154,12 +153,12 @@ local function onattack_moonrock(inst, attacker, target)
             freezable:AddColdness(0.8 * extraresistmult * playermult )
             freezable:SpawnShatterFX()
         end
-        try_consume_and_refill(inst, attacker, "moonrocknugget", 0.5)
+        try_consume_and_refill(inst, attacker, "moonrocknugget", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONROCK)
     end
 end
 local function onattack_none(inst, attacker, target)
-    if onattack_base_check(attacker, target) and math.random() < 0.01 then
-        if inst.components.inventoryitem.owner ~= nil then
+    if onattack_base_check(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_CHANCE.NONE then
+        if inst.components.inventoryitem.owner then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end
         inst.components.container:Close()
@@ -204,32 +203,32 @@ local function OnChangeImage(inst)
     inst._nametail:set(GLASSIC_IDS[(display_name or tail)] or 0)
 end
 
-local function OnAmmoLoaded(inst, data)
+local function OnAmmoLoad(inst, data)
     if data.item.prefab == "moonglass" then
-        inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
+        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.NONE)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
-        inst.components.equippable.walkspeedmult = 1
+        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item.prefab == "thulecite" then
-        inst.components.weapon:SetDamage(TUNING.RUINS_BAT_DAMAGE)
+        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.THULECITE)
         inst.components.weapon:SetOnAttack(onattack_thulecite)
-        inst.components.equippable.walkspeedmult = 1.1
+        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.THULECITE
     elseif data.item.prefab == "moonrocknugget" then
-        inst.components.weapon:SetDamage(TUNING.ALTERGUARDIANHAT_GESTALT_DAMAGE)
+        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.MOONROCK)
         inst.components.weapon:SetOnAttack(onattack_moonrock)
-        inst.components.equippable.walkspeedmult = 1
+        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item:HasTag("spore") then
-        inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE / 2)
-        inst.components.equippable.walkspeedmult = 1
+        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.SPORE)
+        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
         turn_on(inst, inst.components.inventoryitem.owner)
     end
     -- anim and image --
     OnChangeImage(inst)
 end
 
-local function OnAmmoUnloaded(inst, data)
+local function OnAmmoUnload(inst, data)
     inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_none)
-    inst.components.equippable.walkspeedmult = 1
+    inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
     turn_off(inst)
     -- anim and image --
     OnChangeImage(inst)
@@ -278,8 +277,8 @@ local function fn()
     inst.components.container:WidgetSetup("glassiccutter")
     inst.components.container.canbeopened = false
 
-    inst:ListenForEvent("itemget", OnAmmoLoaded)
-    inst:ListenForEvent("itemlose", OnAmmoUnloaded)
+    inst:ListenForEvent("itemget", OnAmmoLoad)
+    inst:ListenForEvent("itemlose", OnAmmoUnload)
 
     -------
 

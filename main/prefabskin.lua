@@ -26,7 +26,7 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 -- }
 
 local function refresh_floater(inst)
-    if inst.components.floater ~= nil then
+    if inst.components.floater then
         if inst.components.floater:IsFloating() then
             inst.components.floater:SwitchToDefaultAnim(true)
             inst.components.floater:SwitchToFloatAnim()
@@ -36,23 +36,23 @@ end
 
 -- [[ Glassic Item Skins ]] --
 -- Golden Axe Victorian
-local _goldenaxe_clear_fn = goldenaxe_clear_fn
+local vanilla_goldenaxe_clear_fn = goldenaxe_clear_fn
 goldenaxe_clear_fn = function(inst, ...)
     GlassicAPI.SetFloatData(inst, {sym_build = "swap_goldenaxe"})
-    return _goldenaxe_clear_fn(inst, ...)
+    return vanilla_goldenaxe_clear_fn(inst, ...)
 end
 
 -- Moon Glass Axe
 if not rawget(_G, "moonglassaxe_clear_fn") then
-    moonglassaxe_init_fn = function(inst, skinname, override_build)
-        GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
-        GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glassaxe")
-    end
     moonglassaxe_clear_fn = function(inst)
         inst.AnimState:SetBank("glassaxe")
         GlassicAPI.SetFloatData(inst, { sym_build = "swap_glassaxe" })
         basic_clear_fn(inst, "glassaxe")
     end
+end
+ga_moonglassaxe_init_fn = function(inst, skinname, override_build)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glassaxe")
 end
 
 -- Moon Glass Hammer
@@ -61,7 +61,7 @@ moonglasshammer_init_fn = function(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasshammer")
 end
 moonglasshammer_clear_fn = function(inst)
-    GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
+    GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer", bank = "glasshammer"})
     basic_clear_fn(inst, "glasshammer")
 end
 

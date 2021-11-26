@@ -1,14 +1,13 @@
 local assets =
 {
-    Asset( "ANIM", "anim/glasspickaxe.zip" ),
-    -- Asset( "ANIM", "anim/swap_glasspickaxe.zip" ),
+    Asset("ANIM", "anim/glasspickaxe.zip"),
 }
 
 local function onattack_moonglass(inst, attacker, target)
-    inst.components.weapon.attackwear = target ~= nil and target:IsValid() 
+    inst.components.weapon.attackwear = target and target:IsValid() 
         and (target:HasTag("shadow") or target:HasTag("shadowminion") or target:HasTag("shadowchesspiece") or target:HasTag("stalker") or target:HasTag("stalkerminion"))
-        and TUNING.MOONGLASSAXE.SHADOW_WEAR
-        or TUNING.MOONGLASSAXE.ATTACKWEAR
+        and TUNING.MOONGLASSPICKAXE.SHADOW_WEAR
+        or TUNING.MOONGLASSPICKAXE.ATTACKWEAR
 end
 
 local function onequip(inst, owner)
@@ -53,16 +52,16 @@ local function fn()
     end
 
     inst:AddComponent("tool")
-    inst.components.tool:SetAction(ACTIONS.MINE,3)
+    inst.components.tool:SetAction(ACTIONS.MINE, TUNING.MOONGLASSPICKAXE.EFFECTIVENESS)
     
     inst:AddComponent("finiteuses")
-    inst.components.finiteuses:SetMaxUses(40)
-    inst.components.finiteuses:SetUses(40)
+    inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASSPICKAXE.USES)
+    inst.components.finiteuses:SetUses(TUNING.MOONGLASSPICKAXE.USES)
     inst.components.finiteuses:SetOnFinished(inst.Remove) 
-    inst.components.finiteuses:SetConsumption(ACTIONS.MINE, 1)
+    inst.components.finiteuses:SetConsumption(ACTIONS.MINE, TUNING.MOONGLASSPICKAXE.CONSUMPTION)
 
     inst:AddComponent("weapon")
-    inst.components.weapon:SetDamage(34)
+    inst.components.weapon:SetDamage(TUNING.MOONGLASSPICKAXE.DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_moonglass)
 
     inst:AddComponent("inspectable")
