@@ -60,8 +60,8 @@ local function fn()
     inst.components.tool:SetAction(ACTIONS.HAMMER, TUNING.MOONGLASSHAMMER.EFFECTIVENESS)
     
     inst:AddComponent("finiteuses")
-    inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASS_HAMMER_USES)
-    inst.components.finiteuses:SetUses(TUNING.MOONGLASS_HAMMER_USES)
+    inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASSHAMMER.USES)
+    inst.components.finiteuses:SetUses(TUNING.MOONGLASSHAMMER.USES)
 
     inst.components.finiteuses:SetOnFinished(inst.Remove)
     inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, TUNING.MOONGLASSHAMMER.CONSUMPTION)
