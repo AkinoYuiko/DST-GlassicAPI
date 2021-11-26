@@ -1,4 +1,9 @@
-local AddAction, AddComponentAction, AddStategraphState, AddStategraphActionHandler, AddPrefabPostInit, AddPrefabPostInitAny = AddAction, AddComponentAction, AddStategraphState, AddStategraphActionHandler, AddPrefabPostInit, AddPrefabPostInitAny
+local AddAction = AddAction
+local AddComponentAction = AddComponentAction
+local AddPrefabPostInit = AddPrefabPostInit
+local AddPrefabPostInitAny = AddPrefabPostInitAny
+local AddStategraphState = AddStategraphState
+local AddStategraphActionHandler = AddStategraphActionHandler
 GLOBAL.setfenv(1, GLOBAL)
 
 local GLASSCUTTEREX = Action({mount_valid=true})
