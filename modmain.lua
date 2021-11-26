@@ -1,16 +1,11 @@
-local _G = GLOBAL
-local STRINGS = _G.STRINGS
-local Translator = _G.LanguageTranslator
-local unpack = _G.unpack
-local tonumber = _G.tonumber
-local io = _G.io
+local STRINGS, LanguageTranslator, ModManager, Translator, TranslateStringTable, TheWorld, hash, io, tonumber, resolvefilepath, resolvefilepath_soft, unpack = GLOBAL.STRINGS, GLOBAL.LanguageTranslator, GLOBAL.ModManager, GLOBAL.Translator, GLOBAL.TranslateStringTable, GLOBAL.TheWorld, GLOBAL.hash, GLOBAL.io, GLOBAL.tonumber, GLOBAL.resolvefilepath, GLOBAL.resolvefilepath_soft, GLOBAL.unpack
 
 GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
 
 local SLAXML = require("slaxml")
 GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
-    path_to_file = _G.resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
+    path_to_file = resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
 
     local images = {}
     local file = io.open(path_to_file, "r")
@@ -31,7 +26,7 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
 
     for _, image in ipairs(images) do
         RegisterInventoryItemAtlas(path_to_file, image)
-        RegisterInventoryItemAtlas(path_to_file, _G.hash(image))
+        RegisterInventoryItemAtlas(path_to_file, hash(image))
     end
 end
 
@@ -104,7 +99,7 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
         data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat")
     end
 
-    if not _G.TheWorld.ismastersim then return end
+    if not TheWorld.ismastersim then return end
 
     local onequipfn = ( slot == "hand" and onequiphandfn )
                         or ( slot == "body" and onequipbodyfn )
@@ -122,16 +117,16 @@ end
 
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
     
-    if inst.components.placer == nil and not _G.TheWorld.ismastersim then return end
+    if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
 
-    if inst.components.inventoryitem ~= nil then
+    if inst.components.inventoryitem then
         inst.components.inventoryitem:ChangeImageName(inst:GetSkinName())
     end
 
-    if inst.components.floater ~= nil then
+    if inst.components.floater then
         if inst.components.floater:IsFloating() then
             inst.components.floater:SwitchToDefaultAnim(true)
             inst.components.floater:SwitchToFloatAnim()
@@ -168,12 +163,12 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     local lang = override_lang or _defaultlang
     if not _languages[lang] then return end
     local filepath = base_path.."/".._languages[lang]..".po"
-    if not _G.resolvefilepath_soft(filepath) then
+    if not resolvefilepath_soft(filepath) then
         print("Could not find a language file matching "..filepath.." in any of the search paths.")
         return
     end
     Translator:LoadPOFile(filepath, lang.."_temp")
-    _G.TranslateStringTable(STRINGS)
+    TranslateStringTable(STRINGS)
     Translator.languages[lang.."_temp"] = nil
     Translator.defaultlang = _defaultlang
 end
@@ -198,14 +193,14 @@ local function write_speech(file, base_strings, strings, indent)
         if type(v) == "table" then
             file:write(str .. k .. " =\n" .. str .. "{\n")
             write_speech(file, base_strings and base_strings[k], v, indent + 1)
-            file:write(str .. "},\n")
+            file:write(str .. "}, \n")
         else
             local comment = base_strings and base_strings[k] and "" or "-- "
             v = GlassicAPI.ConvertEscapeCharactersToString(v)
             if tonumber(k) then
-                file:write(str .. comment .. "\"" .. v .. "\",\n" )
+                file:write(str .. comment .. "\"" .. v .. "\", \n" )
             else
-                file:write(str .. comment .. k .. " = \"" .. v .. "\",\n" )
+                file:write(str .. comment .. k .. " = \"" .. v .. "\", \n" )
             end
         end
     end
@@ -247,27 +242,28 @@ GlassicAPI.MakePOTFromStrings = function(file, strings)
     file:close()
 end
 
-local initialize_modmain = _G.ModManager.InitializeModMain
-_G.ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
+local initialize_modmain = ModManager.InitializeModMain
+ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
     if mainfile == "modmain.lua" then
         env.GlassicAPI = GlassicAPI
     end
     return initialize_modmain(self, _modname, env, mainfile, ...)
 end
-_G.GlassicAPI = GlassicAPI
+
+GLOBAL.GlassicAPI = GlassicAPI
 
 if is_mim_enabled then return end
 
 local main_files = {
-    "assets",
     "actions",
-    "recipes",
-    "widgets",
+    "assets",
     "prefabskin",
-    "reskin_tool_postinit"
+    "recipes",
+    "reskin_tool",
+    "widgets",
 }
 
-for _,v in pairs(main_files) do modimport("main/"..v) end
+for _, v in ipairs(main_files) do modimport("main/"..v) end
 
-modimport("strings/" .. (table.contains({"zh","chs","cht"}, _G.LanguageTranslator.defaultlang) and "zh" or "en") .. ".lua")
+modimport("strings/"..(table.contains({"zh", "chs", "cht"}, LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
 

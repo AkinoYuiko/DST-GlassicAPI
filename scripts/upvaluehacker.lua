@@ -1,5 +1,5 @@
 --Tool designed by Rezecib.
---Personal Changed by Tony.
+--Personally Changed by Tony.
 
 local function GetUpvalueHelper(entry_fn, entry_name)
     local i = 1

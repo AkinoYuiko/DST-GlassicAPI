@@ -2,7 +2,6 @@ local SKIN_AFFINITY_INFO = require("skin_affinity_info")
 local ALL_MOD_SKINS = {}
 local HEADSKIN_CHARACTERS = {}
 local OVERRIDE_RARITY_DATA = {}
-
 local CHARACTER_EXCLUSIVE_SKINS = {}
 
 local function GetPlayerFromID(id)
@@ -100,7 +99,7 @@ InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
         return false
     end
     if IsValidModSkin(item_type, ThePlayer) then
-        return true, -2333
+        return true, -2333 -- :nope:
     end
     return check_ownership_get_latest(self, item_type, ...)
 end

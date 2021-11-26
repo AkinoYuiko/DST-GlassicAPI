@@ -1,7 +1,7 @@
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local function _can_cast_fn(doer, target, pos)
+local function ga_can_cast_fn(doer, target, pos)
 
     local prefab_to_skin = target.prefab
     local is_beard = false
@@ -36,6 +36,6 @@ end
 ENV.AddPrefabPostInit("reskin_tool", function(inst)
     if not TheWorld.ismastersim then return end
     if inst.components.spellcaster then
-        inst.components.spellcaster:SetCanCastFn(_can_cast_fn)
+        inst.components.spellcaster:SetCanCastFn(ga_can_cast_fn)
     end
 end)

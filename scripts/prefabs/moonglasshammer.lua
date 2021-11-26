@@ -1,7 +1,6 @@
 local assets =
 {
     Asset("ANIM", "anim/glasshammer.zip"),
-    -- Asset("ANIM", "anim/swap_glasshammer.zip"),
 }
 local function onattack_moonglass(inst, attacker, target)
     inst.components.weapon.attackwear = target ~= nil and target:IsValid() 
@@ -38,7 +37,6 @@ local function fn()
     inst:AddTag("hammer")
 
     MakeInventoryFloatable(inst, "med", 0.05, {0.7, 0.4, 0.7}, true, -13, {sym_build = "glasshammer", sym_name = "swap_glasshammer",bank = "glasshammer"})
-    -- inst.components.floater:SetBankSwapOnFloat(true, -13, swap_data)
 
     --tool (from tool component) added to pristine state for optimization
     inst:AddTag("tool")
@@ -57,19 +55,16 @@ local function fn()
     inst.components.weapon:SetOnAttack(onattack_moonglass)
 
     inst:AddComponent("inventoryitem")
-    -- inst.components.inventoryitem.imagename = "moonglasshammer"
-    -- inst.components.inventoryitem.atlasname = resolvefilepath("images/inventoryimages/moonglasstools.xml")
-    -----
+    
     inst:AddComponent("tool")
     inst.components.tool:SetAction(ACTIONS.HAMMER, 2)
-    -------
+    
     inst:AddComponent("finiteuses")
     inst.components.finiteuses:SetMaxUses(60)
     inst.components.finiteuses:SetUses(60)
 
     inst.components.finiteuses:SetOnFinished(inst.Remove)
     inst.components.finiteuses:SetConsumption(ACTIONS.HAMMER, 1)
-    -------
 
     MakeHauntableLaunch(inst)
 

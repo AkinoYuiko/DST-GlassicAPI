@@ -1,9 +1,7 @@
 require "prefabutil"
 
 local assets = {
-    -- Asset("ANIM", "anim/brightmare_gestalt.zip"),
     Asset("ANIM", "anim/glassic_flash_fx.zip"),
-
 }
 
 local prefabs = {

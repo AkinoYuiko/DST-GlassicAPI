@@ -35,7 +35,6 @@ local function fn()
     inst.AnimState:SetBank("glasspickaxe")
     inst.AnimState:SetBuild("glasspickaxe")
     inst.AnimState:PlayAnimation("idle")
-    -- inst.AnimState:SetManualBB(20,-70,210,170)
 
     inst:AddTag("sharp")
 
@@ -53,18 +52,15 @@ local function fn()
         return inst
     end
 
-    -----
     inst:AddComponent("tool")
     inst.components.tool:SetAction(ACTIONS.MINE,3)
-
-    -------
+    
     inst:AddComponent("finiteuses")
     inst.components.finiteuses:SetMaxUses(40)
     inst.components.finiteuses:SetUses(40)
     inst.components.finiteuses:SetOnFinished(inst.Remove) 
     inst.components.finiteuses:SetConsumption(ACTIONS.MINE, 1)
 
-    -------
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(34)
     inst.components.weapon:SetOnAttack(onattack_moonglass)
