@@ -1,19 +1,13 @@
-version = "2.8.9"
+version = "2.9"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复一个崩溃.
-
-- 调整了部分代码格式.
-- 调整了部分语言文本.
-- 新增【玻璃制刀】不同形态的描述文本.
-- 调整了部分语言文本.
-- 修复一个崩溃问题.
-- 尝试调整霜灵刀的冰冻效率计算方法.
-- 重做霜灵刀的效果为冰冻敌人.
+- 调整代码结构.
+- 修改了部分示例皮肤的初始化逻辑.
+- 参数统一在tuning处理.
 
 包含了皮肤组件和一套玻璃工具.
 ]]
@@ -21,15 +15,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- Fix a crash.
-
-- Tweak some code format.
-- Change part of translate strings.
-- New descriptions for Glassic Cutter with different slotted items.
-- Change part of translate strings.
-- Fix crash on attacking non-freeze-extraresistance mobs with Frost Cutter.
-- Adjust the efficiency of freezing of Frost Cutter.
-- Reworked Frost Cutter's effect to freeze enemy
+- Tweak code format.
+- Improve init logic for some example skins.
+- Add Tuning.
 
 Included Skin Handler API and Moon Glass Tools / Weapon.
 ]]
