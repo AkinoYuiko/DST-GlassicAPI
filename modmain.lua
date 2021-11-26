@@ -1,4 +1,4 @@
-local STRINGS, LanguageTranslator, ModManager, Translator, TranslateStringTable, TheWorld, hash, io, tonumber, resolvefilepath, resolvefilepath_soft, unpack = GLOBAL.STRINGS, GLOBAL.LanguageTranslator, GLOBAL.ModManager, GLOBAL.Translator, GLOBAL.TranslateStringTable, GLOBAL.TheWorld, GLOBAL.hash, GLOBAL.io, GLOBAL.tonumber, GLOBAL.resolvefilepath, GLOBAL.resolvefilepath_soft, GLOBAL.unpack
+local STRINGS, LanguageTranslator, ModManager, Translator, TranslateStringTable, hash, io, tonumber, resolvefilepath, resolvefilepath_soft, unpack = GLOBAL.STRINGS, GLOBAL.LanguageTranslator, GLOBAL.ModManager, GLOBAL.Translator, GLOBAL.TranslateStringTable, GLOBAL.hash, GLOBAL.io, GLOBAL.tonumber, GLOBAL.resolvefilepath, GLOBAL.resolvefilepath_soft, GLOBAL.unpack
 
 GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
@@ -99,7 +99,7 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
         data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat")
     end
 
-    if not TheWorld.ismastersim then return end
+    if not GLOBAL.TheWorld.ismastersim then return end
 
     local onequipfn = ( slot == "hand" and onequiphandfn )
                         or ( slot == "body" and onequipbodyfn )
@@ -117,7 +117,7 @@ end
 
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
     
-    if inst.components.placer == nil and not TheWorld.ismastersim then return end
+    if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
 
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
