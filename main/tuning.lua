@@ -30,11 +30,11 @@ TUNING.GLASSICCUTTER =
         THULECITE = 0.032,
     },
     DAMAGE = {
-        NONE = wilson_attack * 2,
         SPORE = wilson_attack,
+        NONE = wilson_attack * 2,
         MOONGLASS = wilson_attack * 2,
+        MOONROCK = wilson_attack * 1.25,
         THULECITE = wilson_attack * 1.75,
-        MOONROCK = wilson_attack,
     },
     WALKSPEEDMULT = {
         GENERAL = 1,
