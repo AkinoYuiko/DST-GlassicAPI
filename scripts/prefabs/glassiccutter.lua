@@ -205,20 +205,20 @@ end
 
 local function OnAmmoLoad(inst, data)
     if data.item.prefab == "moonglass" then
-        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.NONE)
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
-        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
+        inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item.prefab == "thulecite" then
-        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.THULECITE)
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.THULECITE)
         inst.components.weapon:SetOnAttack(onattack_thulecite)
-        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.THULECITE
+        inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.THULECITE
     elseif data.item.prefab == "moonrocknugget" then
-        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.MOONROCK)
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONROCK)
         inst.components.weapon:SetOnAttack(onattack_moonrock)
-        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
+        inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item:HasTag("spore") then
-        inst.components.weapon:SetDamage(TUNING.GLASSCICUTTER.DAMAGE.SPORE)
-        inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.SPORE)
+        inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
         turn_on(inst, inst.components.inventoryitem.owner)
     end
     -- anim and image --
@@ -228,7 +228,7 @@ end
 local function OnAmmoUnload(inst, data)
     inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_none)
-    inst.components.equippable.walkspeedmult = TUNING.GLASSCICUTTER.WALKSPEEDMULT.GENERAL
+    inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     turn_off(inst)
     -- anim and image --
     OnChangeImage(inst)
