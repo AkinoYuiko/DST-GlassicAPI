@@ -205,7 +205,7 @@ end
 
 local function OnAmmoLoad(inst, data)
     if data.item.prefab == "moonglass" then
-        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONGLASS)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
         inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item.prefab == "thulecite" then
@@ -226,7 +226,7 @@ local function OnAmmoLoad(inst, data)
 end
 
 local function OnAmmoUnload(inst, data)
-    inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
+    inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
     inst.components.weapon:SetOnAttack(onattack_none)
     inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     turn_off(inst)
