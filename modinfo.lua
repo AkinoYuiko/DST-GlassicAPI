@@ -1,10 +1,12 @@
-version = "2.9"
+version = "2.9.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 修复一处拼写错误.
+
 - 调整代码结构.
 - 修改了部分示例皮肤的初始化逻辑.
 - 参数统一在tuning处理.
@@ -15,6 +17,8 @@ or
 "[Version: "..version..[[]
 
 Changelog:
+- Fix a spell error.
+
 - Tweak code format.
 - Improve init logic for some example skins.
 - Add Tuning.
