@@ -1,4 +1,13 @@
-local STRINGS, LanguageTranslator, ModManager, Translator, TranslateStringTable, hash, io, tonumber, resolvefilepath, resolvefilepath_soft, unpack = GLOBAL.STRINGS, GLOBAL.LanguageTranslator, GLOBAL.ModManager, GLOBAL.Translator, GLOBAL.TranslateStringTable, GLOBAL.hash, GLOBAL.io, GLOBAL.tonumber, GLOBAL.resolvefilepath, GLOBAL.resolvefilepath_soft, GLOBAL.unpack
+local STRINGS               = GLOBAL.STRINGS
+local LanguageTranslator    = GLOBAL.LanguageTranslator
+local ModManager            = GLOBAL.ModManager
+local TranslateStringTable  = GLOBAL.TranslateStringTable
+local hash                  = GLOBAL.hash
+local io                    = GLOBAL.io
+local tonumber              = GLOBAL.tonumber
+local resolvefilepath       = GLOBAL.resolvefilepath
+local resolvefilepath_soft  = GLOBAL.resolvefilepath_soft
+local unpack                = GLOBAL.unpack
 
 GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
@@ -159,7 +168,7 @@ local _languages = {
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
-    local _defaultlang = Translator.defaultlang
+    local _defaultlang = LanguageTranslator.defaultlang
     local lang = override_lang or _defaultlang
     if not _languages[lang] then return end
     local filepath = base_path.."/".._languages[lang]..".po"
@@ -167,13 +176,13 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
         print("Could not find a language file matching "..filepath.." in any of the search paths.")
         return
     end
-    Translator:LoadPOFile(filepath, lang.."_temp")
+    LanguageTranslator:LoadPOFile(filepath, lang.."_temp")
     TranslateStringTable(STRINGS)
-    Translator.languages[lang.."_temp"] = nil
-    Translator.defaultlang = _defaultlang
+    LanguageTranslator.languages[lang.."_temp"] = nil
+    LanguageTranslator.defaultlang = _defaultlang
 end
 
--- Basically Translator.ConvertEscapeCharactersToString, but replace "\"s first
+-- Basically LanguageTranslator.ConvertEscapeCharactersToString, but replace "\"s first
 GlassicAPI.ConvertEscapeCharactersToString = function(str)
     local newstr = string.gsub(str, "\\", "\\\\")
     newstr = string.gsub(newstr, "\n", "\\n")
@@ -264,6 +273,4 @@ local main_files = {
 }
 
 for _, v in ipairs(main_files) do modimport("main/"..v) end
-
 modimport("strings/"..(table.contains({"zh", "chs", "cht"}, LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
-
