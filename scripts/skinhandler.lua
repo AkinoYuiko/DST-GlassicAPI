@@ -118,13 +118,10 @@ local reskin_entity = Sim.ReskinEntity
 Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ent = Ents[guid]
     local reskin = reskin_entity(self, guid, targetskinname, reskinname, ...)
+    if ent.OnSkinChange then ent:OnSkinChange() ent.OnSkinChange = nil end
     if IsModSkin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
-    elseif IsModSkin(targetskinname) then
-        if ent.components.inventoryitem then
-            if ent.OnSkinChange then ent.OnSkinChange(ent) ent.OnSkinChange = nil end
-        end
     end
     return reskin
 end

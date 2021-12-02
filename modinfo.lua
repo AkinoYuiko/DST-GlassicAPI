@@ -1,12 +1,13 @@
-version = "2.9.2"
+version = "2.9.3"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复LanguageTranslator.
+- 修复SkinHandler中关于ReskinEntity的一些逻辑问题.
 
+- 修复LanguageTranslator.
 - 修复一处拼写错误.
 - 调整代码结构.
 - 修改了部分示例皮肤的初始化逻辑.
@@ -18,8 +19,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- Fix LanguageTranslator.
+- Fix logic issue for "ReskinEntity" in SkinHandler.
 
+- Fix LanguageTranslator.
 - Fix a spell error.
 - Tweak code format.
 - Improve init logic for some example skins.
