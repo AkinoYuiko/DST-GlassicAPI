@@ -4,7 +4,7 @@ local assets =
 }
 
 local function onattack_moonglass(inst, attacker, target)
-    inst.components.weapon.attackwear = target and target:IsValid() 
+    inst.components.weapon.attackwear = target and target:IsValid()
         and (target:HasTag("shadow") or target:HasTag("shadowminion") or target:HasTag("shadowchesspiece") or target:HasTag("stalker") or target:HasTag("stalkerminion"))
         and TUNING.MOONGLASSPICKAXE.SHADOW_WEAR
         or TUNING.MOONGLASSPICKAXE.ATTACKWEAR
@@ -53,11 +53,11 @@ local function fn()
 
     inst:AddComponent("tool")
     inst.components.tool:SetAction(ACTIONS.MINE, TUNING.MOONGLASSPICKAXE.EFFECTIVENESS)
-    
+
     inst:AddComponent("finiteuses")
     inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASSPICKAXE.USES)
     inst.components.finiteuses:SetUses(TUNING.MOONGLASSPICKAXE.USES)
-    inst.components.finiteuses:SetOnFinished(inst.Remove) 
+    inst.components.finiteuses:SetOnFinished(inst.Remove)
     inst.components.finiteuses:SetConsumption(ACTIONS.MINE, TUNING.MOONGLASSPICKAXE.CONSUMPTION)
 
     inst:AddComponent("weapon")

@@ -51,11 +51,11 @@ local function fn()
     local inst = CreateEntity()
 
     inst.entity:AddTransform()
-    
+
     if not TheWorld.ismastersim then
         return inst
     end
-    
+
     inst:AddComponent("combat")
     inst.components.combat:SetDefaultDamage(TUNING.ALTERGUARDIANHAT_GESTALT_DAMAGE)
     inst.components.combat:SetRange(TUNING.GESTALTGUARD_ATTACK_RANGE * 10)
@@ -80,7 +80,7 @@ local function MakeFx(t)
 
         inst.entity:AddTransform()
         inst.entity:AddAnimState()
-        
+
         inst:AddTag("FX")
 
         --[[Non-networked entity]]

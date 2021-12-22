@@ -3,7 +3,7 @@ local assets =
     Asset("ANIM", "anim/glasshammer.zip"),
 }
 local function onattack_moonglass(inst, attacker, target)
-    inst.components.weapon.attackwear = target and target:IsValid() 
+    inst.components.weapon.attackwear = target and target:IsValid()
         and (target:HasTag("shadow") or target:HasTag("shadowminion") or target:HasTag("shadowchesspiece") or target:HasTag("stalker") or target:HasTag("stalkerminion"))
         and TUNING.MOONGLASSHAMMER.SHADOW_WEAR
         or TUNING.MOONGLASSHAMMER.ATTACKWEAR
@@ -55,10 +55,10 @@ local function fn()
     inst.components.weapon:SetOnAttack(onattack_moonglass)
 
     inst:AddComponent("inventoryitem")
-    
+
     inst:AddComponent("tool")
     inst.components.tool:SetAction(ACTIONS.HAMMER, TUNING.MOONGLASSHAMMER.EFFECTIVENESS)
-    
+
     inst:AddComponent("finiteuses")
     inst.components.finiteuses:SetMaxUses(TUNING.MOONGLASSHAMMER.USES)
     inst.components.finiteuses:SetUses(TUNING.MOONGLASSHAMMER.USES)

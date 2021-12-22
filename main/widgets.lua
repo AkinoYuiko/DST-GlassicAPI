@@ -2,7 +2,7 @@ local Vector3 = GLOBAL.Vector3
 local containers = require("containers")
 local params = containers.params
 
-params.glassiccutter = 
+params.glassiccutter =
 {
     widget =
     {

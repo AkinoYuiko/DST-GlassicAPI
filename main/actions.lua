@@ -53,7 +53,7 @@ local glassic_state = State({
 
 for _, v in ipairs({"wilson", "wilson_client"}) do
     AddStategraphState(v, glassic_state)
-    AddStategraphActionHandler(v, ActionHandler(GLASSCUTTEREX, "doglassicbuild"))   
+    AddStategraphActionHandler(v, ActionHandler(GLASSCUTTEREX, "doglassicbuild"))
 end
 
 AddPrefabPostInit("glasscutter", function(inst)
