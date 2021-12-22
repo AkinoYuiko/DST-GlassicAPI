@@ -118,14 +118,14 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
     if slot == "hand" then
         inst:ListenForEvent("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
     end
-    inst.OnSkinChange = function(inst) 
+    inst.OnSkinChange = function(inst)
         inst:RemoveEventCallback("equipped", onequipfn)
         inst:RemoveEventCallback("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
     end
 end
 
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
-    
+
     if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
 
     inst.skinname = skinname
