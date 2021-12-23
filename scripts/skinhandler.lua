@@ -117,13 +117,28 @@ end
 local reskin_entity = Sim.ReskinEntity
 Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ent = Ents[guid]
+    if ent.OnSkinChange then
+        ent:OnSkinChange()
+        ent.OnSkinChange = nil
+    end
     local reskin = reskin_entity(self, guid, targetskinname, reskinname, ...)
-    if ent.OnSkinChange then ent:OnSkinChange() ent.OnSkinChange = nil end
     if IsModSkin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
     end
     return reskin
+end
+
+local Floater = require("components/floater")
+local SwitchToFloatAnim = Floater.SwitchToFloatAnim
+Floater.SwitchToFloatAnim = function(self, ...)
+    local rt = { SwitchToFloatAnim(self, ...) }
+    local skinname = self.inst.skinname
+    if IsModSkin(skinname) and self.do_bank_swap and self.swap_data then
+        local symbol = self.swap_data.sym_name or self.swap_data.sym_build
+        self.inst.AnimState:OverrideSymbol("swap_spear", self.swap_data.sym_build or skinname, symbol)
+    end
+    return unpack(rt)
 end
 
 local function ApplyTempCharacter(base_fn, ...)
