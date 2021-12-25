@@ -1,12 +1,13 @@
-version = "2.9.6"
+version = "2.9.7"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 调整SkinHandler中的一些代码格式.
+- 检查文本改用GetStatus.
 
+- 调整SkinHandler中的一些代码格式.
 - 修复换皮肤逻辑和漂浮动画的问题.
 - 调整Tuning.
 - 修复SkinHandler中关于ReskinEntity的一些逻辑问题.
@@ -22,8 +23,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- Tweak code format in SkinHandler.
+- Replace descriptionfn with getstatus.
 
+- Tweak code format in SkinHandler.
 - Fix issue for reskin logic and floating anim.
 - Tweak Tuning.
 - Fix logic issue for "ReskinEntity" in SkinHandler.
