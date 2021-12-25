@@ -234,12 +234,17 @@ local function OnAmmoUnload(inst, data)
     OnChangeImage(inst)
 end
 
-local function displaynamefn(inst)
+local function DisplayNameFn(inst)
     return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
-local function descriptionfn(inst, viewer)
-    return GetString(viewer.prefab, "DESCRIBE", string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or "")) )
+local function GetStatus(inst)
+    local itemtype = GetItemType(inst, true)
+    local itemtype_with_skin = inst:GetSkinBuild() and
+            (( itemtype == "moonglass" and "dream" ) or
+            ( itemtype == "thulecite" and "excalibur" ) or
+            ( itemtype == "moonrock" and "frostmourning" )) or itemtype
+    return string.upper(itemtype_with_skin)
 end
 
 local function fn()
@@ -262,7 +267,7 @@ local function fn()
 
     inst.entity:SetPristine()
 
-    inst.displaynamefn = displaynamefn
+    inst.displaynamefn = DisplayNameFn
     inst._nametail = net_tinybyte(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
@@ -283,9 +288,9 @@ local function fn()
     -------
 
     inst:AddComponent("inspectable")
+    inst.components.inspectable.getstatus = GetStatus
 
     inst:AddComponent("inventoryitem")
-    inst.components.inspectable.descriptionfn = descriptionfn
 
     inst:AddComponent("equippable")
     inst.components.equippable:SetOnEquip(onequip)
