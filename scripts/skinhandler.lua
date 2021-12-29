@@ -124,26 +124,26 @@ Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     end
 
     -- do reskin
-    local rt = { reskin_entity(self, guid, targetskinname, reskinname, ...) }
+    local ret = { reskin_entity(self, guid, targetskinname, reskinname, ...) }
 
     -- mod skin init_fn
     if IsModSkin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
     end
-    return unpack(rt)
+    return unpack(ret)
 end
 
 local Floater = require("components/floater")
 local switch_to_float_anim = Floater.SwitchToFloatAnim
 Floater.SwitchToFloatAnim = function(self, ...)
-    local rt = { switch_to_float_anim(self, ...) }
+    local ret = { switch_to_float_anim(self, ...) }
     local skinname = self.inst.skinname
     if IsModSkin(skinname) and self.do_bank_swap and self.swap_data then
         local symbol = self.swap_data.sym_name or self.swap_data.sym_build
         self.inst.AnimState:OverrideSymbol("swap_spear", self.swap_data.sym_build or skinname, symbol)
     end
-    return unpack(rt)
+    return unpack(ret)
 end
 
 local function ApplyTempCharacter(base_fn, ...)
@@ -155,13 +155,13 @@ local function ApplyTempCharacter(base_fn, ...)
             table.insert(DST_CHARACTERLIST, v)
         end
     end
-    local rt = { base_fn(...) }
+    local ret = { base_fn(...) }
     for i = #DST_CHARACTERLIST, 1, -1 do
         if table.contains(HEADSKIN_CHARACTERS, DST_CHARACTERLIST[i]) then
             table.remove(DST_CHARACTERLIST, i)
         end
     end
-    return unpack(rt)
+    return unpack(ret)
 end
 
 local validate_spawn_prefab_request = ValidateSpawnPrefabRequest
@@ -183,14 +183,14 @@ end
 local SkinPresetsPopup = require("screens/redux/skinpresetspopup")
 local SkinPresetsPopup_ctor = SkinPresetsPopup._ctor
 SkinPresetsPopup._ctor = function(self, ...)
-    local rt = { ApplyTempCharacter(SkinPresetsPopup_ctor, self, ...) }
+    local ret = { ApplyTempCharacter(SkinPresetsPopup_ctor, self, ...) }
 
     local scroll_widget_apply = self.scroll_list.update_fn
     self.scroll_list.update_fn = function(...)
         return ApplyTempCharacter(scroll_widget_apply, ...)
     end
 
-    return unpack(rt)
+    return unpack(ret)
 end
 
 local DefaultSkinSelectionPopup = require("screens/redux/defaultskinselection")
@@ -204,9 +204,9 @@ DefaultSkinSelectionPopup.GetSkinsList = function(self, ...)
         end
         return check_ownership(self, name, ...)
     end
-    local rt = { DefaultSkinSelectionPopup_GetSkinsList(self, ...) }
+    local ret = { DefaultSkinSelectionPopup_GetSkinsList(self, ...) }
     InventoryProxy.CheckOwnership = check_ownership
-    return unpack(rt)
+    return unpack(ret)
 end
 
 local function IsCharacter(prefab)
