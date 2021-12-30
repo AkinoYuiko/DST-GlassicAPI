@@ -1,4 +1,4 @@
-version = "2.9.9"
+version = "2.10"
 -- version_compatible = "2.9.9"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
@@ -20,8 +20,7 @@ description = locale == "zh" and
 - 参数统一在Tuning处理。
 
 "包含了皮肤组件和一套玻璃工具。"
-]]
-or
+]] or
 "[Version: "..version..[[]
 
 Changelog:
