@@ -1,4 +1,4 @@
-local STRINGS = GLOBAL.STRINGS
+GLOBAL.setfenv(1, GLOBAL)
 
 STRINGS.UI.RARITY.Glassic = "Glassic"
 
@@ -28,7 +28,7 @@ STRINGS.NAMES.GLASSICCUTTER_FROSTMOURNING = "Frost Mourning"
 
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER = {
     -- GENERIC = STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSCUTTER,
-    NONE = STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSCUTTER,
+    NONE = "Sharp but probably get broken.",
     MOONGLASS = "Sword with gestalt flash.",
     THULECITE = "Sword with ancient power.",
     MOONROCK = "Sword with frost energy.",

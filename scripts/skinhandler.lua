@@ -4,7 +4,7 @@ local HEADSKIN_CHARACTERS = {}
 local OVERRIDE_RARITY_DATA = {}
 local CHARACTER_EXCLUSIVE_SKINS = {}
 
-local function GetPlayerFromID(id)
+local function get_player_from_id(id)
     if type(id) == "table" then
         return id.prefab and id or nil
     end
@@ -15,33 +15,33 @@ local function GetPlayerFromID(id)
     end
 end
 
-local function GetModSkins()
+local function get_mod_skins()
     return ALL_MOD_SKINS
 end
 
-local function AddModSkin(skin_name, test_fn)
+local function add_mod_skin(skin_name, test_fn)
     ALL_MOD_SKINS[skin_name] = test_fn or true
 end
 
-local function RemoveModSkin(skin_name)
+local function remove_modskin(skin_name)
     ALL_MOD_SKINS[skin_name] = nil
 end
 
-local function IsModSkin(skin_name)
+local function is_mod_skin(skin_name)
     return ALL_MOD_SKINS[skin_name] ~= nil
 end
 
-local function IsValidModSkin(skin_name, userid)
+local function is_valid_mod_skin(skin_name, userid)
     local test_fn = ALL_MOD_SKINS[skin_name]
-    return test_fn and (test_fn == true or test_fn(GetPlayerFromID(userid)))
+    return test_fn and (test_fn == true or test_fn(get_player_from_id(userid)))
 end
 
-local function SetCharacterExclusiveSkin(skin_name, characters)
+local function set_character_exlusive_skin(skin_name, characters)
     CHARACTER_EXCLUSIVE_SKINS[skin_name] = type(characters) == "string" and {characters} or characters
 end
 
-local function DoesCharacterHasSkin(skin_name, character)
-    if IsModSkin(skin_name) then
+local function does_character_has_skin(skin_name, character)
+    if is_mod_skin(skin_name) then
         local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
         if characters then
             character = type(character) == "table" and character.prefab or character
@@ -54,7 +54,7 @@ local function DoesCharacterHasSkin(skin_name, character)
 end
 
 -- skin index for networking between server and clients
-local function IndexSkinIDs(prefab)
+local function index_skin_ids(prefab)
     PREFAB_SKINS_IDS[prefab] = {}
     for index, skin in pairs(PREFAB_SKINS[prefab] or {}) do
         PREFAB_SKINS_IDS[prefab][skin] = index
@@ -76,7 +76,7 @@ end
 
 local check_ownership = InventoryProxy.CheckOwnership
 InventoryProxy.CheckOwnership = function(self, skin, ...)
-    if IsValidModSkin(skin) then
+    if is_valid_mod_skin(skin) then
         return true
     end
     return check_ownership(self, skin, ...)
@@ -84,10 +84,10 @@ end
 
 local check_client_ownership = InventoryProxy.CheckClientOwnership
 InventoryProxy.CheckClientOwnership = function(self, userid, skin, ...)
-    if not DoesCharacterHasSkin(skin, GetPlayerFromID(userid)) then
+    if not does_character_has_skin(skin, get_player_from_id(userid)) then
         return false
     end
-    if IsValidModSkin(skin, userid) then
+    if is_valid_mod_skin(skin, userid) then
         return true
     end
     return check_client_ownership(self, userid, skin, ...)
@@ -95,10 +95,10 @@ end
 
 local check_ownership_get_latest = InventoryProxy.CheckOwnershipGetLatest
 InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
-    if not DoesCharacterHasSkin(item_type, ThePlayer) then
+    if not does_character_has_skin(item_type, ThePlayer) then
         return false
     end
-    if IsValidModSkin(item_type, ThePlayer) then
+    if is_valid_mod_skin(item_type, ThePlayer) then
         return true, -2333 -- :nope:
     end
     return check_ownership_get_latest(self, item_type, ...)
@@ -107,7 +107,7 @@ end
 local spawn_prefab = SpawnPrefab
 SpawnPrefab = function(name, skin, skin_id, creator, ...)
     local ent = spawn_prefab(name, skin, skin_id, creator, ...)
-    if IsModSkin(skin) and DoesCharacterHasSkin(skin, GetPlayerFromID(creator)) then
+    if is_mod_skin(skin) and does_character_has_skin(skin, get_player_from_id(creator)) then
         local init_fn = Prefabs[skin].init_fn
         if init_fn then init_fn(ent) end
     end
@@ -127,7 +127,7 @@ Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ret = { reskin_entity(self, guid, targetskinname, reskinname, ...) }
 
     -- mod skin init_fn
-    if IsModSkin(reskinname) then
+    if is_mod_skin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
     end
@@ -139,14 +139,14 @@ local switch_to_float_anim = Floater.SwitchToFloatAnim
 Floater.SwitchToFloatAnim = function(self, ...)
     local ret = { switch_to_float_anim(self, ...) }
     local skinname = self.inst.skinname
-    if IsModSkin(skinname) and self.do_bank_swap and self.swap_data then
+    if is_mod_skin(skinname) and self.do_bank_swap and self.swap_data then
         local symbol = self.swap_data.sym_name or self.swap_data.sym_build
         self.inst.AnimState:OverrideSymbol("swap_spear", self.swap_data.sym_build or skinname, symbol)
     end
     return unpack(ret)
 end
 
-local function ApplyTempCharacter(base_fn, ...)
+local function apply_temp_character(base_fn, ...)
     if #HEADSKIN_CHARACTERS == 0 then return base_fn(...) end
     local added_characters = {}
     for _, v in ipairs(HEADSKIN_CHARACTERS) do
@@ -166,28 +166,28 @@ end
 
 local validate_spawn_prefab_request = ValidateSpawnPrefabRequest
 ValidateSpawnPrefabRequest = function(...)
-    return ApplyTempCharacter(validate_spawn_prefab_request, ...)
+    return apply_temp_character(validate_spawn_prefab_request, ...)
 end
 
 local LoadoutSelect = require("widgets/redux/loadoutselect")
 local LoadoutSelect_ctor = LoadoutSelect._ctor
 LoadoutSelect._ctor = function(...)
-    return ApplyTempCharacter(LoadoutSelect_ctor, ...)
+    return apply_temp_character(LoadoutSelect_ctor, ...)
 end
 
 local apply_skin_presets = LoadoutSelect.ApplySkinPresets
 LoadoutSelect.ApplySkinPresets = function(...)
-    return ApplyTempCharacter(apply_skin_presets, ...)
+    return apply_temp_character(apply_skin_presets, ...)
 end
 
 local SkinPresetsPopup = require("screens/redux/skinpresetspopup")
 local SkinPresetsPopup_ctor = SkinPresetsPopup._ctor
 SkinPresetsPopup._ctor = function(self, ...)
-    local ret = { ApplyTempCharacter(SkinPresetsPopup_ctor, self, ...) }
+    local ret = { apply_temp_character(SkinPresetsPopup_ctor, self, ...) }
 
     local scroll_widget_apply = self.scroll_list.update_fn
     self.scroll_list.update_fn = function(...)
-        return ApplyTempCharacter(scroll_widget_apply, ...)
+        return apply_temp_character(scroll_widget_apply, ...)
     end
 
     return unpack(ret)
@@ -199,7 +199,7 @@ DefaultSkinSelectionPopup.GetSkinsList = function(self, ...)
     local player_prefab = self.character
     local check_ownership = InventoryProxy.CheckOwnership
     InventoryProxy.CheckOwnership = function(self, name, ...)
-        if not DoesCharacterHasSkin(name, player_prefab) then
+        if not does_character_has_skin(name, player_prefab) then
             return false
         end
         return check_ownership(self, name, ...)
@@ -209,13 +209,13 @@ DefaultSkinSelectionPopup.GetSkinsList = function(self, ...)
     return unpack(ret)
 end
 
-local function IsCharacter(prefab)
+local function is_character(prefab)
     return table.contains(GetActiveCharacterList(), prefab)
 end
 
-local function AddModSkins(data)
+local function add_mod_skins(data)
     for base_prefab, prefab_skins in pairs(data) do
-        if IsCharacter(base_prefab) and not table.contains(HEADSKIN_CHARACTERS, base_prefab) then
+        if is_character(base_prefab) and not table.contains(HEADSKIN_CHARACTERS, base_prefab) then
             table.insert(HEADSKIN_CHARACTERS, base_prefab)
         end
         if not PREFAB_SKINS[base_prefab] then
@@ -223,7 +223,7 @@ local function AddModSkins(data)
         end
         for _, skin_data in ipairs(prefab_skins) do
             local skin_name = type(skin_data) == "table" and skin_data.name or skin_data
-            if IsCharacter(base_prefab) and skin_name ~= base_prefab.."_none" then
+            if is_character(base_prefab) and skin_name ~= base_prefab.."_none" then
                 if not SKIN_AFFINITY_INFO[base_prefab] then
                     SKIN_AFFINITY_INFO[base_prefab] = {}
                 end
@@ -234,10 +234,10 @@ local function AddModSkins(data)
             if not table.contains(PREFAB_SKINS[base_prefab], skin_name) then
                 table.insert(PREFAB_SKINS[base_prefab], skin_name)
             end
-            AddModSkin(skin_name, type(skin_data) == "table" and skin_data.test_fn)
-            SetCharacterExclusiveSkin(skin_name, type(skin_data) == "table" and skin_data.exclusive_char)
+            add_mod_skin(skin_name, type(skin_data) == "table" and skin_data.test_fn)
+            set_character_exlusive_skin(skin_name, type(skin_data) == "table" and skin_data.exclusive_char)
         end
-        IndexSkinIDs(base_prefab)
+        index_skin_ids(base_prefab)
     end
 end
 
@@ -254,7 +254,7 @@ AccountItemFrame._SetRarity = function(self, rarity, ...)
     end
 end
 
-local function SetRarity(rarity, order, color, frame_symbol, override_build)
+local function set_rarity(rarity, order, color, frame_symbol, override_build)
     RARITY_ORDER[rarity] = order
     SKIN_RARITY_COLORS[rarity] = color
     if frame_symbol or override_build then
@@ -268,15 +268,15 @@ local function SetRarity(rarity, order, color, frame_symbol, override_build)
 end
 
 return {
-    GetModSkins                 = GetModSkins,
-    AddModSkin                  = AddModSkin,
-    RemoveModSkin               = RemoveModSkin,
-    IsModSkin                   = IsModSkin,
-    IsValidModSkin              = IsValidModSkin,
+    GetModSkins                 = get_mod_skins,
+    AddModSkin                  = add_mod_skin,
+    RemoveModSkin               = remove_modskin,
+    IsModSkin                   = is_mod_skin,
+    IsValidModSkin              = is_valid_mod_skin,
 
-    SetCharacterExclusiveSkin   = SetCharacterExclusiveSkin,
-    DoesCharacterHasSkin        = DoesCharacterHasSkin,
+    SetCharacterExclusiveSkin   = set_character_exlusive_skin,
+    DoesCharacterHasSkin        = does_character_has_skin,
 
-    AddModSkins                 = AddModSkins,  -- to import skin data
-    SetRarity                   = SetRarity,
+    AddModSkins                 = add_mod_skins,  -- to import skin data
+    SetRarity                   = set_rarity,
 }

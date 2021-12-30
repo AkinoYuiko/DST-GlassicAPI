@@ -1,47 +1,28 @@
-version = "2.10"
--- version_compatible = "2.9.9"
+version = "2.10.2"
+version_compatible = "2.10.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 更新适配纯净辅助.
+- 调整了部分局部函数的名字。
 
-- 检查文本改用GetStatus。
-- 调整SkinHandler中的一些代码格式。
-- 修复换皮肤逻辑和漂浮动画的问题。
-- 调整Tuning。
-- 修复SkinHandler中关于ReskinEntity的一些逻辑问题。
-- 修复LanguageTranslator。
-- 修复一处拼写错误。
-- 调整代码结构。
-- 修改了部分示例皮肤的初始化逻辑。
-- 参数统一在Tuning处理。
+- 更新了可支持的语言列表 _languages。
+- 调整 modmain 的全局环境。
 
 "包含了皮肤组件和一套玻璃工具。"
 ]] or
 "[Version: "..version..[[]
 
 Changelog:
-- Improve compatibility with DST-Fixed.
+- Rename some local functions.
 
-- Replace descriptionfn with getstatus
-- Tweak code format in SkinHandler.
-- Fix issue for reskin logic and floating anim.
-- Tweak Tuning.
-- Fix logic issue for "ReskinEntity" in SkinHandler.
-- Fix LanguageTranslator.
-- Fix a spell error.
-- Tweak code format.
-- Improve init logic for some example skins.
-- Add Tuning.
+- Update _languages table.
+- Tweak global_env in modmain.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
 ]]
-
-icon_atlas = "modicon.xml"
-icon = "modicon.tex"
 
 priority = 32767
 

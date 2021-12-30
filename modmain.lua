@@ -1,13 +1,5 @@
-local STRINGS               = GLOBAL.STRINGS
-local LanguageTranslator    = GLOBAL.LanguageTranslator
-local ModManager            = GLOBAL.ModManager
-local TranslateStringTable  = GLOBAL.TranslateStringTable
-local hash                  = GLOBAL.hash
-local io                    = GLOBAL.io
-local tonumber              = GLOBAL.tonumber
-local resolvefilepath       = GLOBAL.resolvefilepath
-local resolvefilepath_soft  = GLOBAL.resolvefilepath_soft
-local unpack                = GLOBAL.unpack
+local ENV = env
+GLOBAL.setfenv(1, GLOBAL)
 
 GlassicAPI = {}
 GlassicAPI.SkinHandler = require("skinhandler")
@@ -48,7 +40,7 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
     table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
 
-    AddModCharacter(char_name, char_gender)
+    ENV.AddModCharacter(char_name, char_gender)
 end
 
 GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
@@ -56,7 +48,7 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     if assets_table then
         table.insert(assets_table, Asset("ATLAS", file))
     end
-    AddMinimapAtlas(file)
+    ENV.AddMinimapAtlas(file)
 end
 
 GlassicAPI.SetExclusiveToPlayer = function(name)
@@ -108,7 +100,8 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
         data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat")
     end
 
-    if not GLOBAL.TheWorld.ismastersim then return end
+    if not TheWorld.ismastersim then return end
+    -- if not GLOBAL.TheWorld.ismastersim then return end
 
     local onequipfn = ( slot == "hand" and onequiphandfn )
                         or ( slot == "body" and onequipbodyfn )
@@ -126,7 +119,8 @@ end
 
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
 
-    if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
+    if inst.components.placer == nil and not TheWorld.ismastersim then return end
+    -- if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
 
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
@@ -163,9 +157,10 @@ GlassicAPI.MergeStringsToGLOBAL = function(strings, custom_field, no_override)
 end
 
 local _languages = {
-    zh = "chinese_s", -- Chinese
-    sc = "chinese_s", -- Simplified Chinese
+    zh = "chinese_s", -- Simplified Chinese
+    zht = "chinese_t", -- Traditional Chinese
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
+    sc = "chinese_s" ,
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     local _defaultlang = LanguageTranslator.defaultlang
@@ -259,9 +254,10 @@ ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
     return initialize_modmain(self, _modname, env, mainfile, ...)
 end
 
-GLOBAL.GlassicAPI = GlassicAPI
+-- GLOBAL.GlassicAPI = GlassicAPI
+ENV.GlassicAPI = GlassicAPI
 
-if is_mim_enabled then return end
+if ENV.is_mim_enabled then return end
 
 local main_files = {
     "actions",
@@ -272,5 +268,8 @@ local main_files = {
     "widgets",
 }
 
-for _, v in ipairs(main_files) do modimport("main/"..v) end
-modimport("strings/"..(table.contains({"zh", "chs", "cht"}, LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
+for i = 1, #main_files do
+    ENV.modimport("main/" .. main_files[i])
+end
+
+ENV.modimport("strings/"..(table.contains({"zh", "chs", "cht"}, LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
