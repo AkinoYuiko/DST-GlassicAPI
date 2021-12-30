@@ -74,6 +74,8 @@ local function fn()
     inst.components.equippable:SetOnEquip(onequip)
     inst.components.equippable:SetOnUnequip(onunequip)
 
+    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.MOONGLASSHAMMER"})
+
     return inst
 end
 

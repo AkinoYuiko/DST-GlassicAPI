@@ -181,10 +181,11 @@ local function OnChangeImage(inst)
     local tail = GetItemType(inst)
     local anim = GetItemType(inst, true)
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
-    local display_name = inst:GetSkinBuild() and
-                        (( tail == "_moonglass" and "_dream" ) or
-                        ( tail == "_thulecite" and "_excalibur" ) or
-                        ( tail == "_moonrock" and "_frostmourning" ))
+    local display_name = inst:GetSkinBuild()
+                    and (( tail == "_moonglass" and "_dream" )
+                    or ( tail == "_thulecite" and "_excalibur" )
+                    or ( tail == "_moonrock" and "_frostmourning" ))
+                    or tail
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
@@ -200,7 +201,10 @@ local function OnChangeImage(inst)
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
         owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. tail)
     end
-    inst._nametail:set(GLASSIC_IDS[(display_name or tail)] or 0)
+    inst._nametail:set(GLASSIC_IDS[(display_name)] or 0)
+    -- Strcode Name --
+    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. string.upper(display_name)})
+
 end
 
 local function OnAmmoLoad(inst, data)
@@ -301,6 +305,8 @@ local function fn()
 
     inst.GetItemType = GetItemType
     inst.OnChangeImage = OnChangeImage
+
+    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
 
     return inst
 end

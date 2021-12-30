@@ -1,13 +1,14 @@
-version = "2.9.8"
-version_compatible = "2.9.7"
+version = "2.9.9"
+-- version_compatible = "2.9.9"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 检查文本改用GetStatus。
+- 更新适配纯净辅助.
 
+- 检查文本改用GetStatus。
 - 调整SkinHandler中的一些代码格式。
 - 修复换皮肤逻辑和漂浮动画的问题。
 - 调整Tuning。
@@ -24,8 +25,9 @@ or
 "[Version: "..version..[[]
 
 Changelog:
-- Replace descriptionfn with getstatus
+- Improve compatibility with DST-Fixed.
 
+- Replace descriptionfn with getstatus
 - Tweak code format in SkinHandler.
 - Fix issue for reskin logic and floating anim.
 - Tweak Tuning.
