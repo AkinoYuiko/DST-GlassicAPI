@@ -203,7 +203,7 @@ local function OnChangeImage(inst)
     end
     inst._nametail:set(GLASSIC_IDS[(display_name)] or 0)
     -- Strcode Name --
-    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. string.upper(display_name)})
+    inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. string.upper(display_name)})
 
 end
 
@@ -306,7 +306,7 @@ local function fn()
     inst.GetItemType = GetItemType
     inst.OnChangeImage = OnChangeImage
 
-    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
+    inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
 
     return inst
 end

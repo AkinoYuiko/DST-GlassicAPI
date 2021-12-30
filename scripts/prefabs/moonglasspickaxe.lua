@@ -77,7 +77,7 @@ local function fn()
 
     inst.components.floater:SetBankSwapOnFloat(true, -11, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
 
-    inst.drawnameoverride = STRCODE_HEADER and EncodeStrCode({content = "NAMES.MOONGLASSPICKAXE"})
+    inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.MOONGLASSPICKAXE"})
 
     return inst
 end
