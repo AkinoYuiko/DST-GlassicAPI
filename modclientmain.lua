@@ -1,4 +1,4 @@
-if GLOBAL.inGamePlay or GLOBAL.TheNet:IsDedicated() or GLOBAL.TheNet:GetIsServer() or GLOBAL.TheNet:GetIsClient() then return end
+if not GLOBAL.IsInFrontEnd() then return end
 
 modimport("modmain") -- For API functions & mod env
 
