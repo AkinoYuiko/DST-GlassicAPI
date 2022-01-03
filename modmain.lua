@@ -227,10 +227,11 @@ local function write_for_strings(base, data, file)
         if type(v) == "table" then
             write_for_strings(path, v, file)
         else
-            file:write('#. '..path.."\n")
+            file:write('\n')
+            file:write('#. '..path..'\n')
             file:write('msgctxt "'..path..'"\n')
             file:write('msgid "'..GlassicAPI.ConvertEscapeCharactersToString(v)..'"\n')
-            file:write('msgstr ""\n\n')
+            file:write('msgstr ""\n')
         end
     end
 end
@@ -240,7 +241,6 @@ GlassicAPI.MakePOTFromStrings = function(file, strings)
     file:write("\"Application: Dont' Starve\\n\"")
     file:write("\n")
     file:write("\"POT Version: 2.0\\n\"")
-    file:write("\n")
     file:write("\n")
 
     write_for_strings("STRINGS", strings, file)
