@@ -2,9 +2,10 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 GlassicAPI = {}
-GlassicAPI.SkinHandler = require("skinhandler")
 
-local SLAXML = require("slaxml")
+GlassicAPI.SkinHandler = require "skinhandler"
+
+local SLAXML = require "slaxml"
 GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     path_to_file = resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
 
@@ -156,17 +157,18 @@ GlassicAPI.MergeStringsToGLOBAL = function(strings, custom_field, no_override)
     merge_internal(custom_field or STRINGS, strings, no_override)
 end
 
-local _languages = {
+local CHINESE_CODES = {
     zh = "chinese_s", -- Simplified Chinese
     zht = "chinese_t", -- Traditional Chinese
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
+    cht = "chinese_t",
     sc = "chinese_s" ,
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     local _defaultlang = LanguageTranslator.defaultlang
     local lang = override_lang or _defaultlang
-    if not _languages[lang] then return end
-    local filepath = base_path.."/".._languages[lang]..".po"
+    if not CHINESE_CODES[lang] then return end
+    local filepath = base_path.."/"..CHINESE_CODES[lang]..".po"
     if not resolvefilepath_soft(filepath) then
         print("Could not find a language file matching "..filepath.." in any of the search paths.")
         return
