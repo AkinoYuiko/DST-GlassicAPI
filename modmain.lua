@@ -140,7 +140,7 @@ GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
 end
 
 local function merge_internal(target, strings, no_override)
-    for k, v in pairs(strings) do
+    for k, v in orderedPairs(strings) do
         if type(v) == "table" then
             if not target[k] then
                 target[k] = {}
@@ -195,7 +195,7 @@ local function write_speech(file, base_strings, strings, indent)
     for i = 1, indent do
         str = str .. "\t"
     end
-    for k, v in pairs(strings) do
+    for k, v in orderedPairs(strings) do
         if type(v) == "table" then
             file:write(str .. k .. " =\n" .. str .. "{\n")
             write_speech(file, base_strings and base_strings[k], v, indent + 1)
@@ -222,7 +222,7 @@ GlassicAPI.MergeSpeechFile = function(base_strings, file, source)
 end
 
 local function write_for_strings(base, data, file)
-    for k, v in pairs(data) do
+    for k, v in orderedPairs(data) do
         local path = base.."."..k
         if type(v) == "table" then
             write_for_strings(path, v, file)
