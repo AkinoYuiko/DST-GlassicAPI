@@ -1,12 +1,13 @@
-version = "2.10.3"
+version = "2.10.4"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- POT文件处理部分使用orderedPairs代替pairs。
+- POT文件处理部分使用sorted_pairs代替orderedPairs。
 
+- POT文件处理部分使用orderedPairs代替pairs。
 - 调整了部分局部函数的名字。
 - 更新了可支持的语言列表 _languages。
 - 调整 modmain 的全局环境。
@@ -16,8 +17,9 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
-- Replace pairs with orderedPairs to keep string orders in POT files.
+- Replace orderedPairs with sorted_pairs.
 
+- Replace pairs with orderedPairs to keep string orders in POT files.
 - Rename some local functions.
 - Update _languages table.
 - Tweak global_env in modmain.
