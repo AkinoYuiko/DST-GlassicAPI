@@ -1,6 +1,6 @@
-local pref = {}
+local prefabs = {}
 
-table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
+table.insert(prefabs, CreatePrefabSkin("goldenaxe_victorian", {
     base_prefab = "goldenaxe",
     type = "item",
     rarity = "Glassic",
@@ -15,7 +15,7 @@ table.insert(pref, CreatePrefabSkin("goldenaxe_victorian", {
     skin_tags = { "GOLDENAXE" },
 }))
 
-table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
+table.insert(prefabs, CreatePrefabSkin("moonglassaxe_northern", {
     base_prefab = "moonglassaxe",
     type = "item",
     rarity = "Glassic",
@@ -30,7 +30,7 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_northern", {
     skin_tags = { "MOONGLASSAXE" },
 }))
 
-table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
+table.insert(prefabs, CreatePrefabSkin("moonglassaxe_victorian", {
     base_prefab = "moonglassaxe",
     type = "item",
     rarity = "Glassic",
@@ -45,7 +45,7 @@ table.insert(pref, CreatePrefabSkin("moonglassaxe_victorian", {
     skin_tags = { "MOONGLASSAXE" },
 }))
 
-table.insert(pref, CreatePrefabSkin("moonglasshammer_forge", {
+table.insert(prefabs, CreatePrefabSkin("moonglasshammer_forge", {
     base_prefab = "moonglasshammer",
     type = "item",
     rarity = "Glassic",
@@ -60,7 +60,7 @@ table.insert(pref, CreatePrefabSkin("moonglasshammer_forge", {
     skin_tags = { "MOONGLASSHAMMER" },
 }))
 
-table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
+table.insert(prefabs, CreatePrefabSkin("moonglasspickaxe_northern", {
     base_prefab = "moonglasspickaxe",
     type = "item",
     rarity = "Glassic",
@@ -76,7 +76,7 @@ table.insert(pref, CreatePrefabSkin("moonglasspickaxe_northern", {
 }))
 
 
-table.insert(pref, CreatePrefabSkin("glassiccutter_dream", {
+table.insert(prefabs, CreatePrefabSkin("glassiccutter_dream", {
     base_prefab = "glassiccutter",
     type = "item",
     rarity = "Glassic",
@@ -91,4 +91,4 @@ table.insert(pref, CreatePrefabSkin("glassiccutter_dream", {
 
 }))
 
-return unpack(pref)
+return unpack(prefabs)

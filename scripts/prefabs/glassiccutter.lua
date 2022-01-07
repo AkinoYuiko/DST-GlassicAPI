@@ -267,6 +267,8 @@ local function fn()
     inst:AddTag("sharp")
     inst:AddTag("pointy")
 
+    inst:AddTag("weapon")
+
     MakeInventoryFloatable(inst, "med", 0.05, {1.0, 0.4, 1.0}, true, -17.5, {sym_build = "glassiccutter", sym_name = "swap_glassiccutter", anim = "none" } )
 
     inst.entity:SetPristine()
