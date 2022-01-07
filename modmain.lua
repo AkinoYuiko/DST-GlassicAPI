@@ -139,6 +139,10 @@ GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
 
 end
 
+GlassicAPI.ShellComponent = Class(function(self, inst)
+    self.inst = inst
+end)
+
 local function merge_internal(target, strings, no_override)
     for _, k, v in sorted_pairs(strings) do
         if type(v) == "table" then
