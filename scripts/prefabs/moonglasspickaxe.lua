@@ -77,10 +77,6 @@ local function fn()
 
     inst.components.floater:SetBankSwapOnFloat(true, -11, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
 
-    inst:DoTaskInTime(0, function(inst)
-        inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES." .. string.upper(inst.prefab)})
-    end)
-
     return inst
 end
 
