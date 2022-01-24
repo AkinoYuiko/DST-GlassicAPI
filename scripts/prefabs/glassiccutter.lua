@@ -117,6 +117,14 @@ local function onattack_base_check(attacker, target)
         and target and target ~= attacker and target:IsValid()
 end
 
+local function get_attacker_mult(attacker)
+    local damagemult = attacker.components.combat.damagemultiplier or 1
+    damagemult = math.min(2, damagemult)
+    damagemult = math.max(1, damagemult)
+    local electricmult = attacker.components.electricattacks and 1.5 or 1
+    return damagemult * electricmult
+end
+
 local function onattack_moonglass(inst, attacker, target)
     if onattack_base_check(attacker, target) then
         if (target.components.health == nil or not target.components.health:IsDead()) and
@@ -127,7 +135,7 @@ local function onattack_moonglass(inst, attacker, target)
             SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
         end
 
-        try_consume_and_refill(inst, attacker, "moonglass", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS)
+        try_consume_and_refill(inst, attacker, "moonglass", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS * get_attacker_mult(attacker))
     end
 end
 
