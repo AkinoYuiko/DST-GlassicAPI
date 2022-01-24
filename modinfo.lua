@@ -1,12 +1,13 @@
-version = "2.11.1"
+version = "2.11.2"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 移除部分物品的 drawnameoverride，现由纯净辅助自行兼容。
+- 调整了月灵刀消耗月亮碎片的概率。
 
+- 移除部分物品的 drawnameoverride，现由纯净辅助自行兼容。
 - 新增 ShellComponent。
 
 "包含了皮肤组件和一套玻璃工具。"
@@ -14,8 +15,9 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
-- Remove default drawnameoverride from items.
+- Tweak moonglass consume rate with Gestalt Cutter.
 
+- Remove default drawnameoverride from items.
 - Add ShellComponent.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
