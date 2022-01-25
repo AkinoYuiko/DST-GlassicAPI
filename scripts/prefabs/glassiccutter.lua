@@ -38,7 +38,7 @@ local function turn_off(inst)
     end
 end
 
-local function GetItemType(inst, noprefix)
+local function get_item_type(inst, noprefix)
     return inst.components.container and (
         (inst.components.container:Has("moonglass",1) and (noprefix and "moonglass" or "_moonglass")) or
         (inst.components.container:Has("thulecite",1) and (noprefix and "thulecite" or "_thulecite")) or
@@ -50,9 +50,9 @@ local function onequip(inst, owner)
     local skin_build = inst:GetSkinBuild()
     if skin_build then
         -- owner:PushEvent("equipskinneditem", inst:GetSkinName())
-        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter"..GetItemType(inst))
+        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter"..get_item_type(inst))
     else
-        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..GetItemType(inst))
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
     end
 
     owner.AnimState:Show("ARM_carry")
@@ -185,9 +185,9 @@ local GLASSIC_NAMES = {
 }
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
-local function OnChangeImage(inst)
-    local tail = GetItemType(inst)
-    local anim = GetItemType(inst, true)
+local function on_change_image(inst)
+    local tail = get_item_type(inst)
+    local anim = get_item_type(inst, true)
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
     local display_name = inst:GetSkinBuild()
                     and (( tail == "_moonglass" and "_dream" )
@@ -215,7 +215,7 @@ local function OnChangeImage(inst)
 
 end
 
-local function OnAmmoLoad(inst, data)
+local function on_ammo_load(inst, data)
     if data.item.prefab == "moonglass" then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONGLASS)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
@@ -234,24 +234,24 @@ local function OnAmmoLoad(inst, data)
         turn_on(inst, inst.components.inventoryitem.owner)
     end
     -- anim and image --
-    OnChangeImage(inst)
+    on_change_image(inst)
 end
 
-local function OnAmmoUnload(inst, data)
+local function on_ammo_unload(inst, data)
     inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
     inst.components.weapon:SetOnAttack(onattack_none)
     inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     turn_off(inst)
     -- anim and image --
-    OnChangeImage(inst)
+    on_change_image(inst)
 end
 
-local function DisplayNameFn(inst)
+local function display_name_fn(inst)
     return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
 end
 
 local function GetStatus(inst)
-    local itemtype = GetItemType(inst, true)
+    local itemtype = get_item_type(inst, true)
     local itemtype_with_skin = inst:GetSkinBuild() and
             (( itemtype == "moonglass" and "dream" ) or
             ( itemtype == "thulecite" and "excalibur" ) or
@@ -281,7 +281,7 @@ local function fn()
 
     inst.entity:SetPristine()
 
-    inst.displaynamefn = DisplayNameFn
+    inst.displaynamefn = display_name_fn
     inst._nametail = net_tinybyte(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
@@ -296,8 +296,8 @@ local function fn()
     inst.components.container:WidgetSetup("glassiccutter")
     inst.components.container.canbeopened = false
 
-    inst:ListenForEvent("itemget", OnAmmoLoad)
-    inst:ListenForEvent("itemlose", OnAmmoUnload)
+    inst:ListenForEvent("itemget", on_ammo_load)
+    inst:ListenForEvent("itemlose", on_ammo_unload)
 
     -------
 
@@ -313,8 +313,8 @@ local function fn()
 
     MakeHauntableLaunch(inst)
 
-    inst.GetItemType = GetItemType
-    inst.OnChangeImage = OnChangeImage
+    inst.GetItemType = get_item_type
+    inst.OnChangeImage = on_change_image
 
     inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
 

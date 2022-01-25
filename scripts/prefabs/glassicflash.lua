@@ -7,13 +7,13 @@ local prefabs = {
     "electrichitsparks",
 }
 
-local function doattack(inst, target)
+local function do_attack(inst, target)
     if inst.components.combat:CanHitTarget(target) then
         inst.components.combat:DoAttack(target)
     end
 end
 
-local function onattackother(inst, data)
+local function on_attack_other(inst, data)
     local target = data.target
     if target and target:IsValid() and inst:IsValid() then
         if inst.components.electricattacks then
@@ -29,7 +29,7 @@ local function onattackother(inst, data)
 end
 
 local props = {"externaldamagemultipliers", "damagebonus"}
-local function SetTarget(inst, owner, target)
+local function set_target(inst, owner, target)
     if owner then
         for _, v in ipairs(props) do
             inst.components.combat[v] = owner.components.combat[v]
@@ -39,11 +39,11 @@ local function SetTarget(inst, owner, target)
             inst:AddComponent("electricattacks")
         end
 
-        inst:ListenForEvent("onattackother", onattackother)
+        inst:ListenForEvent("onattackother", on_attack_other)
 
         inst.entity:SetParent(owner.entity)
 
-        inst:DoTaskInTime(0 , doattack, target)
+        inst:DoTaskInTime(0 , do_attack, target)
     end
 end
 
@@ -60,7 +60,7 @@ local function fn()
     inst.components.combat:SetDefaultDamage(TUNING.ALTERGUARDIANHAT_GESTALT_DAMAGE)
     inst.components.combat:SetRange(TUNING.GESTALTGUARD_ATTACK_RANGE * 10)
 
-    inst.SetTarget = SetTarget
+    inst.SetTarget = set_target
 
     inst:DoTaskInTime(0.5, function(inst) inst:Remove() end)
 
@@ -68,7 +68,7 @@ local function fn()
 end
 
 
-local function PlaySound(inst, sound)
+local function play_sound(inst, sound)
     inst.SoundEmitter:PlaySound(sound)
 end
 
@@ -91,7 +91,7 @@ local function MakeFx(t)
 
         if t.sound then
             inst.entity:AddSoundEmitter()
-            inst:DoTaskInTime(t.sounddelay or 0, PlaySound, t.sound)
+            inst:DoTaskInTime(t.sounddelay or 0, play_sound, t.sound)
         end
 
         local anim_state = inst.AnimState
