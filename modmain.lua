@@ -279,11 +279,11 @@ for i = 1, #main_files do
 end
 
 local CHINESE_CODES = {
-    ["chs"] = true,
-    ["cht"] = true,
-    ["sc"]  = true,
-    ["zh"]  = true,
-    ["zht"] = true,
+    ["chs"] = "zh",
+    ["cht"] = "zh",
+    ["sc"]  = "zh",
+    ["zh"]  = "zh",
+    ["zht"] = "zh",
 }
 
-ENV.modimport("strings/" .. CHINESE_CODES[LanguageTranslator.defaultlang] and "zh" or "en")
+ENV.modimport("strings/" .. CHINESE_CODES[LanguageTranslator.defaultlang] or "en")
