@@ -286,4 +286,4 @@ local CHINESE_CODES = {
     ["zht"] = "zh",
 }
 
-ENV.modimport("strings/" .. CHINESE_CODES[LanguageTranslator.defaultlang] or "en")
+ENV.modimport("strings/" .. (CHINESE_CODES[LanguageTranslator.defaultlang] or "en"))
