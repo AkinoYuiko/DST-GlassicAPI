@@ -1,6 +1,5 @@
-local Vector3 = GLOBAL.Vector3
-local containers = require("containers")
-local params = containers.params
+GLOBAL.setfenv(1, GLOBAL)
+local params = require("containers").params
 
 params.glassiccutter =
 {
@@ -17,11 +16,12 @@ params.glassiccutter =
     type = "hand_inv",
 }
 
+local allowed_items = {
+    ["moonglass"]       = true,
+    ["thulecite"]       = true,
+    ["moonrocknugget"]  = true,
+}
+
 function params.glassiccutter.itemtestfn(container, item, slot)
-    local allowed_items = {
-        "moonglass",
-        "thulecite",
-        "moonrocknugget",
-    }
-    return item:HasTag("spore") or table.contains(allowed_items, item.prefab)
+    return item:HasTag("spore") or allowed_items[item.prefab]
 end

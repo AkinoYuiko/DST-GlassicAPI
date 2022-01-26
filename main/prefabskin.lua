@@ -25,7 +25,7 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 --  -- #40E0D0 reserved skin colour
 -- }
 
-local function refresh_floater(inst)
+local function update_floater_anim(inst)
     if inst.components.floater then
         if inst.components.floater:IsFloating() then
             inst.components.floater:SwitchToDefaultAnim(true)
@@ -80,12 +80,12 @@ glassiccutter_init_fn = function(inst, skinname, override_build)
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
     inst:OnChangeImage()
-    refresh_floater(inst)
+    update_floater_anim(inst)
 end
 glassiccutter_clear_fn = function(inst)
     inst.AnimState:SetBuild("glassiccutter")
     inst:OnChangeImage()
-    refresh_floater(inst)
+    update_floater_anim(inst)
 end
 
 -- [[ Set Skins ]] --

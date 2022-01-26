@@ -57,12 +57,12 @@ for _, v in ipairs({"wilson", "wilson_client"}) do
 end
 
 AddPrefabPostInit("glasscutter", function(inst)
-    if not TheWorld.ismastersim then return inst end
+    if not TheWorld.ismastersim then return end
     inst:AddComponent("halloweenmoonmutable")
 end)
 
 AddPrefabPostInit("alterguardianhatshard", function(inst)
-    if not TheWorld.ismastersim then return inst end
+    if not TheWorld.ismastersim then return end
     inst:AddComponent("glasssocket")
 end)
 
@@ -73,18 +73,24 @@ local allowed_items = {
     "moonrocknugget",
 }
 
-for _, v in ipairs(allowed_items) do
-    AddPrefabPostInit(v, function(inst)
-        inst:AddTag("reloaditem_ammo")
-        inst:AddComponent("glassiccutter_ammo")
-    end)
+local function reloaditem_ammo_postinit(inst)
+    inst:AddTag("reloaditem_ammo")
+    if not TheWorld.ismastersim then return end
+    inst:AddComponent("glassiccutter_ammo")
 end
 
-AddPrefabPostInitAny(function(inst)
+for i = 1, #allowed_items do
+    AddPrefabPostInit(allowed_items[i], reloaditem_ammo_postinit)
+end
+
+local function spore_ammo_postinit(inst)
+    if not TheWorld.ismastersim then return end
     if inst:HasTag("spore") then
         inst:AddComponent("glassiccutter_ammo")
     end
-end)
+end
+
+AddPrefabPostInitAny(spore_ammo_postinit)
 
 AddComponentAction("INVENTORY", "glassiccutter_ammo", function(inst, doer, actions, right)
     if doer.replica.inventory and not doer.replica.inventory:IsHeavyLifting() then
