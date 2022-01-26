@@ -278,4 +278,12 @@ for i = 1, #main_files do
     ENV.modimport("main/" .. main_files[i])
 end
 
-ENV.modimport("strings/"..(table.contains({"zh", "chs", "cht"}, LanguageTranslator.defaultlang) and "zh" or "en")..".lua")
+local CHINESE_CODES = {
+    ["chs"] = true,
+    ["cht"] = true,
+    ["sc"]  = true,
+    ["zh"]  = true,
+    ["zht"] = true,
+}
+
+ENV.modimport("strings/" .. CHINESE_CODES[LanguageTranslator.defaultlang] and "zh" or "en")
