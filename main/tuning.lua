@@ -25,7 +25,10 @@ TUNING.GLASSICCUTTER =
 {
     CONSUME_CHANCE = {
         NONE = 0.01,
-        MOONGLASS = 0.25,
+        MOONGLASS = {
+            BASE = 0.1,
+            MULT = 2.5,
+        },
         MOONROCK = 0.5,
         THULECITE = 0.032,
     },

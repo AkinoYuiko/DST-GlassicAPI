@@ -112,40 +112,45 @@ local function try_consume_and_refill(inst, owner, item_prefab, chance)
     auto_refill(inst, owner, item_prefab)
 end
 
-local function onattack_base_check(attacker, target)
+local function attacker_testfn(attacker, target)
     return attacker and (attacker.components.health == nil or not attacker.components.health:IsDead())
         and target and target ~= attacker and target:IsValid()
 end
 
+local function target_testfn(target)
+    return (target.components.health == nil or not target.components.health:IsDead()) and
+            (target:HasTag("spiderden") or not target:HasTag("structure")) and
+            not target:HasTag("wall")
+end
+
 local function get_attacker_mult(attacker)
+    local base_mult = TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS.MULT
     local damagemult = attacker.components.combat.damagemultiplier or 1
     damagemult = math.min(2, damagemult)
     damagemult = math.max(1, damagemult)
     local electricmult = attacker.components.electricattacks and 1.5 or 1
-    return damagemult * electricmult
+    return base_mult * damagemult * electricmult
 end
 
-local function onattack_moonglass(inst, attacker, target)
-    if onattack_base_check(attacker, target) then
-        if (target.components.health == nil or not target.components.health:IsDead()) and
-            (target:HasTag("spiderden") or not target:HasTag("structure")) and
-            not target:HasTag("wall")
-            then
 
+local function onattack_moonglass(inst, attacker, target)
+    if attacker_testfn(attacker, target) then
+        local moonglass_rate = TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS.BASE
+        if target_testfn(target) then
+            moonglass_rate = moonglass_rate * get_attacker_mult(attacker)
             SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
         end
-
-        try_consume_and_refill(inst, attacker, "moonglass", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS * get_attacker_mult(attacker))
+        try_consume_and_refill(inst, attacker, "moonglass", moonglass_rate)
     end
 end
 
 local function onattack_thulecite(inst, attacker, target)
-    if onattack_base_check(attacker, target) then
+    if attacker_testfn(attacker, target) then
         try_consume_and_refill(inst, attacker, "thulecite", TUNING.GLASSICCUTTER.CONSUME_CHANCE.THULECITE)
     end
 end
 local function onattack_moonrock(inst, attacker, target)
-    if onattack_base_check(attacker, target) then
+    if attacker_testfn(attacker, target) then
         if target.components.burnable then
             if target.components.burnable:IsBurning() then
                 target.components.burnable:Extinguish()
@@ -165,7 +170,7 @@ local function onattack_moonrock(inst, attacker, target)
     end
 end
 local function onattack_none(inst, attacker, target)
-    if onattack_base_check(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_CHANCE.NONE then
+    if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_CHANCE.NONE then
         if inst.components.inventoryitem.owner then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end
