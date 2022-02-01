@@ -124,7 +124,7 @@ local function target_testfn(target)
 end
 
 local function get_attacker_mult(attacker)
-    local base_mult = TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS.MULT
+    local base_mult = TUNING.GLASSICCUTTER.CONSUME_RATE.MOONGLASS.MULT
     local damagemult = attacker.components.combat.damagemultiplier or 1
     damagemult = math.min(2, damagemult)
     damagemult = math.max(1, damagemult)
@@ -135,7 +135,7 @@ end
 
 local function onattack_moonglass(inst, attacker, target)
     if attacker_testfn(attacker, target) then
-        local moonglass_rate = TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONGLASS.BASE
+        local moonglass_rate = TUNING.GLASSICCUTTER.CONSUME_RATE.MOONGLASS.BASE
         if target_testfn(target) then
             moonglass_rate = moonglass_rate * get_attacker_mult(attacker)
             SpawnPrefab("glassic_flash"):SetTarget(attacker, target)
@@ -146,7 +146,7 @@ end
 
 local function onattack_thulecite(inst, attacker, target)
     if attacker_testfn(attacker, target) then
-        try_consume_and_refill(inst, attacker, "thulecite", TUNING.GLASSICCUTTER.CONSUME_CHANCE.THULECITE)
+        try_consume_and_refill(inst, attacker, "thulecite", TUNING.GLASSICCUTTER.CONSUME_RATE.THULECITE)
     end
 end
 local function onattack_moonrock(inst, attacker, target)
@@ -166,11 +166,11 @@ local function onattack_moonrock(inst, attacker, target)
             freezable:AddColdness(0.8 * extraresistmult * playermult )
             freezable:SpawnShatterFX()
         end
-        try_consume_and_refill(inst, attacker, "moonrocknugget", TUNING.GLASSICCUTTER.CONSUME_CHANCE.MOONROCK)
+        try_consume_and_refill(inst, attacker, "moonrocknugget", TUNING.GLASSICCUTTER.CONSUME_RATE.MOONROCK)
     end
 end
 local function onattack_none(inst, attacker, target)
-    if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_CHANCE.NONE then
+    if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_RATE.NONE then
         if inst.components.inventoryitem.owner then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end

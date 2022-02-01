@@ -23,7 +23,7 @@ TUNING.MOONGLASSPICKAXE =
 
 TUNING.GLASSICCUTTER =
 {
-    CONSUME_CHANCE = {
+    CONSUME_RATE = {
         NONE = 0.01,
         MOONGLASS = {
             BASE = 0.1,

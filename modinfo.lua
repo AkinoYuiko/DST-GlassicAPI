@@ -1,28 +1,18 @@
-version = "2.11.5"
+version = "2.12"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 调整了月灵刀消耗月亮碎片的概率。
-
-- 优化代码提升性能。
-- 调整了月灵刀消耗月亮碎片的概率。
-- 移除部分物品的 drawnameoverride，现由纯净辅助自行兼容。
-- 新增 ShellComponent。
+- 新年小更新，纪念tuni玻璃剑五连碎。
 
 "包含了皮肤组件和一套玻璃工具。"
 ]] or
 "[Version: "..version..[[]
 
 Changelog:
-- Tweak moonglass consume rate with Gestalt Cutter.
-
-- Improve code performance.
-- Tweak moonglass consume rate with Gestalt Cutter.
-- Remove default drawnameoverride from items.
-- Add ShellComponent.
+- In memory of Tony's luck when playing FTK.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
 ]]
