@@ -112,7 +112,7 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
     if slot == "hand" then
         inst:ListenForEvent("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
     end
-    inst.OnSkinChange = function(inst)
+    inst.OnReskinFn = function(inst)
         inst:RemoveEventCallback("equipped", onequipfn)
         inst:RemoveEventCallback("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
     end

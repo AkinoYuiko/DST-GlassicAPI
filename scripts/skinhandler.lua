@@ -117,10 +117,10 @@ end
 local reskin_entity = Sim.ReskinEntity
 Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ent = Ents[guid]
-    -- execute OnSkinChange before reskin_entity to avoid event issues.
-    if ent.OnSkinChange then
-        ent:OnSkinChange()
-        ent.OnSkinChange = nil
+    -- execute OnReskinFn before reskin_entity to avoid event issues.
+    if ent.OnReskinFn then
+        ent:OnReskinFn()
+        ent.OnReskinFn = nil
     end
 
     -- do reskin
