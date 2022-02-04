@@ -1,10 +1,12 @@
-version = "2.12"
+version = "2.12.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
+- 重命名 OnSkinChange 为 OnReskinFn。
+
 - 新年小更新，纪念tuni玻璃剑五连碎。
 
 "包含了皮肤组件和一套玻璃工具。"
@@ -12,6 +14,8 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
+- Rename OnSkinChange as OnReskinFn.
+
 - In memory of Tony's luck when playing FTK.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
