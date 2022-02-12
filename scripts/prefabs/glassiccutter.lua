@@ -174,6 +174,9 @@ local function onattack_none(inst, attacker, target)
         if inst.components.inventoryitem.owner then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })
         end
+        if attacker.components.talker then
+            attacker.components.talker:Say(STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE)
+        end
         inst.components.container:Close()
         inst.components.container:DropEverything()
         inst:Remove()

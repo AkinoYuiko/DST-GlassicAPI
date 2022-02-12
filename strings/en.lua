@@ -36,3 +36,5 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER = {
     EXCALIBUR = "Sheathed in the breath of the planet, a torrent of shining life. Feel its wrath.",
     FROSTMOURNING = "ao?",
 }
+
+STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE = "WEAPON BREAKING"
