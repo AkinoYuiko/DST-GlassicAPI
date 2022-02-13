@@ -1,4 +1,4 @@
-version = "2.12.3"
+version = "2.12.5"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
@@ -16,7 +16,7 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
-- Glassic Cutter will announce WEAPON BREAKING.
+- Glassic Cutter will announce WEAPON BREAK.
 
 - Rename UpvalueHacker as UpvalueUtil.
 - Rename OnSkinChange as OnReskinFn.
