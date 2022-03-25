@@ -32,7 +32,7 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     end
 end
 
-GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
+GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table, has_crafting_menu)
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name.."_none.xml"))
     table.insert(assets_table, Asset("ATLAS", "images/names_"..char_name..".xml"))
@@ -40,7 +40,9 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
     table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
-    table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
+    if has_crafting_menu then
+        table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
+    end
 
     ENV.AddModCharacter(char_name, char_gender)
 end
