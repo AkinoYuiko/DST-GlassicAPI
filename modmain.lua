@@ -40,6 +40,7 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
     table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
+    table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
 
     ENV.AddModCharacter(char_name, char_gender)
 end

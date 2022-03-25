@@ -1,26 +1,18 @@
-version = "2.12.5"
+version = "2.13"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 玻璃剑：武器断裂显示相关文本。
-
-- 重命名 UpvalueHacker 为 UpvalueUtil。
-- 重命名 OnSkinChange 为 OnReskinFn。
-- 新年小更新，纪念tuni玻璃剑五连碎。
+- 更新了 InitCharacterAssets 适配新版本。
 
 "包含了皮肤组件和一套玻璃工具。"
 ]] or
 "[Version: "..version..[[]
 
 Changelog:
-- Glassic Cutter will announce WEAPON BREAK.
-
-- Rename UpvalueHacker as UpvalueUtil.
-- Rename OnSkinChange as OnReskinFn.
-- In memory of Tony's luck when playing FTK.
+- Update InitCharacterAssets for the new version of DST.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
 ]]
