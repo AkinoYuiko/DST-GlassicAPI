@@ -1,14 +1,19 @@
-local AddRecipe = AddRecipe
+local AddRecipe2 = AddRecipe2
 GLOBAL.setfenv(1, GLOBAL)
 
 -- 月镐和月锤 --
-AddRecipe("moonglasspickaxe",
-{Ingredient("twigs", 2), Ingredient("moonglass", 3)},
-RECIPETABS.CELESTIAL, TECH.CELESTIAL_THREE, nil, nil, true)
+AddRecipe2("moonglasspickaxe",
+    {Ingredient("twigs", 2), Ingredient("moonglass", 3)},
+    TECH.CELESTIAL_THREE,
+    {nounlock = true},
+    {"MODS"}
+)
 
-AddRecipe("moonglasshammer",
-{Ingredient("twigs", 3), Ingredient("cutgrass", 6), Ingredient("moonglass", 3)},
-RECIPETABS.CELESTIAL, TECH.CELESTIAL_THREE, nil, nil, true)
-
-AllRecipes["moonglasspickaxe"].sortkey = AllRecipes["moonglassaxe"].sortkey + 0.1
-AllRecipes["moonglasshammer"].sortkey = AllRecipes["moonglasspickaxe"].sortkey + 0.1
+AddRecipe2("moonglasshammer",
+    {Ingredient("twigs", 3), Ingredient("cutgrass", 6), Ingredient("moonglass", 3)},
+    TECH.CELESTIAL_THREE,
+    {nounlock = true},
+    {"MODS"}
+)
+-- AllRecipes["moonglasspickaxe"].sortkey = AllRecipes["moonglassaxe"].sortkey + 0.1
+-- AllRecipes["moonglasshammer"].sortkey = AllRecipes["moonglasspickaxe"].sortkey + 0.1
