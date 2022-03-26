@@ -146,6 +146,25 @@ GlassicAPI.ShellComponent = Class(function(self, inst)
     self.inst = inst
 end)
 
+GlassicAPI.SortRecipeToTarget = function(filter_name, prefab, target, pre_target)
+    local filter = CRAFTING_FILTERS[filter_name]
+    if filter then
+        local RECIPES_KEYS = table.invert(filter.recipes)
+        local target_sort = RECIPES_KEYS[target]
+        if target_sort then
+            local old_sort = RECIPES_KEYS[prefab]
+            local new_sort = target_sort + (pre_target and 0 or 1)
+
+            if old_sort then
+                table.insert(filter.recipes, new_sort, table.remove(filter.recipes, old_sort))
+            else
+                table.insert(filter.recipes, new_sort, prefab)
+            end
+        end
+        filter.default_sort_values = table.invert(filter.recipes)
+    end
+end
+
 local function merge_internal(target, strings, no_override)
     for _, k, v in sorted_pairs(strings) do
         if type(v) == "table" then

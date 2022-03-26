@@ -15,5 +15,5 @@ AddRecipe2("moonglasshammer",
     {nounlock = true},
     {"MODS"}
 )
--- AllRecipes["moonglasspickaxe"].sortkey = AllRecipes["moonglassaxe"].sortkey + 0.1
--- AllRecipes["moonglasshammer"].sortkey = AllRecipes["moonglasspickaxe"].sortkey + 0.1
+GlassicAPI.SortRecipeToTarget("CRAFTING_STATION", "moonglasspickaxe", "moonglassaxe")
+GlassicAPI.SortRecipeToTarget("CRAFTING_STATION", "moonglasshammer", "moonglasspickaxe")
