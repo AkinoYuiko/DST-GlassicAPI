@@ -301,6 +301,7 @@ if ENV.is_mim_enabled then return end
 local main_files = {
     "actions",
     "assets",
+    "craftingmenu_pinslot",
     "prefabskin",
     "recipes",
     "reskin_tool",
