@@ -1,12 +1,14 @@
-version = "2.13.3"
+version = "2.13.4"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 添加 SortRecipeToTarget 方便新版制作栏排序。
+- 新增 SortBefore 和 SortAfter。
+- 移除 SortRecipeToTarget。
 
+- 添加 SortRecipeToTarget 方便新版制作栏排序。
 - 更新所有配方适配新版合成栏。
 - 更新了 InitCharacterAssets 适配新版本。
 
@@ -15,8 +17,10 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
-- Add SortRecipeToTarget for recipe sorting.
+- Add SortBefore and SortAfter.
+- Remove SortRecipeToTarget.
 
+- Add SortRecipeToTarget for recipe sorting.
 - Update recipes with AddRecipe2.
 - Update InitCharacterAssets for the new version of DST.
 
