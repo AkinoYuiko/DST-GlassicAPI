@@ -146,6 +146,45 @@ GlassicAPI.ShellComponent = Class(function(self, inst)
     self.inst = inst
 end)
 
+local function init_recipe_print(...)
+    if KnownModIndex:IsModInitPrintEnabled() then
+        local modname = getfenvminfield(3, "modname")
+        print(ModInfoname(modname), ...)
+    end
+end
+
+GlassicAPI.AddRecipe = function(name, ingredients, tech, config, extra_filters)
+    init_recipe_print("GlassicRecipe", name)
+    require("recipe")
+    mod_protect_Recipe = false
+    local rec = Recipe2(name, ingredients, tech, config)
+
+    if not rec.is_deconstruction_recipe then
+
+        if config and config.nounlock then
+            ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CRAFTING_STATION.name)
+        end
+
+        if config and config.builder_tag then
+			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CHARACTER.name)
+        end
+
+        if config and config.nomods == nil then
+			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.MODS.name)
+        end
+
+        if extra_filters then
+            for _, filter_name in ipairs(extra_filters) do
+                ENV.AddRecipeToFilter(name, filter_name)
+            end
+        end
+    end
+
+    mod_protect_Recipe = true
+    rec:SetModRPCID()
+    return rec
+end
+
 local function sort_recipe(a, b, filter_name, offset)
     local filter = CRAFTING_FILTERS[filter_name]
     if filter and filter.recipes then
