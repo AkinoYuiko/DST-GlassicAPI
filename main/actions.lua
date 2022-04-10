@@ -71,6 +71,7 @@ local allowed_items = {
     "moonglass",
     "thulecite",
     "moonrocknugget",
+    "obsidian"
 }
 
 local function reloaditem_ammo_postinit(inst)

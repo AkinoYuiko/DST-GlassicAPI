@@ -38,11 +38,17 @@ local function turn_off(inst)
     end
 end
 
+local function get_type_name(inst, noprefix, prefab, name_override)
+    local name = name_override or prefab
+    return inst.components.container:Has(prefab,1) and (noprefix and name or ("_" .. name))
+end
+
 local function get_item_type(inst, noprefix)
-    return inst.components.container and (
-        (inst.components.container:Has("moonglass",1) and (noprefix and "moonglass" or "_moonglass")) or
-        (inst.components.container:Has("thulecite",1) and (noprefix and "thulecite" or "_thulecite")) or
-        (inst.components.container:Has("moonrocknugget",1) and (noprefix and "moonrock" or "_moonrock"))) or
+    return inst.components.container and
+        get_type_name(inst, noprefix, "moonglass") or
+        get_type_name(inst, noprefix, "thulecite") or
+        get_type_name(inst, noprefix, "moonrocknugget", "moonrock") or
+        get_type_name(inst, noprefix, "obsidian") or -- IA
         (noprefix and "none" or "")
 end
 
@@ -169,6 +175,43 @@ local function onattack_moonrock(inst, attacker, target)
         try_consume_and_refill(inst, attacker, "moonrocknugget", TUNING.GLASSICCUTTER.CONSUME_RATE.MOONROCK)
     end
 end
+
+local function update_obsidian_damage(inst)
+    local base_damage = TUNING.GLASSICCUTTER.DAMAGE.OBSIDIAN
+    inst.components.weapon:SetDamage(base_damage + inst.obs_charge)
+end
+
+local function reset_charge_and_task(inst)
+    inst.obs_charge = 0
+    if inst.obs_task then
+        inst.obs_task:Cancel()
+        inst.obs_task = nil
+    end
+end
+
+local function update_obs_charge(inst)
+    inst.obs_charge = math.max(inst.obs_charge - 1, 0)
+    update_obsidian_damage(inst)
+    if inst.obs_charge <= 0 then
+        reset_charge_and_task(inst)
+    end
+end
+
+local function activate_obs_task(inst)
+    update_obsidian_damage(inst)
+    if inst.obs_task == nil then
+        inst.obs_task = inst:DoPeriodicTask(3, update_obs_charge)
+    end
+end
+
+local function onattack_obsidian(inst, attacker, target)
+    if attacker_testfn(attacker, target) then
+        inst.obs_charge = math.min(inst.obs_charge + 1, TUNING.GLASSICCUTTER.MAX_OBS_CHARGE)
+        activate_obs_task(inst)
+        try_consume_and_refill(inst, attacker, "obsidian", TUNING.GLASSICCUTTER.CONSUME_RATE.OBSIDIAN)
+    end
+end
+
 local function onattack_none(inst, attacker, target)
     if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_RATE.NONE then
         if attacker.components.talker then
@@ -187,9 +230,11 @@ local GLASSIC_NAMES = {
     "_moonglass",
     "_moonrock",
     "_thulecite",
+    "_obsidian",
     "_dream",
     "_excalibur",
-    "_frostmourning"
+    "_frostmourning",
+    "_flame"
 }
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
@@ -200,7 +245,8 @@ local function on_change_image(inst)
     local display_name = inst:GetSkinBuild()
                     and (( tail == "_moonglass" and "_dream" )
                     or ( tail == "_thulecite" and "_excalibur" )
-                    or ( tail == "_moonrock" and "_frostmourning" ))
+                    or ( tail == "_moonrock" and "_frostmourning" )
+                    or ( tail == "_obsidian" and "_flame" ))
                     or tail
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
@@ -224,6 +270,7 @@ local function on_change_image(inst)
 end
 
 local function on_ammo_load(inst, data)
+    reset_charge_and_task(inst)
     if data.item.prefab == "moonglass" then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONGLASS)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
@@ -236,6 +283,10 @@ local function on_ammo_load(inst, data)
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONROCK)
         inst.components.weapon:SetOnAttack(onattack_moonrock)
         inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
+    elseif data.item.prefab == "obsidian" then
+        inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.OBSIDIAN)
+        inst.components.weapon:SetOnAttack(onattack_obsidian)
+        inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item:HasTag("spore") then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.SPORE)
         inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
@@ -246,6 +297,7 @@ local function on_ammo_load(inst, data)
 end
 
 local function on_ammo_unload(inst, data)
+    reset_charge_and_task(inst)
     inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
     inst.components.weapon:SetOnAttack(onattack_none)
     inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
@@ -263,8 +315,22 @@ local function GetStatus(inst)
     local itemtype_with_skin = inst:GetSkinBuild() and
             (( itemtype == "moonglass" and "dream" ) or
             ( itemtype == "thulecite" and "excalibur" ) or
-            ( itemtype == "moonrock" and "frostmourning" )) or itemtype
+            ( itemtype == "moonrock" and "frostmourning" ) or
+            ( itemtype == "obsidian" and "flame" )) or itemtype
     return string.upper(itemtype_with_skin)
+end
+
+local function OnSave(inst, data)
+    if get_item_type(inst, true) == "obsidian" then
+        data.obs_charge = inst.obs_charge
+    end
+end
+
+local function OnLoad(inst, data)
+    if data and data.obs_charge and get_item_type(inst, true) == "obsidian" then
+        inst.obs_charge = data.obs_charge
+        activate_obs_task(inst)
+    end
 end
 
 local function fn()
@@ -296,6 +362,8 @@ local function fn()
         return inst
     end
 
+    inst.obs_charge = 0
+
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
     inst.components.weapon:SetOnAttack(onattack_none)
@@ -323,6 +391,9 @@ local function fn()
 
     inst.GetItemType = get_item_type
     inst.OnChangeImage = on_change_image
+
+    inst.OnSave = OnSave
+    inst.OnLoad = OnLoad
 
     inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
 

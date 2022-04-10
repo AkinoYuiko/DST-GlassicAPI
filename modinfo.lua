@@ -1,18 +1,18 @@
-version = "2.14"
+version = "2.15"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 新增 GlassicAPI.AddRecipe 以改善新配方的FILTERS管理。
+- 新增了一个彩蛋。
 
 "包含了皮肤组件和一套玻璃工具。"
 ]] or
 "[Version: "..version..[[]
 
 Changelog:
-- Add GlassicAPI.AddRecipe for better mod recipe init.
+- Add an extra scene.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."
 ]]

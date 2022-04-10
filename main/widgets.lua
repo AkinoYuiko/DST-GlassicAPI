@@ -20,6 +20,7 @@ local allowed_items = {
     ["moonglass"]       = true,
     ["thulecite"]       = true,
     ["moonrocknugget"]  = true,
+    ["obsidian"]  = true,
 }
 
 function params.glassiccutter.itemtestfn(container, item, slot)

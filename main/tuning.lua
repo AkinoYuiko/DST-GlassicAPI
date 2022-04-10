@@ -31,6 +31,7 @@ TUNING.GLASSICCUTTER =
         },
         MOONROCK = 0.5,
         THULECITE = 0.032,
+        OBSIDIAN = 0.032
     },
     DAMAGE = {
         SPORE = wilson_attack,
@@ -38,9 +39,11 @@ TUNING.GLASSICCUTTER =
         MOONGLASS = wilson_attack * 2,
         MOONROCK = wilson_attack * 1.25,
         THULECITE = wilson_attack * 1.75,
+        OBSIDIAN = wilson_attack * 1.5,
     },
     WALKSPEEDMULT = {
         GENERAL = 1,
         THULECITE = 1.1,
-    }
+    },
+    MAX_OBS_CHARGE = wilson_attack / 2
 }
