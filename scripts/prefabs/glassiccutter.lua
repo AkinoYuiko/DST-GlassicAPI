@@ -356,7 +356,7 @@ local function fn()
     inst.entity:SetPristine()
 
     inst.displaynamefn = display_name_fn
-    inst._nametail = net_tinybyte(inst.GUID, "glassiccutter._nametail")
+    inst._nametail = net_smallbyte(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
         return inst
