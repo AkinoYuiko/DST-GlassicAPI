@@ -1,12 +1,13 @@
-version = "2.15.1"
+version = "2.15.2"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = locale == "zh" and
 "[版本: "..version..[[]
 
 更新内容:
-- 修复关于netvar的一个错误。
+- 调整了彩蛋相关的一些数据。
 
+- 修复关于netvar的一个错误。
 - 新增了一个彩蛋。
 
 "包含了皮肤组件和一套玻璃工具。"
@@ -14,8 +15,9 @@ description = locale == "zh" and
 "[Version: "..version..[[]
 
 Changelog:
-- Fix a netvar issue.
+- Tweak tuning for the extra scene.
 
+- Fix a netvar issue.
 - Add an extra scene.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."

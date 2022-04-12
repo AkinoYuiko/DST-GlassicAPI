@@ -39,7 +39,7 @@ TUNING.GLASSICCUTTER =
         MOONGLASS = wilson_attack * 2,
         MOONROCK = wilson_attack * 1.25,
         THULECITE = wilson_attack * 1.75,
-        OBSIDIAN = wilson_attack * 1.5,
+        OBSIDIAN = wilson_attack * 1.75,
     },
     WALKSPEEDMULT = {
         GENERAL = 1,

@@ -200,13 +200,17 @@ end
 local function activate_obs_task(inst)
     update_obsidian_damage(inst)
     if inst.obs_task == nil then
-        inst.obs_task = inst:DoPeriodicTask(3, update_obs_charge)
+        inst.obs_task = inst:DoPeriodicTask(5, update_obs_charge)
     end
 end
 
 local function onattack_obsidian(inst, attacker, target)
     if attacker_testfn(attacker, target) then
         inst.obs_charge = math.min(inst.obs_charge + 1, TUNING.GLASSICCUTTER.MAX_OBS_CHARGE)
+        if inst.obs_task then
+            inst.obs_task:Cancel()
+            inst.obs_task = nil
+        end
         activate_obs_task(inst)
         try_consume_and_refill(inst, attacker, "obsidian", TUNING.GLASSICCUTTER.CONSUME_RATE.OBSIDIAN)
     end
