@@ -345,6 +345,7 @@ local main_files = {
     "recipes",
     "reskin_tool",
     "widgets",
+    "glassiccutter_bg",
 }
 
 for i = 1, #main_files do

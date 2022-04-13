@@ -273,6 +273,10 @@ local function on_change_image(inst)
 
 end
 
+local function set_ammo_percent(inst, item)
+    inst._ammopercent:set(item and math.floor(math.floor(item.components.stackable:StackSize() / item.components.stackable.maxsize * 63 + .5), 63) or 0)
+end
+
 local function on_ammo_load(inst, data)
     reset_charge_and_task(inst)
     if data.item.prefab == "moonglass" then
@@ -298,6 +302,11 @@ local function on_ammo_load(inst, data)
     end
     -- anim and image --
     on_change_image(inst)
+    inst.on_ammo_stack_change = function()
+        set_ammo_percent(inst, data.item)
+    end
+    inst:ListenForEvent("stacksizedirty", inst.on_ammo_stack_change, data.item)
+    inst.on_ammo_stack_change()
 end
 
 local function on_ammo_unload(inst, data)
@@ -308,6 +317,11 @@ local function on_ammo_unload(inst, data)
     turn_off(inst)
     -- anim and image --
     on_change_image(inst)
+    if inst.on_ammo_stack_change then
+        set_ammo_percent(inst)
+        inst:RemoveEventCallback("stacksizedirty", inst.on_ammo_stack_change, data.prev_item)
+        inst.on_ammo_stack_change = nil
+    end
 end
 
 local function display_name_fn(inst)
@@ -361,6 +375,7 @@ local function fn()
 
     inst.displaynamefn = display_name_fn
     inst._nametail = net_smallbyte(inst.GUID, "glassiccutter._nametail")
+    inst._ammopercent = net_smallbyte(inst.GUID, "glassiccutter._ammopercent", "glassicammochange")
 
     if not TheWorld.ismastersim then
         return inst
