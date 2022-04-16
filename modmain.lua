@@ -340,11 +340,10 @@ if ENV.is_mim_enabled then return end
 local main_files = {
     "actions",
     "assets",
-    "craftingmenu_pinslot",
     "prefabskin",
     "recipes",
     "reskin_tool",
-    "widgets",
+    "containerwidgets",
 }
 
 for i = 1, #main_files do
@@ -352,11 +351,11 @@ for i = 1, #main_files do
 end
 
 local CHINESE_CODES = {
+    ["zh"]  = "zh",
+    ["zht"] = "zh",
     ["chs"] = "zh",
     ["cht"] = "zh",
     ["sc"]  = "zh",
-    ["zh"]  = "zh",
-    ["zht"] = "zh",
 }
 
 ENV.modimport("strings/" .. (CHINESE_CODES[LanguageTranslator.defaultlang] or "en"))
