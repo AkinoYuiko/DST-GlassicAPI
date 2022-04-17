@@ -249,9 +249,11 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
         print("Could not find a language file matching "..filepath.." in any of the search paths.")
         return
     end
-    LanguageTranslator:LoadPOFile(filepath, lang.."_temp")
+    local temp_lang = lang.."_temp"
+    LanguageTranslator:LoadPOFile(filepath, temp_lang)
+    merge_internal(LanguageTranslator.languages[lang], LanguageTranslator.languages[temp_lang])
     TranslateStringTable(STRINGS)
-    LanguageTranslator.languages[lang.."_temp"] = nil
+    LanguageTranslator.languages[temp_lang] = nil
     LanguageTranslator.defaultlang = _defaultlang
 end
 
@@ -349,13 +351,3 @@ local main_files = {
 for i = 1, #main_files do
     ENV.modimport("main/" .. main_files[i])
 end
-
-local CHINESE_CODES = {
-    ["zh"]  = "zh",
-    ["zht"] = "zh",
-    ["chs"] = "zh",
-    ["cht"] = "zh",
-    ["sc"]  = "zh",
-}
-
-ENV.modimport("strings/" .. (CHINESE_CODES[LanguageTranslator.defaultlang] or "en"))

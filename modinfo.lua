@@ -12,28 +12,24 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.16.1"
+version = "2.17"
 name = "Glassic API"
-author = "Civi, Tony, LSSSS"
+author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
     -- zh
 "[版本: "..version..[[]
 
 更新内容:
-- 更新了modicon。
-
-- 调整了modinfo中的多语言文本功能。
-- 移除了craftingmenu_pinslot 的修复，因为klei已经更新到游戏本体了。
+- 更新了MergeTranslationFromPO。
+- 启用新的模组图标。
 
 "包含了皮肤组件和一套玻璃工具。"]],
     -- en
 "[Version: "..version..[[]
 
 Changelog:
-- Update modicon.
-
-- Tweak locale fn in modinfo.
-- Remove craftingmenu_pinslot fix (Klei has fix it in DST).
+- Update MergeTranslationFromPO.
+- New modicon.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."]]
 )
@@ -46,8 +42,6 @@ all_clients_require_mod = true
 
 icon_atlas = "images/modicon.xml"
 icon = "modicon.tex"
-
-server_filter_tags = {}
 
 folder_name = folder_name or "workshop-"
 if not folder_name:find("workshop-") then
