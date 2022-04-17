@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.16"
+version = "2.16.1"
 name = "Glassic API"
 author = "Civi, Tony, LSSSS"
 description = zh_en(
@@ -20,6 +20,8 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
+- 更新了modicon。
+
 - 调整了modinfo中的多语言文本功能。
 - 移除了craftingmenu_pinslot 的修复，因为klei已经更新到游戏本体了。
 
@@ -28,6 +30,8 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
+- Update modicon.
+
 - Tweak locale fn in modinfo.
 - Remove craftingmenu_pinslot fix (Klei has fix it in DST).
 
