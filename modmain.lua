@@ -165,7 +165,7 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, extra_filters)
             ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CRAFTING_STATION.name)
         end
 
-        if config and config.builder_tag then
+        if config and config.builder_tag and config.nochar == nil then
 			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CHARACTER.name)
         end
 
