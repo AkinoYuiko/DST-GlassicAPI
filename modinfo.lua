@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.17.2"
+version = "2.17.3"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,9 +20,10 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- 更新了GlassicAPI.AddRecipe，允许使用config.nochar。
+- 重构了GlassicAPI.SortAfter和GlassicAPI.SortBefore。
 
-- 更新了MergeTranslationFromPO。
+- 更新了GlassicAPI.AddRecipe，允许使用config.nochar。
+- 更新了GlassicAPI.MergeTranslationFromPO。
 - 启用新的模组图标。
 
 "包含了皮肤组件和一套玻璃工具。"]],
@@ -30,9 +31,10 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
-- Add config.nochar to GlassicAPI.AddRecipe.
+- Rework GlassicAPI.SortAfter and GlassicAPI.SortBefore.
 
-- Update MergeTranslationFromPO.
+- Add config.nochar to GlassicAPI.AddRecipe.
+- Update GlassicAPI.MergeTranslationFromPO.
 - New modicon.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."]]
