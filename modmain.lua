@@ -206,7 +206,6 @@ local function do_sorting(a, b, filter_name, offset, force_sort)
         end
 
         if get_index(recipes, b) then
-            print("Found recipe",b,"in",filter_name)
             target_position = get_index(recipes, b) + offset
         end
 
