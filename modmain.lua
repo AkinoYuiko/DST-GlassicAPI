@@ -153,7 +153,25 @@ local function init_recipe_print(...)
     end
 end
 
-GlassicAPI.AddRecipe = function(name, ingredients, tech, config, extra_filters)
+GlassicAPI.AddTech = function(name)
+    local TechTree = require("techtree")
+    table.insert(TechTree.AVAILABLE_TECH, name)
+    table.insert(TechTree.BONUS_TECH, name)
+
+    for k in pairs(TUNING.PROTOTYPER_TREES) do
+        TUNING.PROTOTYPER_TREES[k][name] = 0
+    end
+end
+
+GlassicAPI.MergeTechBonus = function(target, name, level)
+    scheduler:ExecuteInTime(0, function()
+        if TUNING.PROTOTYPER_TREES[target] then
+            TUNING.PROTOTYPER_TREES[target][name] = level
+        end
+    end)
+end
+
+GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
     init_recipe_print("GlassicRecipe", name)
     require("recipe")
     mod_protect_Recipe = false
@@ -173,8 +191,8 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, extra_filters)
 			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.MODS.name)
         end
 
-        if extra_filters then
-            for _, filter_name in ipairs(extra_filters) do
+        if filters then
+            for _, filter_name in ipairs(filters) do
                 ENV.AddRecipeToFilter(name, filter_name)
             end
         end
@@ -232,6 +250,18 @@ end
 
 GlassicAPI.SortAfter = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 1)
+end
+
+GlassicAPI.NoSearch = function(recipe)
+    local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
+    local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
+    function CraftingMenuWidget:IsRecipeValidForSearch(name)
+        local ret = {is_recipe_valid_for_search(self, name)}
+        if name == recipe then
+            return
+        end
+        return unpack(ret)
+    end
 end
 
 local function merge_internal(target, strings, no_override)
