@@ -159,7 +159,7 @@ GlassicAPI.AddTech = function(name)
     table.insert(TechTree.BONUS_TECH, name)
 
     for k in pairs(TUNING.PROTOTYPER_TREES) do
-        TUNING.PROTOTYPER_TREES[k][name] = 0
+        TUNING.PROTOTYPER_TREES[k][name] = TUNING.PROTOTYPER_TREES[k][name] or 0
     end
 end
 
