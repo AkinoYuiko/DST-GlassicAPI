@@ -265,7 +265,7 @@ GlassicAPI.RecipeNoSearch = function(recipe)
 end
 
 local function merge_internal(target, strings, no_override)
-    for _, k, v in sorted_pairs(strings) do
+    for k, v in pairs(strings) do
         if type(v) == "table" then
             if not target[k] then
                 target[k] = {}
