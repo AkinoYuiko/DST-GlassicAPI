@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.18"
+version = "2.18.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,6 +20,8 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
+- 重命名GlassicAPI.SortAfter/SortBefore/NoSearch.
+
 - 新增GlassicAPI.AddTech和GlassicAPI.NoSearch。
 
 "包含了皮肤组件和一套玻璃工具。"]],
@@ -27,6 +29,8 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
+- Rename GlassicAPI.SortAfter/SortBefore/NoSearch.
+
 - Add GlassicAPI.AddTech and GlassicAPI.NoSearch.
 
 "Included Skin Handler API and Moon Glass Tools & Weapons."]]
