@@ -250,15 +250,11 @@ local function try_sorting(a, b, filter_type, offset)
 end
 
 GlassicAPI.RecipeSortBefore =  function(a, b, filter_type)
-    scheduler:ExecuteInTime(0, function()
-        try_sorting(a, b, filter_type, 0)
-    end)
+    try_sorting(a, b, filter_type, 0)
 end
 
 GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
-    scheduler:ExecuteInTime(0, function()
-        try_sorting(a, b, filter_type, 1)
-    end)
+    try_sorting(a, b, filter_type, 1)
 end
 
 GlassicAPI.RecipeNoSearch = function(recipe)
