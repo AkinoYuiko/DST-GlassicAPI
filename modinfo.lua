@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.18.2"
+version = "2.18.3"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,8 +20,9 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- GlassicAPI.AddRecipe现已支持config.hidden，等效于GlassicAPI.RecipeNoSearch.
+- 完善了部分特效文件，重命名压缩包。
 
+- GlassicAPI.AddRecipe现已支持config.hidden，等效于GlassicAPI.RecipeNoSearch.
 - 重命名GlassicAPI.RecipeSortAfter/RecipeSortBefore/RecipeNoSearch.
 - 新增GlassicAPI.AddTech和GlassicAPI.NoSearch。
 
@@ -30,8 +31,10 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
-- GlassicAPI.AddRecipe now supports config.hidden, same as GlassicAPI.RecipeNoSearch.
+- Rename Fx glassic_flash_fx to glash_fx.
+- Add Fx glash_big_fx.
 
+- GlassicAPI.AddRecipe now supports config.hidden, same as GlassicAPI.RecipeNoSearch.
 - Rename GlassicAPI.RecipeSortAfter/RecipeSortBefore/RecipeNoSearch.
 - Add GlassicAPI.AddTech and GlassicAPI.NoSearch.
 
