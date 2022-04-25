@@ -244,15 +244,15 @@ local function try_sorting(a, b, filter_type, offset)
     end
 end
 
-GlassicAPI.SortBefore =  function(a, b, filter_type)
+GlassicAPI.RecipeSortBefore =  function(a, b, filter_type)
     try_sorting(a, b, filter_type, 0)
 end
 
-GlassicAPI.SortAfter = function(a, b, filter_type)
+GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 1)
 end
 
-GlassicAPI.NoSearch = function(recipe)
+GlassicAPI.RecipeNoSearch = function(recipe)
     local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
     local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
     function CraftingMenuWidget:IsRecipeValidForSearch(name)

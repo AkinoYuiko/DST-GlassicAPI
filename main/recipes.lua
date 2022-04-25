@@ -1,5 +1,5 @@
 local AddRecipe = GlassicAPI.AddRecipe
-local SortAfter = GlassicAPI.SortAfter
+local SortAfter = GlassicAPI.RecipeSortAfter
 GLOBAL.setfenv(1, GLOBAL)
 
 -- 月镐和月锤 --
