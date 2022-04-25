@@ -1,9 +1,9 @@
 local assets = {
-    Asset("ANIM", "anim/glassic_flash_fx.zip"),
+    Asset("ANIM", "anim/glash_fx.zip"),
 }
 
 local prefabs = {
-    "gestalt_flash_fx",
+    "glash_fx",
     "electrichitsparks",
 }
 
@@ -20,7 +20,7 @@ local function on_attack_other(inst, data)
             SpawnPrefab("electrichitsparks"):AlignToTarget(target, inst, true)
         end
 
-        local atk_fx = SpawnPrefab("gestalt_flash_fx")
+        local atk_fx = SpawnPrefab("glash_fx")
         local x, y, z = target.Transform:GetWorldPosition()
         local radius = target:GetPhysicsRadius(0.5)
         local angle = ((inst.entity:GetParent() or inst).Transform:GetRotation() - 90) * DEGREES
@@ -137,15 +137,27 @@ local function MakeFx(t)
     return Prefab(t.name, fx_fn)
 end
 
-local gestalt_flash_fx =
+local glash_fx =
 {
-    name = "gestalt_flash_fx",
-    bank = "gestalt_flash_fx",
-    build = "glassic_flash_fx",
+    name = "glash_fx",
+    bank = "glash_fx",
+    build = "glash_fx",
     anim = function() return "idle_med_"..math.random(3) end,
     sound = "wanda2/characters/wanda/watch/weapon/nightmare_FX",
     fn = function(inst) inst.AnimState:SetFinalOffset(1) end,
 }
 
+local glash_big_fx =
+{
+    name = "glash_big_fx",
+    bank = "glash_fx",
+    build = "glash_fx",
+    anim = function() return "idle_big_"..math.random(3) end,
+    sound = "wanda2/characters/wanda/watch/weapon/shadow_hit_old",
+    -- sound = "dontstarve/common/gem_shatter",
+    fn = function(inst) inst.AnimState:SetFinalOffset(1) end,
+}
+
 return Prefab("glassic_flash", fn, assets, prefabs),
-        MakeFx(gestalt_flash_fx)
+        MakeFx(glash_fx),
+        MakeFx(glash_big_fx)
