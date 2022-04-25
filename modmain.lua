@@ -159,6 +159,7 @@ GlassicAPI.AddTech = function(name)
     table.insert(TechTree.BONUS_TECH, name)
 
     for k in pairs(TUNING.PROTOTYPER_TREES) do
+        TUNING.PROTOTYPER_TREES[k] = TUNING.PROTOTYPER_TREES[k] or {}
         TUNING.PROTOTYPER_TREES[k][name] = TUNING.PROTOTYPER_TREES[k][name] or 0
     end
 end
@@ -189,6 +190,10 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
 
         if config and config.nomods == nil then
 			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.MODS.name)
+        end
+
+        if config and config.hidden then
+			GlassicAPI.RecipeNoSearch(name)
         end
 
         if filters then
@@ -245,11 +250,15 @@ local function try_sorting(a, b, filter_type, offset)
 end
 
 GlassicAPI.RecipeSortBefore =  function(a, b, filter_type)
-    try_sorting(a, b, filter_type, 0)
+    scheduler:ExecuteInTime(0, function()
+        try_sorting(a, b, filter_type, 0)
+    end)
 end
 
 GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
-    try_sorting(a, b, filter_type, 1)
+    scheduler:ExecuteInTime(0, function()
+        try_sorting(a, b, filter_type, 1)
+    end)
 end
 
 GlassicAPI.RecipeNoSearch = function(recipe)
@@ -267,9 +276,7 @@ end
 local function merge_internal(target, strings, no_override)
     for k, v in pairs(strings) do
         if type(v) == "table" then
-            if not target[k] then
-                target[k] = {}
-            end
+            target[k] = target[k] or {}
             merge_internal(target[k], v, no_override)
         else
             if not (no_override and target[k] ~= nil) then
