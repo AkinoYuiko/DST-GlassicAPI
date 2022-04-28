@@ -134,11 +134,9 @@ GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
     end
 
     local floater = inst.components.floater
-    if floater and not (floater.wateranim or floater.landanim) then
-        if floater:IsFloating() then
-            floater:SwitchToDefaultAnim(true)
-            floater:SwitchToFloatAnim()
-        end
+    if floater and floater:IsFloating() and not (floater.wateranim or floater.landanim) then
+        floater:SwitchToDefaultAnim(true)
+        floater:SwitchToFloatAnim()
     end
 
 end
