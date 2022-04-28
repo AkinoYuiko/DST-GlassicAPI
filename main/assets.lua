@@ -21,4 +21,4 @@ Assets = {
     Asset("ANIM", "anim/glassic_rarities.zip"),
 }
 
-GlassicAPI.RegisterItemAtlas("ga_inventoryimages", Assets)
+GlassicAPI.RegisterItemAtlas("ginventoryimages", Assets)
