@@ -51,13 +51,13 @@ if not rawget(_G, "moonglassaxe_clear_fn") then
     end
 end
 ga_moonglassaxe_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glassaxe")
 end
 
 -- Moon Glass Hammer
 moonglasshammer_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasshammer")
 end
 moonglasshammer_clear_fn = function(inst)
@@ -67,7 +67,7 @@ end
 
 -- Moon Glass Pickaxe
 moonglasspickaxe_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build or skinname, override_build or skinname)
+    GlassicAPI.BasicInitFn(inst, skinname, override_build)
     GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasspickaxe")
 end
 moonglasspickaxe_clear_fn = function(inst)
