@@ -391,8 +391,8 @@ ENV.GlassicAPI = GlassicAPI
 if ENV.is_mim_enabled then return end
 
 local main_files = {
-    "actions",
     "assets",
+    "actions",
     "prefabskin",
     "recipes",
     "reskin_tool",

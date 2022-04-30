@@ -16,12 +16,7 @@ params.glassiccutter =
     type = "hand_inv",
 }
 
-local allowed_items = {
-    ["moonglass"]       = true,
-    ["thulecite"]       = true,
-    ["moonrocknugget"]  = true,
-    ["obsidian"]  = true,
-}
+local allowed_items = TUNING.GLASSICCUTTER.ACCEPTING_PREFABS
 
 function params.glassiccutter.itemtestfn(container, item, slot)
     return item:HasTag("spore") or allowed_items[item.prefab]

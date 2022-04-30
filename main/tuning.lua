@@ -23,6 +23,12 @@ TUNING.MOONGLASSPICKAXE =
 
 TUNING.GLASSICCUTTER =
 {
+    ACCEPTING_PREFABS = {
+        moonglass       = true,
+        thulecite       = true,
+        moonrocknugget  = true,
+        obsidian        = true,
+    },
     CONSUME_RATE = {
         NONE = 0.01,
         MOONGLASS = {

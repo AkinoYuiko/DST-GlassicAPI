@@ -67,21 +67,14 @@ AddPrefabPostInit("alterguardianhatshard", function(inst)
 end)
 
 -- right click to set ammo --
-local allowed_items = {
-    "moonglass",
-    "thulecite",
-    "moonrocknugget",
-    "obsidian"
-}
-
 local function reloaditem_ammo_postinit(inst)
     inst:AddTag("reloaditem_ammo")
     if not TheWorld.ismastersim then return end
     inst:AddComponent("glassiccutter_ammo")
 end
 
-for i = 1, #allowed_items do
-    AddPrefabPostInit(allowed_items[i], reloaditem_ammo_postinit)
+for prefab in pairs(TUNING.GLASSICCUTTER.ACCEPTING_PREFABS) do
+    AddPrefabPostInit(prefab, reloaditem_ammo_postinit)
 end
 
 local function spore_ammo_postinit(inst)
