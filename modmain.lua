@@ -152,15 +152,28 @@ local function init_recipe_print(...)
     end
 end
 
-GlassicAPI.AddTech = function(name)
-    local TechTree = require("techtree")
-    table.insert(TechTree.AVAILABLE_TECH, name)
-    table.insert(TechTree.BONUS_TECH, name)
+-- local Builder = require("components/builder")
+local TechTree = require("techtree")
+local function rebuild_techtree(name)
+    TECH.NONE = TechTree.Create()
 
-    for k in pairs(TUNING.PROTOTYPER_TREES) do
+    for k, v in pairs(AllRecipes) do
+        v.level = TechTree.Create(v.level)
+    end
+
+    for k, v in pairs(TUNING.PROTOTYPER_TREES) do
+        v = TechTree.Create(v)
         TUNING.PROTOTYPER_TREES[k] = TUNING.PROTOTYPER_TREES[k] or {}
         TUNING.PROTOTYPER_TREES[k][name] = TUNING.PROTOTYPER_TREES[k][name] or 0
     end
+
+end
+
+GlassicAPI.AddTech = function(name)
+    table.insert(TechTree.AVAILABLE_TECH, name)
+    table.insert(TechTree.BONUS_TECH, name)
+
+    rebuild_techtree(name)
 end
 
 GlassicAPI.MergeTechBonus = function(target, name, level)
