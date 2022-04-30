@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.18.4"
+version = "2.18.5"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,8 +20,9 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- 优化了GlassicAPI.BasicInitFn。
+- 修复GlassicAPI.AddTech在特殊活动开启时会导致崩溃的问题。
 
+- 优化了GlassicAPI.BasicInitFn。
 - 完善了部分特效文件，重命名压缩包。
 - GlassicAPI.AddRecipe现已支持config.hidden，等效于GlassicAPI.RecipeNoSearch.
 - 重命名GlassicAPI.RecipeSortAfter/RecipeSortBefore/RecipeNoSearch.
@@ -32,8 +33,9 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
-- Improve code logic of GlassicAPI.BasicInitFn.
+- Fix crash with special events on.
 
+- Improve code logic of GlassicAPI.BasicInitFn.
 - Rename Fx glassic_flash_fx to glash_fx.
 - Add Fx glash_big_fx.
 - GlassicAPI.AddRecipe now supports config.hidden, same as GlassicAPI.RecipeNoSearch.
