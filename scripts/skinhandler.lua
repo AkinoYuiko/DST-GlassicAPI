@@ -254,12 +254,12 @@ AccountItemFrame._SetRarity = function(self, rarity, ...)
     end
 end
 
-local function set_rarity(rarity, order, color, frame_symbol, override_build)
+local function set_rarity(rarity, order, color, override_symbol, override_build)
     RARITY_ORDER[rarity] = order
     SKIN_RARITY_COLORS[rarity] = color
-    if frame_symbol or override_build then
+    if override_symbol or override_build then
         OVERRIDE_RARITY_DATA[rarity] = {
-            symbol = frame_symbol,
+            symbol = override_symbol,
             build = override_build
         }
     else
