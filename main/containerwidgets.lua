@@ -19,5 +19,5 @@ params.glassiccutter =
 local allowed_items = TUNING.GLASSICCUTTER.ACCEPTING_PREFABS
 
 function params.glassiccutter.itemtestfn(container, item, slot)
-    return item:HasTag("spore") or allowed_items[item.prefab]
+    return allowed_items[item.prefab]
 end

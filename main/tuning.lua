@@ -28,6 +28,10 @@ TUNING.GLASSICCUTTER =
         thulecite       = true,
         moonrocknugget  = true,
         obsidian        = true,
+
+        spore_tall      = true,
+        spore_medium    = true,
+        spore_small     = true,
     },
     CONSUME_RATE = {
         NONE = 0.01,

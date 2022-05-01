@@ -406,10 +406,10 @@ if ENV.is_mim_enabled then return end
 local main_files = {
     "assets",
     "actions",
+    "containerwidgets",
     "prefabskin",
     "recipes",
     "reskin_tool",
-    "containerwidgets",
 }
 
 for i = 1, #main_files do

@@ -67,34 +67,18 @@ AddPrefabPostInit("alterguardianhatshard", function(inst)
 end)
 
 -- right click to set ammo --
-local function reloaditem_ammo_postinit(inst)
-    inst:AddTag("reloaditem_ammo")
+local function set_reloaditem_fragment(inst)
+    inst:AddTag("reloaditem_fragment")
     if not TheWorld.ismastersim then return end
-    inst:AddComponent("glassiccutter_ammo")
+    inst:AddComponent("reloaditem")
 end
 
 for prefab in pairs(TUNING.GLASSICCUTTER.ACCEPTING_PREFABS) do
-    AddPrefabPostInit(prefab, reloaditem_ammo_postinit)
+    AddPrefabPostInit(prefab, set_reloaditem_fragment)
 end
 
-local function spore_ammo_postinit(inst)
-    if not TheWorld.ismastersim then return end
-    if inst:HasTag("spore") then
-        inst:AddComponent("glassiccutter_ammo")
-    end
+local change_tackle_strfn = ACTIONS.CHANGE_TACKLE.strfn
+ACTIONS.CHANGE_TACKLE.strfn = function(act)
+	local item = (act.invobject and act.invobject:IsValid()) and act.invobject
+	return change_tackle_strfn(act) or ((item and item:HasTag("reloaditem_fragment")) and "FRAG") or nil
 end
-
-AddPrefabPostInitAny(spore_ammo_postinit)
-
-AddComponentAction("INVENTORY", "glassiccutter_ammo", function(inst, doer, actions, right)
-    if doer.replica.inventory and not doer.replica.inventory:IsHeavyLifting() then
-        local cutter = doer.replica.inventory:GetEquippedItem(EQUIPSLOTS.HANDS)
-        if cutter and cutter.prefab == "glassiccutter"
-            and cutter.replica.container and cutter.replica.container:IsOpenedBy(doer)
-            and cutter.replica.container:CanTakeItemInSlot(inst)
-            then
-
-            table.insert(actions, ACTIONS.CHANGE_TACKLE)
-        end
-    end
-end)
