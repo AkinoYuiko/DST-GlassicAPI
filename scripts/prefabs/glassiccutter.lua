@@ -200,7 +200,7 @@ end
 local function activate_obs_task(inst)
     update_obsidian_damage(inst)
     if inst.obs_task == nil then
-        inst.obs_task = inst:DoPeriodicTask(5, update_obs_charge)
+        inst.obs_task = inst:DoPeriodicTask(30, update_obs_charge)
     end
 end
 
