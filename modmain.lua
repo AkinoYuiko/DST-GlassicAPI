@@ -2,9 +2,19 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 GlassicAPI = {}
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- SkinHandler helps you create skins quickly.
 GlassicAPI.SkinHandler = require "skinhandler"
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- RegisterItemAtlas helps you register inventory item atlas, so you don't need to specify each mod prefab's inventory image and atlas
+-- It's suitable for a atlas that contains mulitiple images.
+-- The root folder is "MODROOT/images"
+-- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages") will import "MODROOT/images/inventoryimges.xml" and register every element inside.
+-- set 'assets_table' to Assets.
+---@param path_to_file string
+---@param assets_table table
 local SLAXML = require "slaxml"
 GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     path_to_file = resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
@@ -31,7 +41,16 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
         RegisterInventoryItemAtlas(path_to_file, hash(image))
     end
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- InitCharacterAssets helps you init assets that a mod character needs.
+-- e.g. GlassicAPI.InitCharacterAssets("civi", "male", Assets, true)
+-- set 'assets_table' to Assets.
+-- if your mod character has crafting menu icon, set 'has_crafting_menu' to true
+---@param chat_name string
+---@param gender string
+---@param assets_table table
+---@param has_crafting_menu boolean
 GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table, has_crafting_menu)
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name.."_none.xml"))
@@ -54,7 +73,9 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     end
     ENV.AddMinimapAtlas(file)
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- testfn for SkinHandler, try on your own.
 GlassicAPI.SetExclusiveToPlayer = function(name)
     return function(player)
         return not player or player.prefab == name
@@ -72,13 +93,20 @@ GlassicAPI.SetExclusiveToTag = function(tag)
         return not player or player:HasTag(tag)
     end
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- use in skins' initfn most.
+-- before basic init, you need to specify skins' floating swap_data to make the anim switch looks normal.
+---@param swap_data table
 GlassicAPI.SetFloatData = function(inst, swap_data)
     if inst.components.floater and swap_data then
         inst.components.floater.swap_data = swap_data
     end
 end
 
+-- used to fix reskin issue on official skinned items. now it's less necessary to use.
+---@param base_fn function
+---@return function
 GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
     local ret = { base_fn(inst, ...) }
     if inst.components.floater then
@@ -89,11 +117,20 @@ GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
     end
     return unpack(ret)
 end
-
-GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- one of the main init fn that equippable skinned items require.
+-- for equippable items, you need to set BasicOnequipFn to override symbols when you equip your skinned item.
+-- e.g. GlassicAPI.BasicOnequipFn(inst, "hat", "alterguardianhat_nope")
+-- e.g. GlassicAPI.BasicOnequipFn(inst, "hand", "glasscutter_angri", "swap_glasscutter")
+---@param slot string
+---@param build string
+---@param override_symbol string
+---if slot is "hand". override_build needs specified.
+GlassicAPI.BasicOnequipFn = function(inst, slot, build, override_symbol)
 
     local function onequiphandfn(inst, data)
-        data.owner.AnimState:OverrideSymbol("swap_object", build, symbol)
+        data.owner.AnimState:OverrideSymbol("swap_object", build, override_symbol)
     end
 
     local function onequipbodyfn(inst, data)
@@ -121,6 +158,12 @@ GlassicAPI.BasicOnequipFn = function(inst, slot, build, symbol)
     end
 end
 
+-- main init fn that skinned items require.
+-- e.g. GlassicAPI.BasicInitFn(inst, "cane_oops")
+-- e.g. GlassicAPI.BasicInitFn(inst, "moonglasspickaxe_northern", "glasspickaxe_northern")
+---@param skinname string
+---@param override_build string
+-- override_build is not required.
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
 
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
@@ -141,10 +184,15 @@ GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
 
 end
 
+-- all actions require component. to avoid compatibility issues, it's better that we use a new component to set actions.
+-- GlassicAPI.ShellComponent helps you create such a component.
+-- e.g. "scripts/components/glasssocket.lua"
+-- usage: return GlassicAPI.ShellComponent
 GlassicAPI.ShellComponent = Class(function(self, inst)
     self.inst = inst
 end)
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 local function init_recipe_print(...)
     if KnownModIndex:IsModInitPrintEnabled() then
         local modname = getfenvminfield(3, "modname")
@@ -169,6 +217,9 @@ local function rebuild_techtree(name)
 
 end
 
+-- custom tech may allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
+-- e.g. GlassicAPI.AddTech("FRIENDSHIPRING")
+---@param name string
 GlassicAPI.AddTech = function(name)
     table.insert(TechTree.AVAILABLE_TECH, name)
     table.insert(TechTree.BONUS_TECH, name)
@@ -176,6 +227,11 @@ GlassicAPI.AddTech = function(name)
     rebuild_techtree(name)
 end
 
+-- e.g.
+-- GlassicAPI.MergeTechBonus("MOONORB_UPGRADED", "FRIENDSHIPRING", 2)
+-- GlassicAPI.MergeTechBonus("MOON_ALTAR_FULL", "FRIENDSHIPRING", 2)
+-- GlassicAPI.MergeTechBonus("OBSIDIAN_BENCH", "FRIENDSHIPRING", 2)
+-- allows muliti prototypers to bonus a tech simultaneously.
 GlassicAPI.MergeTechBonus = function(target, name, level)
     scheduler:ExecuteInTime(0, function()
         if TUNING.PROTOTYPER_TREES[target] then
@@ -183,7 +239,11 @@ GlassicAPI.MergeTechBonus = function(target, name, level)
         end
     end)
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+-- a smarter way to add a mod recipe, and you don't need to think about filters too much.
+-- also, with confog.hidden, you can set your recipe no searching or in "EVERYTHING" filter.
+-- same format as AddRecipe2
 GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
     init_recipe_print("GlassicRecipe", name)
     require("recipe")
@@ -219,7 +279,8 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
     rec:SetModRPCID()
     return rec
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 local function get_index(t, v)
     for index, value in pairs(t) do
         if value == v then
@@ -261,7 +322,15 @@ local function try_sorting(a, b, filter_type, offset)
     end
 end
 
-GlassicAPI.RecipeSortBefore =  function(a, b, filter_type)
+-- a quick way to sort recipes before or after current recipes.
+---@param a string - the recipe name that you want to sort
+---@param b string - the target recipe name that we base on.
+---@param filter_type string
+-- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem") will sort "darkcrystal" after "purplegem" in all filters that "purplegem" has.
+-- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "MAGIC") will only sort "darkcrystal" after "purplegem" in "MAGIC" filter.
+-- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "TOOLS") will only sort "darkcrystal" to the last in "TOOLS" because "purplegem" is not in "TOOLS".
+-- one of b and filter_type must not be nil.
+GlassicAPI.RecipeSortBefore = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 0)
 end
 
@@ -269,6 +338,7 @@ GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 1)
 end
 
+-- set a recipe not listed in search filter or "EVERYTHING".
 GlassicAPI.RecipeNoSearch = function(recipe)
     local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
     local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
@@ -280,7 +350,8 @@ GlassicAPI.RecipeNoSearch = function(recipe)
         return unpack(ret)
     end
 end
-
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 local function merge_internal(target, strings, no_override)
     for k, v in pairs(strings) do
         if type(v) == "table" then
