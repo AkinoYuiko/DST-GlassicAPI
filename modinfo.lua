@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.18.6"
+version = "2.19"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,33 +20,16 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- 调整了部分参数。
-- 移除了无用代码。
+- modmain中新增了许多注释，解释各种函数的用法。
 
-- 修复GlassicAPI.AddTech在特殊活动开启时会导致崩溃的问题。
-- 优化了GlassicAPI.BasicInitFn。
-- 完善了部分特效文件，重命名压缩包。
-- GlassicAPI.AddRecipe现已支持config.hidden，等效于GlassicAPI.RecipeNoSearch.
-- 重命名GlassicAPI.RecipeSortAfter/RecipeSortBefore/RecipeNoSearch.
-- 新增GlassicAPI.AddTech和GlassicAPI.NoSearch。
-
-"包含了皮肤组件和一套玻璃工具。"]],
+"可以帮助你快速创建一个模组以及制作皮肤，同时还包含了一套玻璃工具和武器。"]],
     -- en
 "[Version: "..version..[[]
 
 Changelog:
-- Tweak some params.
-- Remove useless component.
+- Add documentation in modmain.
 
-- Fix crash with special events on.
-- Improve code logic of GlassicAPI.BasicInitFn.
-- Rename Fx glassic_flash_fx to glash_fx.
-- Add Fx glash_big_fx.
-- GlassicAPI.AddRecipe now supports config.hidden, same as GlassicAPI.RecipeNoSearch.
-- Rename GlassicAPI.RecipeSortAfter/RecipeSortBefore/RecipeNoSearch.
-- Add GlassicAPI.AddTech and GlassicAPI.NoSearch.
-
-"Included Skin Handler API and Moon Glass Tools & Weapons."]]
+"helps create mod and mod skins quickly, and includes extra Moon Glass tools and weapons."]]
 )
 
 priority = 2147483647
