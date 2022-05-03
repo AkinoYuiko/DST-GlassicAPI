@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.19.1"
+version = "2.19"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
