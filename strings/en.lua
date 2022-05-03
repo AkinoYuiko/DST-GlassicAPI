@@ -20,24 +20,24 @@ STRINGS.SKIN_NAMES.glassiccutter_dream = "Musou Isshin"
 
 STRINGS.NAMES.GLASSICCUTTER = "Glassic Cutter"
 STRINGS.NAMES.GLASSICCUTTER_MOONGLASS = "Gestalt Cutter"
-STRINGS.NAMES.GLASSICCUTTER_THULECITE = "Thulecite Cutter"
+-- STRINGS.NAMES.GLASSICCUTTER_THULECITE = "Thulecite Cutter"
 STRINGS.NAMES.GLASSICCUTTER_MOONROCK = "Frost Cutter"
-STRINGS.NAMES.GLASSICCUTTER_OBSIDIAN = "Obsidian Cutter"
+-- STRINGS.NAMES.GLASSICCUTTER_OBSIDIAN = "Obsidian Cutter"
 STRINGS.NAMES.GLASSICCUTTER_DREAM = "Musou Isshin"
-STRINGS.NAMES.GLASSICCUTTER_EXCALIBUR = "Excalibur"
+-- STRINGS.NAMES.GLASSICCUTTER_EXCALIBUR = "Excalibur"
 STRINGS.NAMES.GLASSICCUTTER_FROSTMOURNING = "Frost Mourning"
-STRINGS.NAMES.GLASSICCUTTER_FLAME = "Flame Strength"
+-- STRINGS.NAMES.GLASSICCUTTER_FLAME = "Flame Strength"
 
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER = {
     NONE = "Sharp but probably get broken.",
     MOONGLASS = "Sword with gestalt flash.",
-    THULECITE = "Sword with ancient power.",
+    -- THULECITE = "Sword with ancient power.",
     MOONROCK = "Sword with frost energy.",
-    OBSIDIAN = "Sword with volcano energy.",
+    -- OBSIDIAN = "Sword with volcano energy.",
     DREAM = "Inazuma shines eternal!",
-    EXCALIBUR = "Sheathed in the breath of the planet, a torrent of shining life. Feel its wrath.",
+    -- EXCALIBUR = "Sheathed in the breath of the planet, a torrent of shining life. Feel its wrath.",
     FROSTMOURNING = "ao?",
-    FLAME = "Flame, grant me strength!"
+    -- FLAME = "Flame, grant me strength!"
 }
 
 STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE = "WEAPON BREAK!"

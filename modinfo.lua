@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.19"
+version = "2.19.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,6 +20,8 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
+- 更新了金斧子皮肤的图标和动画。
+- 玻璃剑现在只能插入月亮碎片和月岩了。
 - modmain中新增了许多注释，解释各种函数的用法。
 
 "可以帮助你快速创建一个模组以及制作皮肤，同时还包含了一套玻璃工具和武器。"]],
@@ -27,6 +29,8 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
+- Update inventory image and anim for skin "Ornate Fanciful Axe".
+- Glassic Cutter can only socket Moon Glass and Moon Rock now.
 - Add documentation in modmain.
 
 "helps create mod and mod skins quickly, and includes extra Moon Glass tools and weapons."]]
