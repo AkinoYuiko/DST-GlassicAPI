@@ -131,7 +131,6 @@ local function get_attacker_mult(attacker)
     return base_mult * damagemult * electricmult
 end
 
-
 local function onattack_moonglass(inst, attacker, target)
     if attacker_testfn(attacker, target) then
         local moonglass_rate = TUNING.GLASSICCUTTER.CONSUME_RATE.MOONGLASS.BASE
@@ -260,7 +259,6 @@ local function on_change_image(inst)
     inst._nametail:set(GLASSIC_IDS[(display_name)] or 0)
     -- Strcode Name --
     inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. string.upper(display_name)})
-
 end
 
 local function on_frag_load(inst, data)
