@@ -38,25 +38,46 @@ local function turn_off(inst)
     end
 end
 
-local function get_type_name(inst, noprefix, prefab, name_override)
-    local name = name_override or prefab
-    return inst.components.container:Has(prefab,1) and (noprefix and name or ("_" .. name))
+local ITEMTYPE_MAP =
+{
+    moonglass = "moonglass",
+    moonrocknugget = "moonrock",
+}
+local function get_item_type(inst)
+    local container = inst.components.container
+    if container then
+        -- local prefix = no_prefix and "" or "_"
+        for prefab, name in pairs(ITEMTYPE_MAP) do
+            if container:Has(prefab, 1) then
+                return name
+            end
+        end
+    end
 end
 
-local function get_item_type(inst, noprefix)
-    return inst.components.container and
-        get_type_name(inst, noprefix, "moonglass") or
-        get_type_name(inst, noprefix, "moonrocknugget", "moonrock") or
-        (noprefix and "none" or "")
+local SKINNED_ITEMTYPE_MAP =
+{
+    moonglass = "dream",
+    moonrock = "frost",
+}
+local function get_skinned_itemtype(inst)
+    local itemtype = get_item_type(inst)
+    for name, map in pairs(SKINNED_ITEMTYPE_MAP) do
+        if name == itemtype then
+            return inst:GetSkinBuild() and map or name
+        end
+    end
 end
 
 local function onequip(inst, owner)
+    local itemtype = get_item_type(inst)
+    itemtype = itemtype and ("_" .. itemtype) or ""
     local skin_build = inst:GetSkinBuild()
     if skin_build then
         -- owner:PushEvent("equipskinneditem", inst:GetSkinName())
-        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter"..get_item_type(inst))
+        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. itemtype)
     else
-        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter"..get_item_type(inst))
+        owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter" .. itemtype)
     end
 
     owner.AnimState:Show("ARM_carry")
@@ -118,8 +139,8 @@ end
 
 local function target_testfn(target)
     return (target.components.health == nil or not target.components.health:IsDead()) and
-            (target:HasTag("spiderden") or not target:HasTag("structure")) and
-            not target:HasTag("wall")
+        (target:HasTag("spiderden") or not target:HasTag("structure")) and
+        not target:HasTag("wall")
 end
 
 local function get_attacker_mult(attacker)
@@ -142,11 +163,6 @@ local function onattack_moonglass(inst, attacker, target)
     end
 end
 
--- local function onattack_thulecite(inst, attacker, target)
---     if attacker_testfn(attacker, target) then
---         try_consume_and_refill(inst, attacker, "thulecite", TUNING.GLASSICCUTTER.CONSUME_RATE.THULECITE)
---     end
--- end
 local function onattack_moonrock(inst, attacker, target)
     if attacker_testfn(attacker, target) then
         if target.components.burnable then
@@ -168,46 +184,6 @@ local function onattack_moonrock(inst, attacker, target)
     end
 end
 
--- local function update_obsidian_damage(inst)
---     local base_damage = TUNING.GLASSICCUTTER.DAMAGE.OBSIDIAN
---     inst.components.weapon:SetDamage(base_damage + inst.obs_charge)
--- end
-
--- local function reset_charge_and_task(inst)
---     inst.obs_charge = 0
---     if inst.obs_task then
---         inst.obs_task:Cancel()
---         inst.obs_task = nil
---     end
--- end
-
--- local function update_obs_charge(inst)
---     inst.obs_charge = math.max(inst.obs_charge - 1, 0)
---     update_obsidian_damage(inst)
---     if inst.obs_charge <= 0 then
---         reset_charge_and_task(inst)
---     end
--- end
-
--- local function activate_obs_task(inst)
---     update_obsidian_damage(inst)
---     if inst.obs_task == nil then
---         inst.obs_task = inst:DoPeriodicTask(30, update_obs_charge)
---     end
--- end
-
--- local function onattack_obsidian(inst, attacker, target)
---     if attacker_testfn(attacker, target) then
---         inst.obs_charge = math.min(inst.obs_charge + 1, TUNING.GLASSICCUTTER.MAX_OBS_CHARGE)
---         if inst.obs_task then
---             inst.obs_task:Cancel()
---             inst.obs_task = nil
---         end
---         activate_obs_task(inst)
---         try_consume_and_refill(inst, attacker, "obsidian", TUNING.GLASSICCUTTER.CONSUME_RATE.OBSIDIAN)
---     end
--- end
-
 local function onattack_none(inst, attacker, target)
     if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_RATE.NONE then
         if attacker.components.talker then
@@ -222,25 +198,20 @@ local function onattack_none(inst, attacker, target)
     end
 end
 
-local GLASSIC_NAMES = {
-    "_moonglass",
-    "_moonrock",
-    -- "_thulecite",
-    -- "_obsidian",
-    "_dream",
-    -- "_excalibur",
-    "_frostmourning",
-    -- "_flame"
-}
+local GLASSIC_NAMES = {}
+for name, map in pairs(SKINNED_ITEMTYPE_MAP) do
+    table.insert(GLASSIC_NAMES, name)
+    table.insert(GLASSIC_NAMES, map)
+end
 local GLASSIC_IDS = table.invert(GLASSIC_NAMES)
 
 local function on_change_image(inst)
-    local tail = get_item_type(inst)
-    local anim = get_item_type(inst, true)
+    local itemtype = get_item_type(inst)
+    local skinned_itemtype = get_skinned_itemtype(inst)
+    local anim = itemtype or "none"
+    local tail = itemtype and ("_" .. itemtype) or ""
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
-    local display_name = inst:GetSkinBuild() and
-                    ((tail == "_moonglass" and "_dream" ) or
-                    (tail == "_moonrock" and "_frostmourning" )) or tail
+    local displayname = skinned_itemtype and string.upper("_" .. skinned_itemtype)
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
@@ -256,32 +227,20 @@ local function on_change_image(inst)
         local owner = inst.components.inventoryitem and inst.components.inventoryitem.owner
         owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. tail)
     end
-    inst._nametail:set(GLASSIC_IDS[(display_name)] or 0)
+    inst._nametail:set(GLASSIC_IDS[(skinned_itemtype)] or 0)
     -- Strcode Name --
-    inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. string.upper(display_name)})
+    inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER" .. displayname})
 end
 
 local function on_frag_load(inst, data)
-    -- reset_charge_and_task(inst)
     if data.item.prefab == "moonglass" then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONGLASS)
         inst.components.weapon:SetOnAttack(onattack_moonglass)
-        -- inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
-    -- elseif data.item.prefab == "thulecite" then
-    --     inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.THULECITE)
-    --     inst.components.weapon:SetOnAttack(onattack_thulecite)
-    --     inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.THULECITE
     elseif data.item.prefab == "moonrocknugget" then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.MOONROCK)
         inst.components.weapon:SetOnAttack(onattack_moonrock)
-        -- inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
-    -- elseif data.item.prefab == "obsidian" then
-    --     inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.OBSIDIAN)
-    --     inst.components.weapon:SetOnAttack(onattack_obsidian)
-    --     inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     elseif data.item:HasTag("spore") then
         inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.SPORE)
-        -- inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
         turn_on(inst, inst.components.inventoryitem.owner)
     end
     -- anim and image --
@@ -289,41 +248,23 @@ local function on_frag_load(inst, data)
 end
 
 local function on_frag_unload(inst, data)
-    -- reset_charge_and_task(inst)
     inst.components.weapon:SetDamage(TUNING.GLASSICCUTTER.DAMAGE.NONE)
     inst.components.weapon:SetOnAttack(onattack_none)
-    -- inst.components.equippable.walkspeedmult = TUNING.GLASSICCUTTER.WALKSPEEDMULT.GENERAL
     turn_off(inst)
     -- anim and image --
     on_change_image(inst)
 end
 
 local function display_name_fn(inst)
-    return STRINGS.NAMES[string.upper("glassiccutter" .. (GLASSIC_NAMES[inst._nametail:value()] or ""))]
+    local displayname = GLASSIC_NAMES[inst._nametail:value()]
+    displayname = displayname and ("_" .. displayname) or ""
+    return STRINGS.NAMES[string.upper("glassiccutter" .. displayname)]
 end
 
-local function GetStatus(inst)
-    local itemtype = get_item_type(inst, true)
-    local itemtype_with_skin = inst:GetSkinBuild() and
-            (( itemtype == "moonglass" and "dream" ) or
-            -- ( itemtype == "thulecite" and "excalibur" ) or
-            ( itemtype == "moonrock" and "frostmourning" )) or itemtype
-            -- ( itemtype == "obsidian" and "flame" )) or itemtype
-    return string.upper(itemtype_with_skin)
+local function get_status(inst)
+    local skinned_itemtype = get_skinned_itemtype(inst)
+    return skinned_itemtype and string.upper(skinned_itemtype)
 end
-
--- local function OnSave(inst, data)
---     if get_item_type(inst, true) == "obsidian" then
---         data.obs_charge = inst.obs_charge
---     end
--- end
-
--- local function OnLoad(inst, data)
---     if data and data.obs_charge and get_item_type(inst, true) == "obsidian" then
---         inst.obs_charge = data.obs_charge
---         activate_obs_task(inst)
---     end
--- end
 
 local function fn()
     local inst = CreateEntity()
@@ -348,13 +289,11 @@ local function fn()
     inst.entity:SetPristine()
 
     inst.displaynamefn = display_name_fn
-    inst._nametail = net_smallbyte(inst.GUID, "glassiccutter._nametail")
+    inst._nametail = net_tinybyte(inst.GUID, "glassiccutter._nametail")
 
     if not TheWorld.ismastersim then
         return inst
     end
-
-    inst.obs_charge = 0
 
     inst:AddComponent("weapon")
     inst.components.weapon:SetDamage(TUNING.GLASSCUTTER.DAMAGE)
@@ -370,22 +309,17 @@ local function fn()
     -------
 
     inst:AddComponent("inspectable")
-    inst.components.inspectable.getstatus = GetStatus
+    inst.components.inspectable.getstatus = get_status
 
     inst:AddComponent("inventoryitem")
 
     inst:AddComponent("equippable")
     inst.components.equippable:SetOnEquip(onequip)
     inst.components.equippable:SetOnUnequip(onunequip)
-    inst.components.equippable.walkspeedmult = 1
 
     MakeHauntableLaunch(inst)
 
-    inst.GetItemType = get_item_type
     inst.OnChangeImage = on_change_image
-
-    -- inst.OnSave = OnSave
-    -- inst.OnLoad = OnLoad
 
     inst.drawnameoverride = rawget(_G, "EncodeStrCode") and EncodeStrCode({content = "NAMES.GLASSICCUTTER"})
 
