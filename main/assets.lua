@@ -18,7 +18,7 @@ PrefabFiles = {
 }
 
 Assets = {
-    Asset("ANIM", "anim/glassic_rarities.zip"),
+    Asset("ANIM", "anim/glassicrarities.zip"),
 }
 
 GlassicAPI.RegisterItemAtlas("ginventoryimages", Assets)

@@ -9,7 +9,7 @@ local CHINESE_CODES = {
 }
 
 modimport("modmain") -- For API functions & mod env
-Assets = { Asset("ANIM", "anim/glassic_rarities.zip") }
+Assets = { Asset("ANIM", "anim/glassicrarities.zip") }
 
 GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 255, 1 }, "glassic", "glassic_rarities")
 
