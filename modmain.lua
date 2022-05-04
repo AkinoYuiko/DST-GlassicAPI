@@ -128,33 +128,22 @@ end
 ---@param override_symbol string
 ---if slot is "hand". override_build needs specified.
 GlassicAPI.BasicOnequipFn = function(inst, slot, build, override_symbol)
-
-    local function onequiphandfn(inst, data)
-        data.owner.AnimState:OverrideSymbol("swap_object", build, override_symbol)
-    end
-
-    local function onequipbodyfn(inst, data)
-        data.owner.AnimState:OverrideSymbol("swap_body", build, "swap_body")
-    end
-
-    local function onequiphatfn(inst, data)
-        data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat")
-    end
-
+    local onequipfns =
+    {
+        hand = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_object", build, override_symbol) end,
+        body = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_body", build, "swap_body") end,
+        hat = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat") end,
+    }
     if not TheWorld.ismastersim then return end
-    -- if not GLOBAL.TheWorld.ismastersim then return end
 
-    local onequipfn = ( slot == "hand" and onequiphandfn )
-                        or ( slot == "body" and onequipbodyfn )
-                        or ( slot == "hat" and onequiphatfn )
-                        or nil
+    local onequipfn = onequipfns[slot]
     inst:ListenForEvent("equipped", onequipfn)
     if slot == "hand" then
-        inst:ListenForEvent("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
+        inst:ListenForEvent("stoprowing", onequipfn)
     end
     inst.OnReskinFn = function(inst)
         inst:RemoveEventCallback("equipped", onequipfn)
-        inst:RemoveEventCallback("stoprowing", onequiphandfn) -- IA compatible after stopping rowing.
+        inst:RemoveEventCallback("stoprowing", onequipfn)
     end
 end
 
@@ -165,9 +154,7 @@ end
 ---@param override_build string
 -- override_build is not required.
 GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
-
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
-    -- if inst.components.placer == nil and not GLOBAL.TheWorld.ismastersim then return end
 
     inst.skinname = skinname
     inst.AnimState:SetBuild(override_build or skinname)
@@ -181,7 +168,6 @@ GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
         floater:SwitchToDefaultAnim(true)
         floater:SwitchToFloatAnim()
     end
-
 end
 
 -- all actions require component. to avoid compatibility issues, it's better that we use a new component to set actions.
@@ -214,7 +200,6 @@ local function rebuild_techtree(name)
         TUNING.PROTOTYPER_TREES[k] = TUNING.PROTOTYPER_TREES[k] or {}
         TUNING.PROTOTYPER_TREES[k][name] = TUNING.PROTOTYPER_TREES[k][name] or 0
     end
-
 end
 
 -- custom tech may allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
@@ -223,7 +208,6 @@ end
 GlassicAPI.AddTech = function(name)
     table.insert(TechTree.AVAILABLE_TECH, name)
     table.insert(TechTree.BONUS_TECH, name)
-
     rebuild_techtree(name)
 end
 
