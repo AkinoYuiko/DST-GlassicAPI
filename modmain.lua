@@ -179,14 +179,6 @@ GlassicAPI.ShellComponent = Class(function(self, inst)
 end)
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
-local function init_recipe_print(...)
-    if KnownModIndex:IsModInitPrintEnabled() then
-        local modname = getfenvminfield(3, "modname")
-        print(ModInfoname(modname), ...)
-    end
-end
-
--- local Builder = require("components/builder")
 local TechTree = require("techtree")
 local function rebuild_techtree(name)
     TECH.NONE = TechTree.Create()
@@ -225,6 +217,13 @@ GlassicAPI.MergeTechBonus = function(target, name, level)
 end
 --------------------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------------------
+local function init_recipe_print(...)
+    if KnownModIndex:IsModInitPrintEnabled() then
+        local modname = getfenvminfield(3, "modname")
+        print(ModInfoname(modname), ...)
+    end
+end
+
 -- a smarter way to add a mod recipe, and you don't need to think about filters too much.
 -- also, with confog.hidden, you can set your recipe no searching or in "EVERYTHING" filter.
 -- same format as AddRecipe2
