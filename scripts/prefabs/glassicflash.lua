@@ -43,7 +43,7 @@ local function set_target(inst, owner, target)
 
         inst.entity:SetParent(owner.entity)
 
-        inst:DoTaskInTime(0 , do_attack, target)
+        inst:DoTaskInTime(0, do_attack, target)
     end
 end
 

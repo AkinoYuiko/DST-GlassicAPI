@@ -381,7 +381,7 @@ local CHS_CODES = {
     zht = "chinese_t", -- Traditional Chinese
     chs = "chinese_s", -- Chinese Mod (workshop 367546858)
     cht = "chinese_t",
-    sc = "chinese_s" ,
+    sc = "chinese_s",
 }
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
     local _defaultlang = LanguageTranslator.defaultlang
