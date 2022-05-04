@@ -1,13 +1,5 @@
-local CHINESE_CODES = {
-    ["zh"]  = "zh",
-    ["zht"] = "zh",
-    ["chs"] = "zh",
-    ["cht"] = "zh",
-    ["sc"]  = "zh",
-}
-
-modimport("strings/" .. (CHINESE_CODES[GLOBAL.LanguageTranslator.defaultlang] or "en"))
 modimport("main/tuning")
+modimport("main/strings")
 
 PrefabFiles = {
     "glassicflash",

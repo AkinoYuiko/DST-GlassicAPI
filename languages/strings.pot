@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Application: Dont' Starve\n"
+"POT Version: 2.0\n"
+
+#. STRINGS.ACTIONS.CHANGE_TACKLE.FRAG
+msgctxt "STRINGS.ACTIONS.CHANGE_TACKLE.FRAG"
+msgid "Set Fragment"
+msgstr ""
+
+#. STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE
+msgctxt "STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE"
+msgid "WEAPON BREAK!"
+msgstr ""
+
+#. STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.DREAM
+msgctxt "STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.DREAM"
+msgid "Inazuma shines eternal!"
+msgstr ""
+
+#. STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.FROST
+msgctxt "STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.FROST"
+msgid "ao?"
+msgstr ""
+
+#. STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.GENERIC
+msgctxt "STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.GENERIC"
+msgid "Sharp but probably get broken."
+msgstr ""
+
+#. STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.MOONGLASS
+msgctxt "STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.MOONGLASS"
+msgid "Sword with gestalt flash."
+msgstr ""
+
+#. STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.MOONROCK
+msgctxt "STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER.MOONROCK"
+msgid "Sword with frost energy."
+msgstr ""
+
+#. STRINGS.NAMES.GLASSICCUTTER
+msgctxt "STRINGS.NAMES.GLASSICCUTTER"
+msgid "Glassic Cutter"
+msgstr ""
+
+#. STRINGS.NAMES.GLASSICCUTTER_DREAM
+msgctxt "STRINGS.NAMES.GLASSICCUTTER_DREAM"
+msgid "Musou Isshin"
+msgstr ""
+
+#. STRINGS.NAMES.GLASSICCUTTER_FROST
+msgctxt "STRINGS.NAMES.GLASSICCUTTER_FROST"
+msgid "Frost Mourning"
+msgstr ""
+
+#. STRINGS.NAMES.GLASSICCUTTER_MOONGLASS
+msgctxt "STRINGS.NAMES.GLASSICCUTTER_MOONGLASS"
+msgid "Gestalt Cutter"
+msgstr ""
+
+#. STRINGS.NAMES.GLASSICCUTTER_MOONROCK
+msgctxt "STRINGS.NAMES.GLASSICCUTTER_MOONROCK"
+msgid "Frost Cutter"
+msgstr ""
+
+#. STRINGS.NAMES.MOONGLASSHAMMER
+msgctxt "STRINGS.NAMES.MOONGLASSHAMMER"
+msgid "Moon Glass Hammer"
+msgstr ""
+
+#. STRINGS.NAMES.MOONGLASSPICKAXE
+msgctxt "STRINGS.NAMES.MOONGLASSPICKAXE"
+msgid "Moon Glass Pickaxe"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.glassiccutter_dream
+msgctxt "STRINGS.SKIN_NAMES.glassiccutter_dream"
+msgid "Musou Isshin"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.goldenaxe_victorian
+msgctxt "STRINGS.SKIN_NAMES.goldenaxe_victorian"
+msgid "Ornate Fanciful Axe"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.moonglassaxe_northern
+msgctxt "STRINGS.SKIN_NAMES.moonglassaxe_northern"
+msgid "Moon Nordic Axe"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.moonglassaxe_victorian
+msgctxt "STRINGS.SKIN_NAMES.moonglassaxe_victorian"
+msgid "Moon Fanciful Axe"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.moonglasshammer_forge
+msgctxt "STRINGS.SKIN_NAMES.moonglasshammer_forge"
+msgid "Moon Forging Hammer"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.moonglasspickaxe_northern
+msgctxt "STRINGS.SKIN_NAMES.moonglasspickaxe_northern"
+msgid "Moon Nordic Pickaxe"
+msgstr ""
+
+#. STRINGS.UI.RARITY.Glassic
+msgctxt "STRINGS.UI.RARITY.Glassic"
+msgid "Glassic"
+msgstr ""

@@ -210,7 +210,7 @@ local function on_change_image(inst)
     local anim = itemtype or "none"
     local tail = itemtype and ("_" .. itemtype) or ""
     local skin_build = inst:GetSkinBuild() or "glassiccutter"
-    local displayname = skinned_itemtype and string.upper("_" .. skinned_itemtype)
+    local displayname = skinned_itemtype and string.upper("_" .. skinned_itemtype) or ""
     -- AnimState --
     inst.AnimState:PlayAnimation(anim)
     -- Image --
