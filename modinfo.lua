@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.19.5"
+version = "2.19.6"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,8 +20,9 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- 优化了merge_internal的异常处理。
+- 优化了GlassicAPI.BasicInitFn的代码。
 
+- 优化了merge_internal的异常处理。
 - 优化了语言字符串模板以供参考。
 ...
 - 玻璃剑现在只能插入月亮碎片和月岩了。
@@ -32,8 +33,9 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
-- Tweak code logic for merge_internal.
+- Improve code performance for GlassicAPI.BasicInitFn.
 
+- Tweak code logic for merge_internal.
 - Update strings format for reference.
 ...
 - Glassic Cutter can only socket Moon Glass and Moon Rock now.
