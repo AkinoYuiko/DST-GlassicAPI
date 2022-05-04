@@ -12,7 +12,7 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.19.4"
+version = "2.19.5"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
@@ -20,12 +20,10 @@ description = zh_en(
 "[版本: "..version..[[]
 
 更新内容:
-- 优化了语言字符串模板以供参考。
+- 优化了merge_internal的异常处理。
 
-- 优化了部分代码的逻辑。
-- 更新了月光玻璃镐皮肤的图标和动画。
-- 更新了月光玻璃斧皮肤的图标和动画。
-- 更新了金斧子皮肤的图标和动画。
+- 优化了语言字符串模板以供参考。
+...
 - 玻璃剑现在只能插入月亮碎片和月岩了。
 - modmain中新增了许多注释，解释各种函数的用法。
 
@@ -34,12 +32,10 @@ description = zh_en(
 "[Version: "..version..[[]
 
 Changelog:
-- Update strings format for reference.
+- Tweak code logic for merge_internal.
 
-- Tweak code logic.
-- Update inventory image and anim for skin "Moon Nordic Pickaxe".
-- Update inventory image and anim for skin "Moon Fanciful Axe" and "Moon Nordic Axe".
-- Update inventory image and anim for skin "Ornate Fanciful Axe".
+- Update strings format for reference.
+...
 - Glassic Cutter can only socket Moon Glass and Moon Rock now.
 - Add documentation in modmain.
 

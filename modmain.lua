@@ -355,7 +355,15 @@ end
 local function merge_internal(target, strings, no_override)
     for k, v in pairs(strings) do
         if type(v) == "table" then
-            target[k] = target[k] or {}
+            if type(target[k]) == "string" then
+                if no_override then
+                    error("MERGE PROTECTION: Can not merge a table to a string!")
+                else
+                    target[k] = {}
+                end
+            elseif not target[k] then
+                target[k] = {}
+            end
             merge_internal(target[k], v, no_override)
         else
             if not (no_override and target[k] ~= nil) then
