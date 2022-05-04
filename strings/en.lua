@@ -29,7 +29,7 @@ STRINGS.CHARACTERS.GENERIC.DESCRIBE.GLASSICCUTTER = {
     MOONGLASS = "Sword with gestalt flash.",
     MOONROCK = "Sword with frost energy.",
     DREAM = "Inazuma shines eternal!",
-     FROST = "ao?",
+    FROST = "ao?",
 }
 
 STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE = "WEAPON BREAK!"

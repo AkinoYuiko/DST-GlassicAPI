@@ -46,7 +46,6 @@ local ITEMTYPE_MAP =
 local function get_item_type(inst)
     local container = inst.components.container
     if container then
-        -- local prefix = no_prefix and "" or "_"
         for prefab, name in pairs(ITEMTYPE_MAP) do
             if container:Has(prefab, 1) then
                 return name
