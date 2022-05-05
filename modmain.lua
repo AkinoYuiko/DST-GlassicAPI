@@ -219,16 +219,23 @@ end
 --------------------------------------------------------------------------------------------------------------
 local function init_recipe_print(...)
     if KnownModIndex:IsModInitPrintEnabled() then
-        local modname = getfenvminfield(3, "modname")
-        print(ModInfoname(modname), ...)
+        print("Glassic API", ...)
     end
 end
 
+local add_recipe_to_filter = function(recipe_name, filter_name)
+    init_recipe_print("AddRecipeToFilter", recipe_name)
+    local filter = CRAFTING_FILTERS[filter_name]
+    if filter ~= nil and filter.default_sort_values[recipe_name] == nil then
+        table.insert(filter.recipes, recipe_name)
+        filter.default_sort_values[recipe_name] = #filter.recipes
+    end
+end
 -- a smarter way to add a mod recipe, and you don't need to think about filters too much.
 -- also, with confog.hidden, you can set your recipe no searching or in "EVERYTHING" filter.
 -- same format as AddRecipe2
 GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
-    init_recipe_print("GlassicRecipe", name)
+    init_recipe_print("AddRecipe", name)
     require("recipe")
     mod_protect_Recipe = false
     local rec = Recipe2(name, ingredients, tech, config)
@@ -236,15 +243,15 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
     if not rec.is_deconstruction_recipe then
 
         if config and config.nounlock then
-            ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CRAFTING_STATION.name)
+            add_recipe_to_filter(name, CRAFTING_FILTERS.CRAFTING_STATION.name)
         end
 
         if config and config.builder_tag and config.nochar == nil then
-			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.CHARACTER.name)
+			add_recipe_to_filter(name, CRAFTING_FILTERS.CHARACTER.name)
         end
 
         if config and config.nomods == nil then
-			ENV.AddRecipeToFilter(name, CRAFTING_FILTERS.MODS.name)
+			add_recipe_to_filter(name, CRAFTING_FILTERS.MODS.name)
         end
 
         if config and config.hidden then
@@ -253,7 +260,7 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
 
         if filters then
             for _, filter_name in ipairs(filters) do
-                ENV.AddRecipeToFilter(name, filter_name)
+                add_recipe_to_filter(name, filter_name)
             end
         end
     end
