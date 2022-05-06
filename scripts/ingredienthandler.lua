@@ -40,7 +40,7 @@ local function remove_alter_ingredient(recname, ingredienttype, alternative)
 end
 
 return {
-    -- GetAlterIngredient = get_alter_ingredient,
-    -- AddAlterIngredient = add_alter_ingredient,
-    -- RemoveAlterIngredient = remove_alter_ingredient,
+    GetAlterIngredient = get_alter_ingredient,
+    AddAlterIngredient = add_alter_ingredient,
+    RemoveAlterIngredient = remove_alter_ingredient,
 }
