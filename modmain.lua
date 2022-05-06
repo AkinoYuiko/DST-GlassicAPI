@@ -2,12 +2,12 @@ local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
 GlassicAPI = {}
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
 -- SkinHandler helps you create skins quickly.
 GlassicAPI.SkinHandler = require "skinhandler"
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+
 -- RegisterItemAtlas helps you register inventory item atlas, so you don't need to specify each mod prefab's inventory image and atlas
 -- It's suitable for a atlas that contains mulitiple images.
 -- The root folder is "MODROOT/images"
@@ -41,8 +41,9 @@ GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
         RegisterInventoryItemAtlas(path_to_file, hash(image))
     end
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 -- InitCharacterAssets helps you init assets that a mod character needs.
 -- e.g. GlassicAPI.InitCharacterAssets("civi", "male", Assets, true)
 -- set 'assets_table' to Assets.
@@ -73,8 +74,9 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     end
     ENV.AddMinimapAtlas(file)
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 -- testfn for SkinHandler, try on your own.
 GlassicAPI.SetExclusiveToPlayer = function(name)
     return function(player)
@@ -93,8 +95,9 @@ GlassicAPI.SetExclusiveToTag = function(tag)
         return not player or player:HasTag(tag)
     end
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 -- use in skins' initfn most.
 -- before basic init, you need to specify skins' floating swap_data to make the anim switch looks normal.
 ---@param swap_data table
@@ -117,8 +120,9 @@ GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
     end
     return unpack(ret)
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 -- one of the main init fn that equippable skinned items require.
 -- for equippable items, you need to set BasicOnequipFn to override symbols when you equip your skinned item.
 -- e.g. GlassicAPI.BasicOnequipFn(inst, "hat", "alterguardianhat_nope")
@@ -177,8 +181,9 @@ end
 GlassicAPI.ShellComponent = Class(function(self, inst)
     self.inst = inst
 end)
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 local TechTree = require("techtree")
 local function rebuild_techtree(name)
     TECH.NONE = TechTree.Create()
@@ -215,8 +220,9 @@ GlassicAPI.MergeTechBonus = function(target, name, level)
         end
     end)
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 local function init_recipe_print(...)
     if KnownModIndex:IsModInitPrintEnabled() then
         print("Glassic API", ...)
@@ -269,8 +275,9 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
     rec:SetModRPCID()
     return rec
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 local function get_index(t, v)
     for index, value in pairs(t) do
         if value == v then
@@ -340,8 +347,9 @@ GlassicAPI.RecipeNoSearch = function(recipe)
         return unpack(ret)
     end
 end
---------------------------------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+
 local function merge_internal(target, strings, no_override)
     for k, v in pairs(strings) do
         if type(v) == "table" then
