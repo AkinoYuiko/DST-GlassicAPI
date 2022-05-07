@@ -253,15 +253,15 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
         end
 
         if config and config.builder_tag and config.nochar == nil then
-			add_recipe_to_filter(name, CRAFTING_FILTERS.CHARACTER.name)
+            add_recipe_to_filter(name, CRAFTING_FILTERS.CHARACTER.name)
         end
 
         if config and config.nomods == nil then
-			add_recipe_to_filter(name, CRAFTING_FILTERS.MODS.name)
+            add_recipe_to_filter(name, CRAFTING_FILTERS.MODS.name)
         end
 
         if config and config.hidden then
-			GlassicAPI.RecipeNoSearch(name)
+            GlassicAPI.RecipeNoSearch(name)
         end
 
         if filters then
