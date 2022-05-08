@@ -17,9 +17,7 @@ name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 description = zh_en(
     -- zh
-"[版本: "..version..[[]
-
-更新内容:
+"版本: "..version.. "\n\n" .. [[更新内容:
 - 优化了GlassicAPI.BasicInitFn的代码。
 
 - 优化了merge_internal的异常处理。
@@ -30,9 +28,7 @@ description = zh_en(
 
 "可以帮助你快速创建一个模组以及制作皮肤，同时还包含了一套玻璃工具和武器。"]],
     -- en
-"[Version: "..version..[[]
-
-Changelog:
+"Version: "..version.. "\n\n" .. [[Changelog:
 - Improve code performance for GlassicAPI.BasicInitFn.
 
 - Tweak code logic for merge_internal.
