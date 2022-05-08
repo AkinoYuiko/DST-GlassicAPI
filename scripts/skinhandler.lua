@@ -147,17 +147,17 @@ Floater.SwitchToFloatAnim = function(self, ...)
 end
 
 local function apply_temp_character(base_fn, ...)
-    if #HEADSKIN_CHARACTERS == 0 then return base_fn(...) end
+    if IsTableEmpty(HEADSKIN_CHARACTERS) then return base_fn(...) end
     local added_characters = {}
-    for _, v in ipairs(HEADSKIN_CHARACTERS) do
-        if not table.contains(DST_CHARACTERLIST, v) then
-            table.insert(added_characters, v)
-            table.insert(DST_CHARACTERLIST, v)
+    for character in pairs(HEADSKIN_CHARACTERS) do
+        if not table.contains(DST_CHARACTERLIST, character) then
+            table.insert(DST_CHARACTERLIST, character)
+            added_characters[character] = true
         end
     end
     local ret = { base_fn(...) }
     for i = #DST_CHARACTERLIST, 1, -1 do
-        if table.contains(HEADSKIN_CHARACTERS, DST_CHARACTERLIST[i]) then
+        if added_characters[DST_CHARACTERLIST[i]] then
             table.remove(DST_CHARACTERLIST, i)
         end
     end
@@ -215,8 +215,8 @@ end
 
 local function add_mod_skins(data)
     for base_prefab, prefab_skins in pairs(data) do
-        if is_character(base_prefab) and not table.contains(HEADSKIN_CHARACTERS, base_prefab) then
-            table.insert(HEADSKIN_CHARACTERS, base_prefab)
+        if is_character(base_prefab) then
+            HEADSKIN_CHARACTERS[base_prefab] = true
         end
         if not PREFAB_SKINS[base_prefab] then
             PREFAB_SKINS[base_prefab] = {}
