@@ -11,7 +11,7 @@ GlassicAPI.SkinHandler = require "skinhandler"
 -- RegisterItemAtlas helps you register inventory item atlas, so you don't need to specify each mod prefab's inventory image and atlas
 -- It's suitable for a atlas that contains mulitiple images.
 -- The root folder is "MODROOT/images"
--- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages") will import "MODROOT/images/inventoryimges.xml" and register every element inside.
+-- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages", Assets) will import "MODROOT/images/inventoryimges.xml" and register every element inside.
 -- set 'assets_table' to Assets.
 ---@param path_to_file string
 ---@param assets_table table
@@ -293,7 +293,7 @@ local function do_sorting(a, b, filter_name, offset, force_sort)
         local recipes = filter.recipes
         if get_index(recipes, a) then
             if force_sort or table.contains(recipes, b) then
-                recipes[get_index(recipes, a)] = nil
+                table.remove(recipes, get_index(recipes, a))
                 target_position = #recipes + 1
             end
         end
@@ -323,9 +323,10 @@ end
 ---@param a string - the recipe name that you want to sort
 ---@param b string - the target recipe name that we base on.
 ---@param filter_type string
--- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem") will sort "darkcrystal" after "purplegem" in all filters that "purplegem" has.
+-- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem") will sort "darkcrystal" after "purplegem" in all filters that "purplegem" is in.
 -- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "MAGIC") will only sort "darkcrystal" after "purplegem" in "MAGIC" filter.
 -- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "TOOLS") will only sort "darkcrystal" to the last in "TOOLS" because "purplegem" is not in "TOOLS".
+-- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", nil, "TOOLS") will also sort "darkcrystal" to the last in "TOOLS".
 -- one of b and filter_type must not be nil.
 GlassicAPI.RecipeSortBefore = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 0)
