@@ -1,6 +1,3 @@
-local env = env
-GLOBAL.setfenv(1, GLOBAL)
-
 local strings =
 {
     ANNOUNCE_GLASSICCUTTER_BROKE = "WEAPON BREAK!",
@@ -64,12 +61,12 @@ local strings =
 }
 
 GlassicAPI.MergeStringsToGLOBAL(strings)
-GlassicAPI.MergeTranslationFromPO(env.MODROOT.."languages")
+GlassicAPI.MergeTranslationFromPO(MODROOT.."languages")
 
 function UpdateGlassicStrings()
-    local file, errormsg = io.open(env.MODROOT .. "languages/strings.pot", "w")
+    local file, errormsg = io.open(MODROOT .. "languages/strings.pot", "w")
     if not file then
-        print("Can't generate " .. env.MODROOT .. "languages/strings.pot" .. "\n" .. tostring(errormsg))
+        print("Can't generate " .. MODROOT .. "languages/strings.pot" .. "\n" .. tostring(errormsg))
         return
     end
     GlassicAPI.MakePOTFromStrings(file, strings)

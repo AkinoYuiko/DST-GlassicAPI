@@ -1,5 +1,4 @@
-local ENV = env
-GLOBAL.setfenv(1, GLOBAL)
+GLOBAL.setmetatable(env, { __index = function(t, k) return GLOBAL.rawget(GLOBAL, k) end})
 
 GlassicAPI = {}
 
@@ -64,7 +63,7 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table, 
         table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
     end
 
-    ENV.AddModCharacter(char_name, char_gender)
+    AddModCharacter(char_name, char_gender)
 end
 
 GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
@@ -72,7 +71,7 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
     if assets_table then
         table.insert(assets_table, Asset("ATLAS", file))
     end
-    ENV.AddMinimapAtlas(file)
+    AddMinimapAtlas(file)
 end
 
 ------------------------------------------------------------------------------------------------------------
@@ -476,10 +475,9 @@ ModManager.InitializeModMain = function(self, _modname, env, mainfile, ...)
     return initialize_modmain(self, _modname, env, mainfile, ...)
 end
 
--- GLOBAL.GlassicAPI = GlassicAPI
-ENV.GlassicAPI = GlassicAPI
+_G.GlassicAPI = GlassicAPI
 
-if ENV.is_mim_enabled then return end
+if is_mim_enabled then return end
 
 local main_files = {
     "assets",
@@ -491,5 +489,5 @@ local main_files = {
 }
 
 for i = 1, #main_files do
-    ENV.modimport("main/" .. main_files[i])
+    modimport("main/" .. main_files[i])
 end

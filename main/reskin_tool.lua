@@ -1,6 +1,3 @@
-local AddPrefabPostInit = AddPrefabPostInit
-GLOBAL.setfenv(1, GLOBAL)
-
 local function ga_can_cast_fn(doer, target, pos)
 
     local prefab_to_skin = target.prefab

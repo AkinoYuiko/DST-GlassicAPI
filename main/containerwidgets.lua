@@ -1,4 +1,3 @@
-GLOBAL.setfenv(1, GLOBAL)
 local params = require("containers").params
 
 params.glassiccutter =
