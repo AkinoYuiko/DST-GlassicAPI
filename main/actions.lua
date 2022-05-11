@@ -1,10 +1,11 @@
 local AddAction = AddAction
 local AddComponentAction = AddComponentAction
-local AddPrefabPostInit = AddPrefabPostInit
-local AddPrefabPostInitAny = AddPrefabPostInitAny
 local AddStategraphState = AddStategraphState
 local AddStategraphActionHandler = AddStategraphActionHandler
+local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
+
+--------------------------------------------------------------------------------
 
 local GLASSCUTTEREX = Action({mount_valid=true})
 
@@ -26,17 +27,25 @@ GLASSCUTTEREX.fn = function(act)
 
         -- do mutate
         if item.prefab == "alterguardianhatshard" and target.prefab == "glasscutter" then
+            item:Remove()
             if target.components.halloweenmoonmutable then
                 target.components.halloweenmoonmutable:Mutate("glassiccutter")
             end
+            return true
         end
-
-        item:Remove()
-        return true
     end
 end
 
+local change_tackle_strfn = ACTIONS.CHANGE_TACKLE.strfn
+ACTIONS.CHANGE_TACKLE.strfn = function(act)
+    local item = (act.invobject and act.invobject:IsValid()) and act.invobject
+    return change_tackle_strfn(act) or ((item and item:HasTag("reloaditem_fragment")) and "FRAG") or nil
+end
+
 AddAction(GLASSCUTTEREX)
+
+--------------------------------------------------------------------------------
+
 AddComponentAction("USEITEM", "glasssocket", function(inst, doer, target, actions, right)
     if target.prefab == "glasscutter" then
         table.insert(actions, ACTIONS.GLASSCUTTEREX)
@@ -51,10 +60,14 @@ local glassic_state = State({
     end
 })
 
+--------------------------------------------------------------------------------
+
 for _, v in ipairs({"wilson", "wilson_client"}) do
     AddStategraphState(v, glassic_state)
     AddStategraphActionHandler(v, ActionHandler(GLASSCUTTEREX, "doglassicbuild"))
 end
+
+--------------------------------------------------------------------------------
 
 AddPrefabPostInit("glasscutter", function(inst)
     if not TheWorld.ismastersim then return end
@@ -75,10 +88,4 @@ end
 
 for prefab in pairs(TUNING.GLASSICCUTTER.ACCEPTING_PREFABS) do
     AddPrefabPostInit(prefab, set_reloaditem_fragment)
-end
-
-local change_tackle_strfn = ACTIONS.CHANGE_TACKLE.strfn
-ACTIONS.CHANGE_TACKLE.strfn = function(act)
-    local item = (act.invobject and act.invobject:IsValid()) and act.invobject
-    return change_tackle_strfn(act) or ((item and item:HasTag("reloaditem_fragment")) and "FRAG") or nil
 end
