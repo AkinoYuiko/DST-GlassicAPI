@@ -208,6 +208,12 @@ GlassicAPI.AddTech = function(name)
     rebuild_techtree(name)
 end
 
+-- custom prototyper trees.
+-- e.g. GlassicAPI.AddPrototyperTrees("DUMMYSCIENCE", {DUMMYTECH = 2})
+GlassicAPI.AddPrototyperTrees = function(name, t)
+    TUNING.PROTOTYPER_TREES[name] = TechTree.Create(t)
+end
+
 -- e.g.
 -- GlassicAPI.MergeTechBonus("MOONORB_UPGRADED", "FRIENDSHIPRING", 2)
 -- GlassicAPI.MergeTechBonus("MOON_ALTAR_FULL", "FRIENDSHIPRING", 2)
