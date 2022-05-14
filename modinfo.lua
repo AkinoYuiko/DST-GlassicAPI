@@ -10,23 +10,13 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.19.10"
+version = "2.20"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 优化了actions的排版逻辑以便阅读。
-
-- 修复了配方排序中的一个小问题。
-...
-- 玻璃剑现在只能插入月亮碎片和月岩了。
-- modmain中新增了许多注释用于解释各种函数的用法。
+- 新增 GlassicAPI.AddPrototyperTrees。
 ]], [[
-- Tweak code logic in main/actions for better reading.
-
-- Fix an issue with recipe sorting.
-...
-- Glassic Cutter can only socket Moon Glass and Moon Rock now.
-- Add documentation in modmain.
+- Add GlassicAPI.AddPrototyperTrees.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
     zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog ..
