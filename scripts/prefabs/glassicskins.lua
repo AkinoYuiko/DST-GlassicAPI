@@ -25,8 +25,9 @@ table.insert(prefabs, CreatePrefabSkin("moonglassaxe_northern", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_northern", sym_name = "swap_glassaxe", bank = "glassaxe"})
-        ga_moonglassaxe_init_fn(inst, "moonglassaxe_northern", "glassaxe_northern")
+        GlassicAPI.BasicInitFn(inst, "moonglassaxe_northern")
     end,
+    build_name_override = "glassaxe_northern",
     skin_tags = { "MOONGLASSAXE" },
 }))
 
@@ -40,8 +41,9 @@ table.insert(prefabs, CreatePrefabSkin("moonglassaxe_victorian", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_victorian", sym_name = "swap_glassaxe", bank = "glassaxe"})
-        ga_moonglassaxe_init_fn(inst, "moonglassaxe_victorian", "glassaxe_victorian")
+        GlassicAPI.BasicInitFn(inst, "moonglassaxe_victorian")
     end,
+    build_name_override = "glassaxe_victorian",
     skin_tags = { "MOONGLASSAXE" },
 }))
 
@@ -55,8 +57,9 @@ table.insert(prefabs, CreatePrefabSkin("moonglasshammer_forge", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer_forge", sym_name = "swap_glasshammer", bank = "glasshammer"})
-        moonglasshammer_init_fn(inst, "moonglasshammer_forge", "glasshammer_forge")
+        GlassicAPI.BasicInitFn(inst, "moonglasshammer_forge")
     end,
+    build_name_override = "glasshammer_forge",
     skin_tags = { "MOONGLASSHAMMER" },
 }))
 
@@ -70,8 +73,9 @@ table.insert(prefabs, CreatePrefabSkin("moonglasspickaxe_northern", {
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe_northern", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
-        moonglasspickaxe_init_fn(inst, "moonglasspickaxe_northern", "glasspickaxe_northern")
+        GlassicAPI.BasicInitFn(inst, "moonglasspickaxe_northern")
     end,
+    build_name_override = "glasspickaxe_northern",
     skin_tags = { "MOONGLASSPICKAXE" },
 }))
 

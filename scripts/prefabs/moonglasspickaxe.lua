@@ -11,7 +11,13 @@ local function onattack_moonglass(inst, attacker, target)
 end
 
 local function onequip(inst, owner)
-    owner.AnimState:OverrideSymbol("swap_object", "glasspickaxe", "swap_glasspickaxe")
+    local skin_build = inst:GetSkinBuild()
+    if skin_build then
+        owner:PushEvent("equipskinneditem", inst:GetSkinName())
+        owner.AnimState:OverrideItemSkinSymbol("swap_object", skin_build, "swap_glasspickaxe", inst.GUID, "swap_glasspickaxe")
+    else
+        owner.AnimState:OverrideSymbol("swap_object", "glasspickaxe", "swap_glasspickaxe")
+    end
     owner.AnimState:Show("ARM_carry")
     owner.AnimState:Hide("ARM_normal")
 end

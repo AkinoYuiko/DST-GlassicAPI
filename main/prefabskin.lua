@@ -49,36 +49,25 @@ if not rawget(_G, "moonglassaxe_clear_fn") then
         GlassicAPI.SetFloatData(inst, { sym_build = "swap_glassaxe" })
         basic_clear_fn(inst, "glassaxe")
     end
-end
-ga_moonglassaxe_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build)
-    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glassaxe")
+    GlassicAPI.SetOnequipSkinItem("moonglassaxe", {"swap_object", "swap_glassaxe", "swap_glassaxe"})
 end
 
 -- Moon Glass Hammer
-moonglasshammer_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build)
-    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasshammer")
-end
 moonglasshammer_clear_fn = function(inst)
     GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer", bank = "glasshammer"})
     basic_clear_fn(inst, "glasshammer")
 end
 
 -- Moon Glass Pickaxe
-moonglasspickaxe_init_fn = function(inst, skinname, override_build)
-    GlassicAPI.BasicInitFn(inst, skinname, override_build)
-    GlassicAPI.BasicOnequipFn(inst, "hand", override_build or skinname, "swap_glasspickaxe")
-end
 moonglasspickaxe_clear_fn = function(inst)
     GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
     basic_clear_fn(inst, "glasspickaxe")
 end
 
-glassiccutter_init_fn = function(inst, skinname, override_build)
+glassiccutter_init_fn = function(inst, skinname)
     if not TheWorld.ismastersim then return end
     inst.skinname = skinname
-    inst.AnimState:SetBuild(override_build or skinname)
+    inst.AnimState:SetBuild(inst:GetSkinBuild())
     inst:OnChangeImage()
     update_floater_anim(inst)
 end

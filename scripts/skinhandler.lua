@@ -110,6 +110,8 @@ SpawnPrefab = function(name, skin, skin_id, creator, ...)
     if is_mod_skin(skin) and does_character_has_skin(skin, get_player_from_id(creator)) then
         local init_fn = Prefabs[skin].init_fn
         if init_fn then init_fn(ent) end
+        -- set skin_id for kidding.
+        ent.skin_id = math.abs(hash(skin) - hash(tostring(TheWorld.meta.session_id)))
     end
     return ent
 end
@@ -117,19 +119,14 @@ end
 local reskin_entity = Sim.ReskinEntity
 Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ent = Ents[guid]
-    -- execute OnReskinFn before reskin_entity to avoid event issues.
-    if ent.OnReskinFn then
-        ent:OnReskinFn()
-        ent.OnReskinFn = nil
-    end
-
     -- do reskin
     local ret = { reskin_entity(self, guid, targetskinname, reskinname, ...) }
-
     -- mod skin init_fn
     if is_mod_skin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
+        -- set skin_id for kidding.
+        ent.skin_id = math.abs(hash(reskinname) - hash(tostring(TheWorld.meta.session_id)))
     end
     return unpack(ret)
 end

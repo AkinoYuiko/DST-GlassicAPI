@@ -123,32 +123,40 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 
--- one of the main init fn that equippable skinned items require.
--- for equippable items, you need to set BasicOnequipFn to override symbols when you equip your skinned item.
--- e.g. GlassicAPI.BasicOnequipFn(inst, "hat", "alterguardianhat_nope")
--- e.g. GlassicAPI.BasicOnequipFn(inst, "hand", "glasscutter_angri", "swap_glasscutter")
----@param slot string
----@param build string
----@param override_symbol string
----if slot is "hand". override_build needs specified.
-GlassicAPI.BasicOnequipFn = function(inst, slot, build, override_symbol)
-    local onequipfns =
-    {
-        hand = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_object", build, override_symbol) end,
-        body = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_body", build, "swap_body") end,
-        hat = function(inst, data) data.owner.AnimState:OverrideSymbol("swap_hat", build, "swap_hat") end,
-    }
-    if not TheWorld.ismastersim then return end
+local function set_onquip_skin_item(symbol, symbol_override, frame)
+    return function(inst)
+        if not TheWorld.ismastersim then return end
 
-    local onequipfn = onequipfns[slot]
-    inst:ListenForEvent("equipped", onequipfn)
-    if slot == "hand" then
-        inst:ListenForEvent("stoprowing", onequipfn)
+        local onequipfn = inst.components.equippable.onequipfn
+        if onequipfn then
+            inst.components.equippable:SetOnEquip(function(_inst, _owner)
+                onequipfn(_inst, _owner)
+                local skin_build = _inst:GetSkinBuild()
+                if skin_build then
+                    _owner:PushEvent("equipskinneditem", _inst:GetSkinName())
+                    _owner.AnimState:OverrideItemSkinSymbol(symbol, skin_build, symbol_override, _inst.GUID, frame)
+                end
+            end)
+        end
     end
-    inst.OnReskinFn = function(inst)
-        inst:RemoveEventCallback("equipped", onequipfn)
-        inst:RemoveEventCallback("stoprowing", onequipfn)
+end
+
+-- Set OverrideItemSkinSymbol for official items that has no skin.
+-- This is an altanative way to hack'in official items without skins.
+---@param name string prefab_name
+---@param data table {symbol, symbol_override, frame}
+--[[e.g.
+    if not rawget(_G, "moonglassaxe_clear_fn") then
+        moonglassaxe_clear_fn = function(inst)
+            inst.AnimState:SetBank("glassaxe")
+            GlassicAPI.SetFloatData(inst, { sym_build = "swap_glassaxe" })
+            basic_clear_fn(inst, "glassaxe")
+        end
+        GlassicAPI.SetOnequipSkinItem("moonglassaxe", {"swap_object", "swap_glassaxe", "swap_glassaxe"})
     end
+--]]
+GlassicAPI.SetOnequipSkinItem = function(name, data)
+    ENV.AddPrefabPostInit(name, set_onquip_skin_item(unpack(data)))
 end
 
 -- main init fn that skinned items require.
@@ -157,11 +165,11 @@ end
 ---@param skinname string
 ---@param override_build string
 -- override_build is not required.
-GlassicAPI.BasicInitFn = function(inst, skinname, override_build)
+GlassicAPI.BasicInitFn = function(inst, skinname)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
     inst.skinname = skinname
-    inst.AnimState:SetBuild(override_build or skinname)
+    inst.AnimState:SetBuild(inst:GetSkinBuild())
 
     if inst.components.inventoryitem then
         inst.components.inventoryitem:ChangeImageName(inst:GetSkinName())
