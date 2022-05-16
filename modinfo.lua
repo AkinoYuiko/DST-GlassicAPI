@@ -10,13 +10,21 @@ local function zh_en(a, b)
     })
 end
 
-version = "2.20"
+version = "3.0"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 新增 GlassicAPI.AddPrototyperTrees。
+- 重新优化皮肤组件逻辑。
+- 新增skin_id支持。
+- 新增SetOnequipSkinItem。
+- 移除OnReskinFn。
+- 移除BasicOnequipFn。
 ]], [[
-- Add GlassicAPI.AddPrototyperTrees.
+- Tweak Skinhandler logic and skin fns.
+- Add skin_id support.
+- Add SetOnequipSkinItem.
+- Remove OnReskinFn.
+- Remove BasicOnequipFn.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
     zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog ..
