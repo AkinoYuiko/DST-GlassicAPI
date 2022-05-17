@@ -5,7 +5,7 @@ GlassicAPI = {}
 
 ------------------------------------------------------------------------------------------------------------
 -- SkinHandler helps you create skins quickly.
--- ENV.modimport("main/skinhandler")
+ENV.modimport("main/skinhandler")
 ------------------------------------------------------------------------------------------------------------
 
 -- RegisterItemAtlas helps you register inventory item atlas, so you don't need to specify each mod prefab's inventory image and atlas
@@ -502,7 +502,6 @@ local main_files = {
     "prefabskin",
     "recipes",
     "reskin_tool",
-    "skinhandler",
     "upvalueutil",
 }
 
