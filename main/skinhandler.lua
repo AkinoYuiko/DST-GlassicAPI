@@ -1,3 +1,5 @@
+GLOBAL.setfenv(1, GLOBAL)
+
 local SKIN_AFFINITY_INFO = require("skin_affinity_info")
 local ALL_MOD_SKINS = {}
 local HEADSKIN_CHARACTERS = {}
@@ -264,7 +266,8 @@ local function set_rarity(rarity, order, color, override_symbol, override_build)
     end
 end
 
-return {
+GlassicAPI.SkinHandler =
+{
     GetModSkins                 = get_mod_skins,
     AddModSkin                  = add_mod_skin,
     RemoveModSkin               = remove_modskin,

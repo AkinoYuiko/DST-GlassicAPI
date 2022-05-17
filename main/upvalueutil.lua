@@ -1,5 +1,8 @@
---Tool designed by Rezecib.
---Personal Changed by Tony.
+-- Tool designed by Rezecib.
+-- Personal Changed by Tony.
+-- Changed by Civi again.
+local modname = modname
+GLOBAL.setfenv(1, GLOBAL)
 
 local function GetUpvalueHelper(entry_fn, entry_name)
     local i = 1
@@ -30,7 +33,9 @@ local function SetUpvalue(start_fn, path, new_fn)
     debug.setupvalue(scope_fn, fn_i, new_fn)
 end
 
-return {
+GlassicAPI.UpvalueUtil =
+{
+    parant = modname,
     GetUpvalue = GetUpvalue,
     SetUpvalue = SetUpvalue
 }
