@@ -10,16 +10,20 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.0"
+version = "3.0.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
+- 调整了SkinHandler和UpvalueUtil的文件位置。
+
 - 重新优化皮肤组件逻辑。
 - 新增skin_id支持。
 - 新增SetOnequipSkinItem。
 - 移除OnReskinFn。
 - 移除BasicOnequipFn。
 ]], [[
+- Tweak file location of SkinHandler and UpvalueUtil.
+
 - Tweak Skinhandler logic and skin fns.
 - Add skin_id support.
 - Add SetOnequipSkinItem.
