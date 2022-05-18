@@ -4,8 +4,18 @@ GLOBAL.setfenv(1, GLOBAL)
 GlassicAPI = {}
 
 ------------------------------------------------------------------------------------------------------------
--- SkinHandler helps you create skins quickly.
-ENV.modimport("main/skinhandler")
+-- Import Utils
+------------------------------------------------------------------------------------------------------------
+local utils =
+{
+    "skinhandler",
+    "slaxml",
+    "upvalueutil",
+}
+for i = 1, #utils do
+    ENV.modimport("utils/" .. utils[i])
+end
+
 ------------------------------------------------------------------------------------------------------------
 
 -- RegisterItemAtlas helps you register inventory item atlas, so you don't need to specify each mod prefab's inventory image and atlas
@@ -15,13 +25,12 @@ ENV.modimport("main/skinhandler")
 -- set 'assets_table' to Assets.
 ---@param path_to_file string
 ---@param assets_table table
-local SLAXML = require "slaxml"
 GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
     path_to_file = resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
 
     local images = {}
     local file = io.open(path_to_file, "r")
-    local parser = SLAXML:parser({
+    local parser = ENV.SLAXML:parser({
         attribute = function(name, value)
             if name == "name" then
                 table.insert(images, value)
@@ -502,7 +511,7 @@ local main_files = {
     "prefabskin",
     "recipes",
     "reskin_tool",
-    "upvalueutil",
+    -- "upvalueutil",
 }
 
 for i = 1, #main_files do

@@ -2,6 +2,12 @@
 v0.8 Copyright © 2013-2018 Gavin Kistner <!@phrogz.net>; MIT Licensed
 See http://github.com/Phrogz/SLAXML for details.
 --]=====================================================================]
+
+-- changed part start --
+local ENV = env
+GLOBAL.setfenv(1, GLOBAL)
+-- changed part end --
+
 local SLAXML = {
     VERSION = "0.8",
     _call = {
@@ -256,4 +262,6 @@ function SLAXML:parse(xml,options)
     if #nsStack > 0 then error("Parsing ended with unclosed elements") end
 end
 
-return SLAXML
+-- changed part start --
+ENV.SLAXML = SLAXML
+-- changed part end --
