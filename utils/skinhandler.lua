@@ -7,7 +7,7 @@ local OVERRIDE_RARITY_DATA = {}
 local CHARACTER_EXCLUSIVE_SKINS = {}
 
 local function get_player_from_id(id)
-    if type(id) == "table" then
+    if type(id) == "table" then -- If it's an entity
         return id.prefab and id or nil
     end
     for _, player in ipairs(AllPlayers) do
@@ -25,7 +25,7 @@ local function add_mod_skin(skin_name, test_fn)
     ALL_MOD_SKINS[skin_name] = test_fn or true
 end
 
-local function remove_modskin(skin_name)
+local function remove_mod_skin(skin_name)
     ALL_MOD_SKINS[skin_name] = nil
 end
 
@@ -42,7 +42,7 @@ local function set_character_exlusive_skin(skin_name, characters)
     CHARACTER_EXCLUSIVE_SKINS[skin_name] = type(characters) == "string" and {characters} or characters
 end
 
-local function does_character_has_skin(skin_name, character)
+local function does_character_have_skin(skin_name, character)
     if is_mod_skin(skin_name) then
         local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
         if characters then
@@ -55,7 +55,7 @@ local function does_character_has_skin(skin_name, character)
     return true
 end
 
--- skin index for networking between server and clients
+-- Skin index for networking between server and clients
 local function index_skin_ids(prefab)
     PREFAB_SKINS_IDS[prefab] = {}
     for index, skin in pairs(PREFAB_SKINS[prefab] or {}) do
@@ -86,7 +86,7 @@ end
 
 local check_client_ownership = InventoryProxy.CheckClientOwnership
 InventoryProxy.CheckClientOwnership = function(self, userid, skin, ...)
-    if not does_character_has_skin(skin, get_player_from_id(userid)) then
+    if not does_character_have_skin(skin, get_player_from_id(userid)) then
         return false
     end
     if is_valid_mod_skin(skin, userid) then
@@ -97,7 +97,7 @@ end
 
 local check_ownership_get_latest = InventoryProxy.CheckOwnershipGetLatest
 InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
-    if not does_character_has_skin(item_type, ThePlayer) then
+    if not does_character_have_skin(item_type, ThePlayer) then
         return false
     end
     if is_valid_mod_skin(item_type, ThePlayer) then
@@ -109,10 +109,10 @@ end
 local spawn_prefab = SpawnPrefab
 SpawnPrefab = function(name, skin, skin_id, creator, ...)
     local ent = spawn_prefab(name, skin, skin_id, creator, ...)
-    if is_mod_skin(skin) and does_character_has_skin(skin, get_player_from_id(creator)) then
+    if is_mod_skin(skin) and does_character_have_skin(skin, get_player_from_id(creator)) then
         local init_fn = Prefabs[skin].init_fn
         if init_fn then init_fn(ent) end
-        -- set skin_id for kidding.
+        -- Set skin_id for kidding.
         ent.skin_id = math.abs(hash(skin) - hash(tostring(TheWorld.meta.session_id)))
     end
     return ent
@@ -121,13 +121,13 @@ end
 local reskin_entity = Sim.ReskinEntity
 Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, ...)
     local ent = Ents[guid]
-    -- do reskin
+    -- Do reskin
     local ret = { reskin_entity(self, guid, targetskinname, reskinname, ...) }
-    -- mod skin init_fn
+    -- Mod skin init_fn
     if is_mod_skin(reskinname) then
         local init_fn = Prefabs[reskinname].init_fn
         if init_fn then init_fn(ent) end
-        -- set skin_id for kidding.
+        -- Set skin_id for kidding.
         ent.skin_id = math.abs(hash(reskinname) - hash(tostring(TheWorld.meta.session_id)))
     end
     return unpack(ret)
@@ -198,7 +198,7 @@ DefaultSkinSelectionPopup.GetSkinsList = function(self, ...)
     local player_prefab = self.character
     local check_ownership = InventoryProxy.CheckOwnership
     InventoryProxy.CheckOwnership = function(self, name, ...)
-        if not does_character_has_skin(name, player_prefab) then
+        if not does_character_have_skin(name, player_prefab) then
             return false
         end
         return check_ownership(self, name, ...)
@@ -270,13 +270,14 @@ GlassicAPI.SkinHandler =
 {
     GetModSkins                 = get_mod_skins,
     AddModSkin                  = add_mod_skin,
-    RemoveModSkin               = remove_modskin,
+    RemoveModSkin               = remove_mod_skin,
     IsModSkin                   = is_mod_skin,
     IsValidModSkin              = is_valid_mod_skin,
 
     SetCharacterExclusiveSkin   = set_character_exlusive_skin,
-    DoesCharacterHasSkin        = does_character_has_skin,
+    DoesCharacterHaveSkin       = does_character_have_skin,
+    DoesCharacterHasSkin        = does_character_have_skin, -- Backward compatible
 
-    AddModSkins                 = add_mod_skins,  -- to import skin data
+    AddModSkins                 = add_mod_skins, -- To import skin data
     SetRarity                   = set_rarity,
 }
