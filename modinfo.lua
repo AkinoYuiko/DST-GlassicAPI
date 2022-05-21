@@ -10,14 +10,18 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.1"
+version = "3.1.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
+- 优化了部分动画和贴图。
+
 - SkinHandler开放GetPlayerFromID
 - 皮肤的test_fn传入参数修改为(skin_name, userid)
 - 优化初始物品皮肤检验
 ]], [[
+- Tweak some anim and tex.
+
 - Add SkinHandler.GetPlayerFromID.
 - test_fn for mod skins now accpets params: skin_name, userid.
 - Tweak code logic for starting inventory item skins.
