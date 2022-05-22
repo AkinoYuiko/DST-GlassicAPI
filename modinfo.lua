@@ -10,13 +10,17 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.2"
+version = "3.2.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
+- 调整了skinname初始化逻辑，现在无需在init_fn中指定了。
+
 - 移除 PostInitFloater.
 - 新增 UpdateFloaterAnim.
 ]], [[
+- Tweak code logic for skinname init. Now it's no need to specify in skin init_fn.
+
 - Remove PostInitFloater.
 - Add UpdateFloaterAnim.
 ]])
