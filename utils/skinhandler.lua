@@ -31,17 +31,14 @@ end
 
 local function validate_mod_skin(skin_name, userid)
     local test_fn = ALL_MOD_SKINS[skin_name]
-    if test_fn then
-        if userid then
-            local player = get_player_from_id(userid)
-            local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
-            if player and characters then
-                return table.contains(characters, player.prefab)
-            end
-            return FunctionOrValue(test_fn, skin_name, userid)
+    if userid then
+        local player = get_player_from_id(userid)
+        local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
+        if player and characters then
+            return table.contains(characters, player.prefab)
         end
-        return true
     end
+    return FunctionOrValue(test_fn, skin_name, userid)
 end
 
 local function set_character_exlusive_skin(skin_name, characters)
