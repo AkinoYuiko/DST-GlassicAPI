@@ -10,7 +10,8 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.1.1"
+version = "3.1.2"
+version_compatible = "3.1.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
