@@ -116,18 +116,12 @@ GlassicAPI.SetFloatData = function(inst, swap_data)
     end
 end
 
--- used to fix reskin issue on official skinned items. now it's less necessary to use.
----@param base_fn function
----@return function
-GlassicAPI.PostInitFloater = function(inst, base_fn, ...)
-    local ret = { base_fn(inst, ...) }
-    if inst.components.floater then
-        if inst.components.floater:IsFloating() then
-            inst.components.floater:SwitchToDefaultAnim(true)
-            inst.components.floater:SwitchToFloatAnim()
-        end
+GlassicAPI.UpdateFloaterAnim = function(inst)
+    local floater = inst.components.floater
+    if floater and floater:IsFloating() and not (floater.wateranim or floater.landanim) then
+        floater:SwitchToDefaultAnim(true)
+        floater:SwitchToFloatAnim()
     end
-    return unpack(ret)
 end
 
 ------------------------------------------------------------------------------------------------------------
@@ -184,11 +178,7 @@ GlassicAPI.BasicInitFn = function(inst, skinname)
         inst.components.inventoryitem:ChangeImageName(inst:GetSkinName())
     end
 
-    local floater = inst.components.floater
-    if floater and floater:IsFloating() and not (floater.wateranim or floater.landanim) then
-        floater:SwitchToDefaultAnim(true)
-        floater:SwitchToFloatAnim()
-    end
+    GlassicAPI.UpdateFloaterAnim(inst)
 end
 
 -- all actions require component. to avoid compatibility issues, it's better that we use a new component to set actions.

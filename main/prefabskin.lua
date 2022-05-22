@@ -25,15 +25,6 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 --  -- #40E0D0 reserved skin colour
 -- }
 
-local function update_floater_anim(inst)
-    if inst.components.floater then
-        if inst.components.floater:IsFloating() then
-            inst.components.floater:SwitchToDefaultAnim(true)
-            inst.components.floater:SwitchToFloatAnim()
-        end
-    end
-end
-
 -- [[ Glassic Item Skins ]] --
 -- Golden Axe Victorian
 local vanilla_goldenaxe_clear_fn = goldenaxe_clear_fn
@@ -69,12 +60,12 @@ glassiccutter_init_fn = function(inst, skinname)
     inst.skinname = skinname
     inst.AnimState:SetBuild(inst:GetSkinBuild())
     inst:OnChangeImage()
-    update_floater_anim(inst)
+    GlassicAPI.UpdateFloaterAnim(inst)
 end
 glassiccutter_clear_fn = function(inst)
     inst.AnimState:SetBuild("glassiccutter")
     inst:OnChangeImage()
-    update_floater_anim(inst)
+    GlassicAPI.UpdateFloaterAnim(inst)
 end
 
 -- [[ Set Skins ]] --
