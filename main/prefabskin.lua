@@ -57,7 +57,6 @@ end
 
 glassiccutter_init_fn = function(inst, skinname)
     if not TheWorld.ismastersim then return end
-    inst.skinname = skinname
     inst.AnimState:SetBuild(inst:GetSkinBuild())
     inst:OnChangeImage()
     GlassicAPI.UpdateFloaterAnim(inst)

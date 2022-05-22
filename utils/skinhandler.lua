@@ -111,14 +111,19 @@ local function generate_skin_id(skin_name)
     end
 end
 
+local function init_mod_skin(ent, skin)
+    ent.skinname = skin
+    ent.skin_id = generate_skin_id(skin)
+
+    local init_fn = Prefabs[skin].init_fn
+    if init_fn then init_fn(ent) end
+end
+
 local spawn_prefab = SpawnPrefab
 SpawnPrefab = function(name, skin, skin_id, creator, ...)
     local ent = spawn_prefab(name, skin, skin_id, creator, ...)
     if validate_mod_skin(skin, creator) then
-        local init_fn = Prefabs[skin].init_fn
-        if init_fn then init_fn(ent) end
-        -- Set skin_id for kidding.
-        ent.skin_id = generate_skin_id(skin)
+        init_mod_skin(ent, skin)
     end
     return ent
 end
@@ -130,10 +135,7 @@ Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, skin_id, use
     local ret = { reskin_entity(self, guid, targetskinname, reskinname, skin_id, userid, ...) }
     -- Execute mod skin init_fn
     if validate_mod_skin(reskinname, userid) then
-        local init_fn = Prefabs[reskinname].init_fn
-        if init_fn then init_fn(ent) end
-        -- Set skin_id for kidding.
-        ent.skin_id = generate_skin_id(reskinname)
+        init_mod_skin(ent, reskinname)
     end
     return unpack(ret)
 end

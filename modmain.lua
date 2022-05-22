@@ -171,7 +171,7 @@ end
 GlassicAPI.BasicInitFn = function(inst, skinname)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
-    inst.skinname = skinname
+    -- inst.skinname = skinname
     inst.AnimState:SetBuild(inst:GetSkinBuild())
 
     if inst.components.inventoryitem then
