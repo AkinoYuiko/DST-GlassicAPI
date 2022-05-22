@@ -10,22 +10,15 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.1.2"
-version_compatible = "3.1.1"
+version = "3.2"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 优化了部分动画和贴图。
-
-- SkinHandler开放GetPlayerFromID
-- 皮肤的test_fn传入参数修改为(skin_name, userid)
-- 优化初始物品皮肤检验
+- 移除 PostInitFloater.
+- 新增 UpdateFloaterAnim.
 ]], [[
-- Tweak some anim and tex.
-
-- Add SkinHandler.GetPlayerFromID.
-- test_fn for mod skins now accpets params: skin_name, userid.
-- Tweak code logic for starting inventory item skins.
+- Remove PostInitFloater.
+- Add UpdateFloaterAnim.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
     zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
