@@ -501,7 +501,7 @@ local main_files = {
     "prefabskin",
     "recipes",
     "reskin_tool",
-    -- "upvalueutil",
+    "hide_in_scb",
 }
 
 for i = 1, #main_files do
