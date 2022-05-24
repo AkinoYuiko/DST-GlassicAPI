@@ -73,6 +73,11 @@ msgctxt "STRINGS.NAMES.MOONGLASSPICKAXE"
 msgid "Moon Glass Pickaxe"
 msgstr ""
 
+#. STRINGS.SKIN_NAMES.cane_glass
+msgctxt "STRINGS.SKIN_NAMES.cane_glass"
+msgid "Gane"
+msgstr ""
+
 #. STRINGS.SKIN_NAMES.glassiccutter_dream
 msgctxt "STRINGS.SKIN_NAMES.glassiccutter_dream"
 msgid "Musou Isshin"

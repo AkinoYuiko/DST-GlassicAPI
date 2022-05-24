@@ -54,6 +54,7 @@ local strings =
     },
     SKIN_NAMES =
     {
+        cane_glass = "Gane",
         glassiccutter_dream = "Musou Isshin",
         goldenaxe_victorian = "Ornate Fanciful Axe",
         moonglassaxe_northern = "Moon Nordic Axe",

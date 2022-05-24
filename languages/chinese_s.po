@@ -84,6 +84,11 @@ msgctxt "STRINGS.NAMES.MOONGLASSPICKAXE"
 msgid "Moon Glass Pickaxe"
 msgstr "月光玻璃镐"
 
+#. STRINGS.SKIN_NAMES.cane_glass
+msgctxt "STRINGS.SKIN_NAMES.cane_glass"
+msgid "Gane"
+msgstr "手丈"
+
 #. STRINGS.SKIN_NAMES.glassiccutter_dream
 msgctxt "STRINGS.SKIN_NAMES.glassiccutter_dream"
 msgid "Musou Isshin"

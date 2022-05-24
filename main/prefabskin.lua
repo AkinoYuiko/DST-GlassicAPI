@@ -69,6 +69,7 @@ end
 
 -- [[ Set Skins ]] --
 GlassicAPI.SkinHandler.AddModSkins({
+    cane = { "cane_glass" },
     glassiccutter = { "glassiccutter_dream" },
     goldenaxe = { "goldenaxe_victorian" },
     moonglassaxe = { "moonglassaxe_northern", "moonglassaxe_victorian" },

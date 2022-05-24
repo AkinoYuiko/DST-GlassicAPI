@@ -5,8 +5,8 @@ table.insert(prefabs, CreatePrefabSkin("goldenaxe_victorian", {
     type = "item",
     rarity = "Glassic",
     assets = {
-    Asset( "DYNAMIC_ANIM", "anim/dynamic/goldenaxe_victorian.zip" ),
-    Asset( "PKGREF", "anim/dynamic/goldenaxe_victorian.dyn" ),
+        Asset( "DYNAMIC_ANIM", "anim/dynamic/goldenaxe_victorian.zip" ),
+        Asset( "PKGREF", "anim/dynamic/goldenaxe_victorian.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "goldenaxe_victorian", sym_name = "swap_goldenaxe"})
@@ -15,13 +15,28 @@ table.insert(prefabs, CreatePrefabSkin("goldenaxe_victorian", {
     skin_tags = { "GOLDENAXE" },
 }))
 
+table.insert(prefabs, CreatePrefabSkin("cane_glass", {
+    base_prefab = "cane",
+    type = "item",
+    rarity = "Glassic",
+    assets = {
+        Asset( "DYNAMIC_ANIM", "anim/dynamic/cane_glass.zip" ),
+        Asset( "PKGREF", "anim/dynamic/cane_glass.dyn" ),
+    },
+    init_fn = function(inst)
+        GlassicAPI.SetFloatData(inst, {sym_build = "cane_glass", sym_name = "swap_cane"})
+        GlassicAPI.BasicInitFn(inst, "cane_glass")
+    end,
+    skin_tags = { "CANE" },
+}))
+
 table.insert(prefabs, CreatePrefabSkin("moonglassaxe_northern", {
     base_prefab = "moonglassaxe",
     type = "item",
     rarity = "Glassic",
     assets = {
-    Asset( "DYNAMIC_ANIM", "anim/dynamic/glassaxe_northern.zip" ),
-    Asset( "PKGREF", "anim/dynamic/glassaxe_northern.dyn" ),
+        Asset( "DYNAMIC_ANIM", "anim/dynamic/glassaxe_northern.zip" ),
+        Asset( "PKGREF", "anim/dynamic/glassaxe_northern.dyn" ),
     },
     init_fn = function(inst)
         GlassicAPI.SetFloatData(inst, {sym_build = "glassaxe_northern", sym_name = "swap_glassaxe", bank = "glassaxe"})
