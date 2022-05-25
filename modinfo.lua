@@ -10,18 +10,20 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.2.2"
+version = "3.2.3"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 新增了一个手杖皮肤作为示例。
+- 纠正了一些文本错误。
 
+- 新增了一个手杖皮肤作为示例。
 - 调整了skinname初始化逻辑，现在无需在init_fn中指定了。
 - 移除 PostInitFloater.
 - 新增 UpdateFloaterAnim.
 ]], [[
-- Add example skin: Gane (Cane).
+- Fix some text error.
 
+- Add example skin: Gane (Cane).
 - Tweak code logic for skinname init. Now it's no need to specify in skin init_fn.
 - Remove PostInitFloater.
 - Add UpdateFloaterAnim.
