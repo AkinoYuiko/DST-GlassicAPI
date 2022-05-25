@@ -56,9 +56,9 @@ local strings =
     {
         cane_glass = "Gane",
         glassiccutter_dream = "Musou Isshin",
-        goldenaxe_victorian = "Ornate Fanciful Axe",
+        goldenaxe_victorian = "Fanciful Luxury Axe",
         moonglassaxe_northern = "Moon Nordic Axe",
-        moonglassaxe_victorian = "Moon Fanciful Axe",
+        moonglassaxe_victorian = "Fanciful Moon Glass Axe",
         moonglasshammer_forge = "Moon Forging Hammer",
         moonglasspickaxe_northern = "Moon Nordic Pickaxe",
     },

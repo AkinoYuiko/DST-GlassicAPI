@@ -85,7 +85,7 @@ msgstr ""
 
 #. STRINGS.SKIN_NAMES.goldenaxe_victorian
 msgctxt "STRINGS.SKIN_NAMES.goldenaxe_victorian"
-msgid "Ornate Fanciful Axe"
+msgid "Fanciful Luxury Axe"
 msgstr ""
 
 #. STRINGS.SKIN_NAMES.moonglassaxe_northern
@@ -95,7 +95,7 @@ msgstr ""
 
 #. STRINGS.SKIN_NAMES.moonglassaxe_victorian
 msgctxt "STRINGS.SKIN_NAMES.moonglassaxe_victorian"
-msgid "Moon Fanciful Axe"
+msgid "Fanciful Moon Glass Axe"
 msgstr ""
 
 #. STRINGS.SKIN_NAMES.moonglasshammer_forge
