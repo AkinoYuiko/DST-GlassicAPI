@@ -73,6 +73,36 @@ msgctxt "STRINGS.NAMES.MOONGLASSPICKAXE"
 msgid "Moon Glass Pickaxe"
 msgstr ""
 
+#. STRINGS.SKIN_DESCRIPTIONS.cane_glass
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.cane_glass"
+msgid "It's a glassic joke, I assume."
+msgstr ""
+
+#. STRINGS.SKIN_DESCRIPTIONS.glassiccutter_dream
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.glassiccutter_dream"
+msgid "Inazuma shines eternal!"
+msgstr ""
+
+#. STRINGS.SKIN_DESCRIPTIONS.goldenaxe_victorian
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.goldenaxe_victorian"
+msgid "An elegantly engraved golden axe."
+msgstr ""
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_northern
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_northern"
+msgid "A resplendent moon axe, its design reminiscent of days of yore."
+msgstr ""
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_victorian
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_victorian"
+msgid "An elegantly engraved moon axe."
+msgstr ""
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglasspickaxe_northern
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglasspickaxe_northern"
+msgid "A resplendent moon pickaxe, its design reminiscent of days of yore."
+msgstr ""
+
 #. STRINGS.SKIN_NAMES.cane_glass
 msgctxt "STRINGS.SKIN_NAMES.cane_glass"
 msgid "Gane"
@@ -106,6 +136,11 @@ msgstr ""
 #. STRINGS.SKIN_NAMES.moonglasspickaxe_northern
 msgctxt "STRINGS.SKIN_NAMES.moonglasspickaxe_northern"
 msgid "Moon Nordic Pickaxe"
+msgstr ""
+
+#. STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC
+msgctxt "STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC"
+msgid "Glassic Collection"
 msgstr ""
 
 #. STRINGS.UI.RARITY.Glassic

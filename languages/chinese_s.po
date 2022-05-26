@@ -84,6 +84,36 @@ msgctxt "STRINGS.NAMES.MOONGLASSPICKAXE"
 msgid "Moon Glass Pickaxe"
 msgstr "月光玻璃镐"
 
+#. STRINGS.SKIN_DESCRIPTIONS.cane_glass
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.cane_glass"
+msgid "It's a glassic joke, I assume."
+msgstr "玻璃笑话。"
+
+#. STRINGS.SKIN_DESCRIPTIONS.glassiccutter_dream
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.glassiccutter_dream"
+msgid "Inazuma shines eternal!"
+msgstr "稻光，亦是永恒！"
+
+#. STRINGS.SKIN_DESCRIPTIONS.goldenaxe_victorian
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.goldenaxe_victorian"
+msgid "An elegantly engraved golden axe."
+msgstr "一把雕工精美的金斧头。"
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_northern
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_northern"
+msgid "A resplendent moon axe, its design reminiscent of days of yore."
+msgstr "华丽的月斧头，古代遗物。"
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_victorian
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglassaxe_victorian"
+msgid "An elegantly engraved moon axe."
+msgstr "一把雕工精美的月光斧头。"
+
+#. STRINGS.SKIN_DESCRIPTIONS.moonglasspickaxe_northern
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.moonglasspickaxe_northern"
+msgid "A resplendent moon pickaxe, its design reminiscent of days of yore."
+msgstr "华丽的月光鹤嘴锄，古代遗物。"
+
 #. STRINGS.SKIN_NAMES.cane_glass
 msgctxt "STRINGS.SKIN_NAMES.cane_glass"
 msgid "Gane"
@@ -118,6 +148,11 @@ msgstr "月神锤"
 msgctxt "STRINGS.SKIN_NAMES.moonglasspickaxe_northern"
 msgid "Moon Nordic Pickaxe"
 msgstr "月光北欧鹤嘴锄"
+
+#. STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC
+msgctxt "STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC"
+msgid "Glassic Collection"
+msgstr "玻璃系列"
 
 #. STRINGS.UI.RARITY.Glassic
 msgctxt "STRINGS.UI.RARITY.Glassic"
