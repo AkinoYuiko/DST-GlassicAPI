@@ -12,7 +12,7 @@ table.insert(prefabs, CreatePrefabSkin("goldenaxe_victorian", {
         GlassicAPI.SetFloatData(inst, {sym_build = "goldenaxe_victorian", sym_name = "swap_goldenaxe"})
         GlassicAPI.BasicInitFn(inst, "goldenaxe_victorian")
     end,
-    skin_tags = { "GOLDENAXE" },
+    skin_tags = { "GOLDENAXE", "VICTORIAN" },
 }))
 
 table.insert(prefabs, CreatePrefabSkin("cane_glass", {
@@ -27,7 +27,7 @@ table.insert(prefabs, CreatePrefabSkin("cane_glass", {
         GlassicAPI.SetFloatData(inst, {sym_build = "cane_glass", sym_name = "swap_cane"})
         GlassicAPI.BasicInitFn(inst, "cane_glass")
     end,
-    skin_tags = { "CANE" },
+    skin_tags = { "CANE", "GLASSIC" },
 }))
 
 table.insert(prefabs, CreatePrefabSkin("moonglassaxe_northern", {
@@ -43,7 +43,7 @@ table.insert(prefabs, CreatePrefabSkin("moonglassaxe_northern", {
         GlassicAPI.BasicInitFn(inst, "moonglassaxe_northern")
     end,
     build_name_override = "glassaxe_northern",
-    skin_tags = { "MOONGLASSAXE" },
+    skin_tags = { "MOONGLASSAXE", "GLASSIC" },
 }))
 
 table.insert(prefabs, CreatePrefabSkin("moonglassaxe_victorian", {
@@ -59,7 +59,7 @@ table.insert(prefabs, CreatePrefabSkin("moonglassaxe_victorian", {
         GlassicAPI.BasicInitFn(inst, "moonglassaxe_victorian")
     end,
     build_name_override = "glassaxe_victorian",
-    skin_tags = { "MOONGLASSAXE" },
+    skin_tags = { "MOONGLASSAXE", "GLASSIC" },
 }))
 
 table.insert(prefabs, CreatePrefabSkin("moonglasshammer_forge", {
@@ -75,7 +75,7 @@ table.insert(prefabs, CreatePrefabSkin("moonglasshammer_forge", {
         GlassicAPI.BasicInitFn(inst, "moonglasshammer_forge")
     end,
     build_name_override = "glasshammer_forge",
-    skin_tags = { "MOONGLASSHAMMER" },
+    skin_tags = { "MOONGLASSHAMMER", "GLASSIC" },
 }))
 
 table.insert(prefabs, CreatePrefabSkin("moonglasspickaxe_northern", {
@@ -91,7 +91,7 @@ table.insert(prefabs, CreatePrefabSkin("moonglasspickaxe_northern", {
         GlassicAPI.BasicInitFn(inst, "moonglasspickaxe_northern")
     end,
     build_name_override = "glasspickaxe_northern",
-    skin_tags = { "MOONGLASSPICKAXE" },
+    skin_tags = { "MOONGLASSPICKAXE", "GLASSIC" },
 }))
 
 
@@ -106,7 +106,7 @@ table.insert(prefabs, CreatePrefabSkin("glassiccutter_dream", {
     init_fn = function(inst)
         glassiccutter_init_fn(inst, "glassiccutter_dream")
     end,
-    skin_tags = { "GLASSICCUTTER" },
+    skin_tags = { "GLASSICCUTTER", "GLASSIC" },
 
 }))
 
