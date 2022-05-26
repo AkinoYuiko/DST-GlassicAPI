@@ -1,3 +1,5 @@
+table.insert(Assets, Asset("ANIM", "anim/glassicrarities.zip"))
+table.insert(PrefabFiles, "glassicskins")
 GLOBAL.setfenv(1, GLOBAL)
 
 -- Glassic rarity EXAMPLE
