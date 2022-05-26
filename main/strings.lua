@@ -62,11 +62,29 @@ local strings =
         moonglasshammer_forge = "Moon Forging Hammer",
         moonglasspickaxe_northern = "Moon Nordic Pickaxe",
     },
+    SKIN_DESCRIPTIONS =
+    {
+        cane_glass = "It's a glassic joke, I assume.",
+        glassiccutter_dream = "Inazuma shines eternal!",
+        goldenaxe_victorian = "An elegantly engraved golden axe.",
+        moonglassaxe_northern = "A resplendent moon axe, its design reminiscent of days of yore.",
+        moonglassaxe_victorian = "An elegantly engraved moon axe.",
+        moonglasshammer_forge = STRINGS.SKIN_DESCRIPTIONS.hammer_forge,
+        moonglasspickaxe_northern = "A resplendent moon pickaxe, its design reminiscent of days of yore.",
+    },
+    SKIN_TAG_CATEGORIES =
+    {
+        COLLECTION =
+        {
+            GLASSIC = "Glassic Collection",
+        }
+    },
 }
 
 GlassicAPI.MergeStringsToGLOBAL(strings)
 GlassicAPI.MergeTranslationFromPO(env.MODROOT.."languages")
 
+-- if env.is_mim_enabled then return end
 function UpdateGlassicStrings()
     local file, errormsg = io.open(env.MODROOT .. "languages/strings.pot", "w")
     if not file then
