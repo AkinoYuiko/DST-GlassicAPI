@@ -10,23 +10,17 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.2.3"
+version = "3.3"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 纠正了一些文本错误。
-
-- 新增了一个手杖皮肤作为示例。
-- 调整了skinname初始化逻辑，现在无需在init_fn中指定了。
-- 移除 PostInitFloater.
-- 新增 UpdateFloaterAnim.
+- 完善对 Mods In Menu 的支持，现在物品皮肤也会显示在收藏了。
+- 补全了缺失的文本。
+- 修复月神锤缺少 SWAP_ICON 的问题。
 ]], [[
-- Fix some text error.
-
-- Add example skin: Gane (Cane).
-- Tweak code logic for skinname init. Now it's no need to specify in skin init_fn.
-- Remove PostInitFloater.
-- Add UpdateFloaterAnim.
+- Add compatibility for prefab skins with Mods In Menu.
+- Add missing strings.
+- Fix missing SWAP_ICON for skin: Moon Forging Hammer.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
     zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
