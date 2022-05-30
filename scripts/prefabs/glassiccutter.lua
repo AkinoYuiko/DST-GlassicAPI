@@ -73,8 +73,8 @@ local function onequip(inst, owner)
     itemtype = itemtype and ("_" .. itemtype) or ""
     local skin_build = inst:GetSkinBuild()
     if skin_build then
-        -- owner:PushEvent("equipskinneditem", inst:GetSkinName())
-        owner.AnimState:OverrideSymbol("swap_object", skin_build, "swap_glassiccutter" .. itemtype)
+        owner:PushEvent("equipskinneditem", inst:GetSkinName())
+        owner.AnimState:OverrideItemSkinSymbol("swap_object", skin_build, "swap_glassiccutter" .. itemtype, inst.GUID, "swap_glassiccutter")
     else
         owner.AnimState:OverrideSymbol("swap_object", "glassiccutter", "swap_glassiccutter" .. itemtype)
     end
@@ -220,6 +220,10 @@ local function on_change_image(inst)
     -- float swap data --
     if inst.components.floater then
         inst.components.floater.swap_data = { sym_build = skin_build, sym_name = "swap_glassiccutter" .. tail, anim = anim}
+        if inst.components.floater:IsFloating() then
+            inst.components.floater:SwitchToDefaultAnim(true)
+            inst.components.floater:SwitchToFloatAnim()
+        end
     end
     -- Equipped --
     if inst.components.equippable and inst.components.equippable:IsEquipped() then
