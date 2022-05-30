@@ -10,17 +10,13 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.3"
+version = "3.4"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 完善对 Mods In Menu 的支持，现在物品皮肤也会显示在收藏了。
-- 补全了缺失的文本。
-- 修复月神锤缺少 SWAP_ICON 的问题。
+- 升级了 GlassicAPI.BasicInitFn
 ]], [[
-- Add compatibility for prefab skins with Mods In Menu.
-- Add missing strings.
-- Fix missing SWAP_ICON for skin: Moon Forging Hammer.
+- Make GlassicAPI.BasicInitFn better for use.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
     zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
