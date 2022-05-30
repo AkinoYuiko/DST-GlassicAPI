@@ -28,45 +28,27 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 -- }
 
 -- [[ Glassic Item Skins ]] --
--- Golden Axe Victorian
-local vanilla_goldenaxe_clear_fn = goldenaxe_clear_fn
-goldenaxe_clear_fn = function(inst, ...)
-    GlassicAPI.SetFloatData(inst, {sym_build = "swap_goldenaxe"})
-    return vanilla_goldenaxe_clear_fn(inst, ...)
-end
-
 -- Moon Glass Axe
 if not rawget(_G, "moonglassaxe_clear_fn") then
-    moonglassaxe_clear_fn = function(inst)
-        inst.AnimState:SetBank("glassaxe")
-        GlassicAPI.SetFloatData(inst, { sym_build = "swap_glassaxe" })
-        basic_clear_fn(inst, "glassaxe")
-    end
+    moonglassaxe_clear_fn = function(inst) basic_clear_fn(inst, "glassaxe") end
     GlassicAPI.SetOnequipSkinItem("moonglassaxe", {"swap_object", "swap_glassaxe", "swap_glassaxe"})
 end
 
 -- Moon Glass Hammer
-moonglasshammer_clear_fn = function(inst)
-    GlassicAPI.SetFloatData(inst, {sym_build = "glasshammer", sym_name = "swap_glasshammer", bank = "glasshammer"})
-    basic_clear_fn(inst, "glasshammer")
-end
+moonglasshammer_clear_fn = function(inst) basic_clear_fn(inst, "glasshammer") end
 
 -- Moon Glass Pickaxe
-moonglasspickaxe_clear_fn = function(inst)
-    GlassicAPI.SetFloatData(inst, {sym_build = "glasspickaxe", sym_name = "swap_glasspickaxe", bank = "glasspickaxe"})
-    basic_clear_fn(inst, "glasspickaxe")
-end
+moonglasspickaxe_clear_fn = function(inst) basic_clear_fn(inst, "glasspickaxe") end
 
-glassiccutter_init_fn = function(inst, skinname)
+-- Glassic Cutter
+glassiccutter_init_fn = function(inst, build_name)
     if not TheWorld.ismastersim then return end
-    inst.AnimState:SetBuild(inst:GetSkinBuild())
+    inst.AnimState:SetSkin(build_name, "glassiccutter")
     inst:OnChangeImage()
-    GlassicAPI.UpdateFloaterAnim(inst)
 end
 glassiccutter_clear_fn = function(inst)
     inst.AnimState:SetBuild("glassiccutter")
     inst:OnChangeImage()
-    GlassicAPI.UpdateFloaterAnim(inst)
 end
 
 -- [[ Set Skins ]] --

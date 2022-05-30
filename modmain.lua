@@ -168,12 +168,10 @@ end
 ---@param skinname string
 ---@param override_build string
 -- override_build is not required.
-GlassicAPI.BasicInitFn = function(inst, skinname)
+GlassicAPI.BasicInitFn = function(inst)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
-    -- inst.skinname = skinname
-    inst.AnimState:SetBuild(inst:GetSkinBuild())
-
+    inst.AnimState:SetSkin(inst:GetSkinBuild())
     if inst.components.inventoryitem then
         inst.components.inventoryitem:ChangeImageName(inst:GetSkinName())
     end
