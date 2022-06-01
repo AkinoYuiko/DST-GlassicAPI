@@ -87,21 +87,28 @@ end
 ------------------------------------------------------------------------------------------------------------
 
 -- testfn for SkinHandler, try on your own.
-GlassicAPI.SetExclusiveToPlayer = function(name)
-    return function(player)
-        return not player or player.prefab == name
-    end
-end
+-- GlassicAPI.SetExclusiveToPlayer = function(name)
+    -- return true
+    -- return function(skin_name, userid)
+    --     local player = GlassicAPI.SkinHandler.GetPlayerFromID(userid) or ThePlayer
+    --     return player and player:HasTag(tag)
+    -- end
+-- end
 
-GlassicAPI.SetExclusiveToPlayers = function(table)
-    return function(player)
-        return not player or table.contains(table, player.prefab)
-    end
-end
+-- GlassicAPI.SetExclusiveToPlayers = function(table)
+    -- return true
+--     return function(player)
+--         return not player or table.contains(table, player.prefab)
+--     end
+-- end
 
 GlassicAPI.SetExclusiveToTag = function(tag)
-    return function(player)
-        return not player or player:HasTag(tag)
+    return function(skin_name, userid)
+        local player = GlassicAPI.SkinHandler.GetPlayerFromID(userid) or ThePlayer
+        if player then
+            return player:HasTag(tag)
+        end
+        return true
     end
 end
 
