@@ -119,6 +119,11 @@ msgctxt "STRINGS.SKIN_NAMES.cane_glass"
 msgid "Gane"
 msgstr "手丈"
 
+#. STRINGS.SKIN_DESCRIPTIONS.orangestaff_glass
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.orangestaff_glass"
+msgid "It's a glassic joke, I assume."
+msgstr "玻璃笑话。"
+
 #. STRINGS.SKIN_NAMES.glassiccutter_dream
 msgctxt "STRINGS.SKIN_NAMES.glassiccutter_dream"
 msgid "Musou Isshin"
@@ -148,6 +153,11 @@ msgstr "月神锤"
 msgctxt "STRINGS.SKIN_NAMES.moonglasspickaxe_northern"
 msgid "Moon Nordic Pickaxe"
 msgstr "月光北欧鹤嘴锄"
+
+#. STRINGS.SKIN_NAMES.orangestaff_glass
+msgctxt "STRINGS.SKIN_NAMES.orangestaff_glass"
+msgid "Rod Of Glass"
+msgstr "玻璃魔杖"
 
 #. STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC
 msgctxt "STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC"

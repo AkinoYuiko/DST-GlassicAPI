@@ -90,4 +90,18 @@ table.insert(prefabs, CreatePrefabSkin("glassiccutter_dream", {
 
 }))
 
+table.insert(prefabs, CreatePrefabSkin("orangestaff_glass", {
+    base_prefab = "orangestaff",
+    type = "item",
+    rarity = "Glassic",
+    assets = {
+        Asset( "DYNAMIC_ANIM", "anim/dynamic/orangestaff_glass.zip" ),
+        Asset( "PKGREF", "anim/dynamic/orangestaff_glass.dyn" ),
+    },
+    init_fn = function(inst) orangestaff_init_fn(inst, "orangestaff_glass") end,
+    skin_sound = { "dontstarve/common/gem_shatter", "", },
+    fx_prefab = { "", "", "glash_fx", "glash_fx", },
+    skin_tags = { "ORANGESTAFF", "GLASSIC" },
+}))
+
 return unpack(prefabs)

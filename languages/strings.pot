@@ -108,6 +108,11 @@ msgctxt "STRINGS.SKIN_NAMES.cane_glass"
 msgid "Gane"
 msgstr ""
 
+#. STRINGS.SKIN_DESCRIPTIONS.orangestaff_glass
+msgctxt "STRINGS.SKIN_DESCRIPTIONS.orangestaff_glass"
+msgid "It's a glassic joke, I assume."
+msgstr ""
+
 #. STRINGS.SKIN_NAMES.glassiccutter_dream
 msgctxt "STRINGS.SKIN_NAMES.glassiccutter_dream"
 msgid "Musou Isshin"
@@ -136,6 +141,11 @@ msgstr ""
 #. STRINGS.SKIN_NAMES.moonglasspickaxe_northern
 msgctxt "STRINGS.SKIN_NAMES.moonglasspickaxe_northern"
 msgid "Moon Nordic Pickaxe"
+msgstr ""
+
+#. STRINGS.SKIN_NAMES.orangestaff_glass
+msgctxt "STRINGS.SKIN_NAMES.orangestaff_glass"
+msgid "Rod Of Glass"
 msgstr ""
 
 #. STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC

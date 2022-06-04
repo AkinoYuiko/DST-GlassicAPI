@@ -61,6 +61,7 @@ local strings =
         moonglassaxe_victorian = "Fanciful Moon Glass Axe",
         moonglasshammer_forge = "Moon Forging Hammer",
         moonglasspickaxe_northern = "Moon Nordic Pickaxe",
+        orangestaff_glass = "Rod Of Glass",
     },
     SKIN_DESCRIPTIONS =
     {
@@ -71,6 +72,7 @@ local strings =
         moonglassaxe_victorian = "An elegantly engraved moon axe.",
         moonglasshammer_forge = STRINGS.SKIN_DESCRIPTIONS.hammer_forge,
         moonglasspickaxe_northern = "A resplendent moon pickaxe, its design reminiscent of days of yore.",
+        orangestaff_glass = "It's a glassic joke, I assume.",
     },
     SKIN_TAG_CATEGORIES =
     {
