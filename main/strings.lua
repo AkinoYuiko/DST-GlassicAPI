@@ -3,7 +3,7 @@ GLOBAL.setfenv(1, GLOBAL)
 
 local strings =
 {
-    ANNOUNCE_GLASSICCUTTER_BROKE = "WEAPON BREAK!",
+    ANNOUNCE_GLASSIC_BROKE = "WEAPON BREAK!",
     ACTIONS =
     {
         CHANGE_TACKLE =
@@ -85,6 +85,14 @@ local strings =
 
 GlassicAPI.MergeStringsToGLOBAL(strings)
 GlassicAPI.MergeTranslationFromPO(env.MODROOT.."languages")
+
+-- Wait for DST Fixed
+scheduler:ExecuteInTime(0, function()
+    local STRCODE_TALKER = rawget(_G, "STRCODE_TALKER")
+    if STRCODE_TALKER then
+        STRCODE_TALKER[STRINGS.ANNOUNCE_GLASSIC_BROKE] = "ANNOUNCE_GLASSIC_BROKE"
+    end
+end)
 
 -- if env.is_mim_enabled then return end
 function UpdateGlassicStrings()

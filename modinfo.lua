@@ -14,12 +14,10 @@ version = "3.4.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 移除手杖皮肤：手丈。
 - 新增懒人魔杖皮肤：玻璃魔杖。
 
 - 升级了 GlassicAPI.BasicInitFn
 ]], [[
-- Remove skin: Gane (Walking Cane).
 - Add skin: Rod Of Glass (Lazy Explorer).
 
 - Make GlassicAPI.BasicInitFn better for use.

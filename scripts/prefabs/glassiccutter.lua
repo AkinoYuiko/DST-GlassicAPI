@@ -186,7 +186,7 @@ end
 local function onattack_none(inst, attacker, target)
     if attacker_testfn(attacker, target) and math.random() < TUNING.GLASSICCUTTER.CONSUME_RATE.NONE then
         if attacker.components.talker then
-            attacker.components.talker:Say(STRINGS.ANNOUNCE_GLASSICCUTTER_BROKE, 3, true)
+            attacker.components.talker:Say(STRINGS.ANNOUNCE_GLASSIC_BROKE, nil, true)
         end
         if inst.components.inventoryitem.owner then
             inst.components.inventoryitem.owner:PushEvent("toolbroke", { tool = inst })

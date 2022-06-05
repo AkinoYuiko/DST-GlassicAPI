@@ -51,6 +51,31 @@ glassiccutter_clear_fn = function(inst)
     inst:OnChangeImage()
 end
 
+local function onpercentusedchange(inst, data)
+    if data.percent <= 0 and not inst:HasTag("usesdepleted") then
+        local owner = inst.components.inventoryitem.owner
+        if owner then
+            owner.components.talker:Say(STRINGS.ANNOUNCE_GLASSIC_BROKE, nil, true)
+        end
+    end
+end
+
+glassic_orangestaff_init_fn = function(inst)
+    local build_name = inst:GetSkinBuild()
+    orangestaff_init_fn(inst, build_name)
+
+    inst:ListenForEvent("percentusedchange", onpercentusedchange)
+end
+
+local _orangestaff_clear_fn = orangestaff_clear_fn
+orangestaff_clear_fn = function(inst)
+    local ret = { _orangestaff_clear_fn(inst) }
+
+    inst:RemoveEventCallback("percentusedchange", onpercentusedchange)
+
+    return unpack(ret)
+end
+
 -- [[ Set Skins ]] --
 GlassicAPI.SkinHandler.AddModSkins({
     cane = { "cane_glass" },
