@@ -10,16 +10,18 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.4.1"
+version = "3.4.2"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
+- 为玻璃魔杖皮肤新增特殊文本。
+
 - 新增懒人魔杖皮肤：玻璃魔杖。
-
-- 升级了 GlassicAPI.BasicInitFn
+- 升级了 GlassicAPI.BasicInitFn。
 ]], [[
-- Add skin: Rod Of Glass (Lazy Explorer).
+- Add special text string for skin: Rod of Glass.
 
+- Add skin: Rod Of Glass (Lazy Explorer).
 - Make GlassicAPI.BasicInitFn better for use.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
