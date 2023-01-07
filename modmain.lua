@@ -241,6 +241,18 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 
+-- set a recipe not listed in search filter or "EVERYTHING".
+local HIDDEN_RECIPES = {}
+local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
+local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
+function CraftingMenuWidget:IsRecipeValidForSearch(name)
+    local ret = {is_recipe_valid_for_search(self, name)}
+    if HIDDEN_RECIPES[name] then
+        return
+    end
+    return unpack(ret)
+end
+
 local function init_recipe_print(...)
     if KnownModIndex:IsModInitPrintEnabled() then
         print("Glassic API", ...)
@@ -279,7 +291,9 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
         end
 
         if config and config.hidden then
-            GlassicAPI.RecipeNoSearch(name)
+            HIDDEN_RECIPES[name] = true
+        elseif HIDDEN_RECIPES[name] then
+            HIDDEN_RECIPES[name] = nil
         end
 
         if filters then
@@ -352,19 +366,6 @@ end
 
 GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
     try_sorting(a, b, filter_type, 1)
-end
-
--- set a recipe not listed in search filter or "EVERYTHING".
-GlassicAPI.RecipeNoSearch = function(recipe)
-    local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
-    local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
-    function CraftingMenuWidget:IsRecipeValidForSearch(name)
-        local ret = {is_recipe_valid_for_search(self, name)}
-        if name == recipe then
-            return
-        end
-        return unpack(ret)
-    end
 end
 
 ------------------------------------------------------------------------------------------------------------
