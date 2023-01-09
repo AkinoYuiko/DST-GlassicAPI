@@ -103,8 +103,13 @@ end
 
 local function generate_skin_id(skin_name)
     if type(skin_name) == "string" then
-        local session_id = TheWorld and TheWorld.meta and TheWorld.meta.session_identifier
-        return math.abs(hash(skin_name) - hash(tostring(session_id)))
+        local calc = 0x1505
+        local session_id = TheWorld and TheWorld.meta and TheWorld.meta.session_identifier or ""
+        local str = skin_name .. session_id
+        for i = 1, #str do
+            calc = ((calc * 0x21) % 0x80000000) + string.byte(str:sub(i, i))
+        end
+        return calc
     end
 end
 
@@ -293,6 +298,8 @@ local function set_rarity(rarity, order, color, override_symbol, override_build)
     end
 end
 
+
+
 GlassicAPI.SkinHandler =
 {
     GetModSkins                 = get_mod_skins,
@@ -309,4 +316,5 @@ GlassicAPI.SkinHandler =
 
     AddModSkins                 = add_mod_skins, -- Import skin data
     SetRarity                   = set_rarity,
+
 }
