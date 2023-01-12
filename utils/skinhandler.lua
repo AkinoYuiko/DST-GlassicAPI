@@ -101,15 +101,15 @@ InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
     return check_ownership_get_latest(self, item_type, ...)
 end
 
-local function generate_skin_id(skin_name)
-    if type(skin_name) == "string" then
-        local calc = 0x1505
-        local session_id = TheWorld and TheWorld.meta and TheWorld.meta.session_identifier or ""
-        local str = skin_name .. session_id
+local function generate_skin_id(name)
+    if type(name) == "string" then
+        local res = 0x1505
+        local sid = TheWorld.meta.session_identifier
+        local str = name .. sid
         for i = 1, #str do
-            calc = ((calc * 0x21) % 0x80000000) + string.byte(str:sub(i, i))
+            res = ((res * 0x21) % 0x80000000) + string.byte(str:sub(i, i))
         end
-        return calc
+        return res
     end
 end
 
