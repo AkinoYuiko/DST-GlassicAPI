@@ -47,11 +47,6 @@ local strings =
             },
         },
     },
-    RECIPE_DESC =
-    {
-        MOONGLASSHAMMER = STRINGS.RECIPE_DESC.MOONGLASSAXE,
-        MOONGLASSPICKAXE = STRINGS.RECIPE_DESC.MOONGLASSAXE,
-    },
     SKIN_NAMES =
     {
         cane_glass = "Gane",
