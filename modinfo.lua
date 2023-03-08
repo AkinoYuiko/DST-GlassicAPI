@@ -10,18 +10,20 @@ local function zh_en(a, b)
     })
 end
 
-version = "3.4.4"
+version = "3.4.5"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 优化了一处代码逻辑。
+- 调整了AddRecipe示例中的代码。
 
+- 优化了一处代码逻辑。
 - 为玻璃魔杖皮肤新增特殊文本。
 - 新增懒人魔杖皮肤：玻璃魔杖。
 - 升级了 GlassicAPI.BasicInitFn。
 ]], [[
-- Tweak code logic for hidden recipes in searching.
+- Tweak code logic for example recipe description.
 
+- Tweak code logic for hidden recipes in searching.
 - Add special text string for skin: Rod of Glass.
 - Add skin: Rod Of Glass (Lazy Explorer).
 - Make GlassicAPI.BasicInitFn better for use.
