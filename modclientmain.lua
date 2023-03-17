@@ -1,9 +1,3 @@
-if not GLOBAL.TheNet:GetServerGameMode() == "" then return end
-
-Assets = {}
-PrefabFiles = {}
-
-modimport("modmain") -- For API functions & mod env
-
-modimport("main/prefabskin")
-modimport("main/strings")
+if GLOBAL.TheNet:GetServerGameMode() == "" then
+    modimport("modmain") -- For API functions & mod env
+end

@@ -1,3 +1,6 @@
+Assets = {}
+PrefabFiles = {}
+
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
@@ -9,7 +12,7 @@ GlassicAPI = {}
 local utils =
 {
     "skinhandler",
-    "slaxml",
+    -- "slaxml",
     "upvalueutil",
 }
 for i = 1, #utils do
@@ -23,32 +26,45 @@ end
 -- The root folder is "MODROOT/images"
 -- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages", Assets) will import "MODROOT/images/inventoryimges.xml" and register every element inside.
 -- set 'assets_table' to Assets.
----@param path_to_file string
+---@param atlas string
 ---@param assets_table table
-GlassicAPI.RegisterItemAtlas = function(path_to_file, assets_table)
-    path_to_file = resolvefilepath("images/"..(path_to_file:find(".xml") and path_to_file or path_to_file..".xml"))
+GlassicAPI.RegisterItemAtlas = function(atlas, assets_table)
+    atlas = resolvefilepath("images/"..(atlas:find(".xml") and atlas or atlas..".xml"))
 
     local images = {}
-    local file = io.open(path_to_file, "r")
-    local parser = ENV.SLAXML:parser({
-        attribute = function(name, value)
-            if name == "name" then
-                table.insert(images, value)
-            end
-        end
-    })
-    parser:parse(file:read("*a"))
+    local file = io.open(atlas, "r")
+    -- local parser = ENV.SLAXML:parser({
+    --     attribute = function(name, value)
+    --         if name == "name" then
+    --             table.insert(images, value)
+    --         end
+    --     end
+    -- })
+    -- parser:parse(file:read("*a"))
+    local data = file:read("*a")
     file:close()
 
     if assets_table then
-        table.insert(assets_table, Asset("ATLAS", path_to_file))
-        table.insert(assets_table, Asset("ATLAS_BUILD", path_to_file, 256))
+        table.insert(assets_table, Asset("ATLAS", atlas))
+        table.insert(assets_table, Asset("ATLAS_BUILD", atlas, 256))
     end
 
-    for _, image in ipairs(images) do
-        RegisterInventoryItemAtlas(path_to_file, image)
-        RegisterInventoryItemAtlas(path_to_file, hash(image))
+    local str = string.gsub(data, "%s+", "")
+    local _, _, elements = string.find(str, "<Elements>(.-)</Elements>")
+
+    for s in string.gmatch(elements, "<Element(.-)/>") do
+        local _, _, image = string.find(s, "name=\"(.-)\"")
+        if image then
+            RegisterInventoryItemAtlas(atlas, image)
+            RegisterInventoryItemAtlas(atlas, hash(image))
+        end
     end
+
+
+    -- for _, image in ipairs(images) do
+    --     RegisterInventoryItemAtlas(atlas, image)
+    --     RegisterInventoryItemAtlas(atlas, hash(image))
+    -- end
 end
 
 ------------------------------------------------------------------------------------------------------------
@@ -498,18 +514,15 @@ end
 -- GLOBAL.GlassicAPI = GlassicAPI
 ENV.GlassicAPI = GlassicAPI
 
-if ENV.is_mim_enabled then return end
-
 local main_files = {
-    "assets",
-    "actions",
-    "containerwidgets",
+    "strings",
     "prefabskin",
-    "recipes",
-    "reskin_tool",
-    -- "upvalueutil",
 }
 
 for i = 1, #main_files do
     ENV.modimport("main/" .. main_files[i])
 end
+
+if ENV.is_mim_enabled then return end
+
+ENV.modimport("main/reskin_tool")
