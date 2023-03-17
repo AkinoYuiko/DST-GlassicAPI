@@ -1,4 +1,4 @@
-if not GLOBAL.IsInFrontEnd() then return end
+if not GLOBAL.TheNet:GetServerGameMode() == "" then return end
 
 Assets = {}
 PrefabFiles = {}
