@@ -10,14 +10,18 @@ local function zh_en(a, b)
     })
 end
 
-version = "4.0.1"
+version = "4.1"
 name = "Glassic API"
 author = "Civi, Tony, U.N. Owen, LSSSS"
 changelog = zh_en([[
-- 修复一处代码逻辑问题。
+- 修复文件缺失的问题。
 
+- 修复一处代码逻辑问题。
 - 本API不再包含示例道具和皮肤，如需学习请参考【暗夜故事集】里面的写法
 ]], [[
+- Fix missing anim.
+
+- Fix a crash with "Mods In Menu" enabled.
 - Migrate example items and skins to "Night Stories" mod.
 ]])
 description = zh_en("版本: ", "Version: ") .. version ..
