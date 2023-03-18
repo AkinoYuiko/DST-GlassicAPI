@@ -12,7 +12,7 @@ GlassicAPI = {}
 local utils =
 {
     "skinhandler",
-    -- "slaxml",
+    "slaxml",
     "upvalueutil",
 }
 for i = 1, #utils do
@@ -26,45 +26,32 @@ end
 -- The root folder is "MODROOT/images"
 -- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages", Assets) will import "MODROOT/images/inventoryimges.xml" and register every element inside.
 -- set 'assets_table' to Assets.
----@param atlas string
+---@param atlas_path string
 ---@param assets_table table
-GlassicAPI.RegisterItemAtlas = function(atlas, assets_table)
-    atlas = resolvefilepath("images/"..(atlas:find(".xml") and atlas or atlas..".xml"))
+GlassicAPI.RegisterItemAtlas = function(atlas_path, assets_table)
+    atlas_path = resolvefilepath("images/"..(atlas_path:find(".xml") and atlas_path or atlas_path..".xml"))
 
     local images = {}
-    local file = io.open(atlas, "r")
-    -- local parser = ENV.SLAXML:parser({
-    --     attribute = function(name, value)
-    --         if name == "name" then
-    --             table.insert(images, value)
-    --         end
-    --     end
-    -- })
-    -- parser:parse(file:read("*a"))
-    local data = file:read("*a")
+    local file = io.open(atlas_path, "r")
+    local parser = ENV.SLAXML:parser({
+        attribute = function(name, value)
+            if name == "name" then
+                table.insert(images, value)
+            end
+        end
+    })
+    parser:parse(file:read("*a"))
     file:close()
 
     if assets_table then
-        table.insert(assets_table, Asset("ATLAS", atlas))
-        table.insert(assets_table, Asset("ATLAS_BUILD", atlas, 256))
+        table.insert(assets_table, Asset("ATLAS", atlas_path))
+        table.insert(assets_table, Asset("ATLAS_BUILD", atlas_path, 256))
     end
 
-    local str = string.gsub(data, "%s+", "")
-    local _, _, elements = string.find(str, "<Elements>(.-)</Elements>")
-
-    for s in string.gmatch(elements, "<Element(.-)/>") do
-        local _, _, image = string.find(s, "name=\"(.-)\"")
-        if image then
-            RegisterInventoryItemAtlas(atlas, image)
-            RegisterInventoryItemAtlas(atlas, hash(image))
-        end
+    for _, image in ipairs(images) do
+        RegisterInventoryItemAtlas(atlas_path, image)
+        RegisterInventoryItemAtlas(atlas_path, hash(image))
     end
-
-
-    -- for _, image in ipairs(images) do
-    --     RegisterInventoryItemAtlas(atlas, image)
-    --     RegisterInventoryItemAtlas(atlas, hash(image))
-    -- end
 end
 
 ------------------------------------------------------------------------------------------------------------
