@@ -172,12 +172,7 @@ GlassicAPI.SetOnequipSkinItem = function(name, data)
     ENV.AddPrefabPostInit(name, set_onquip_skin_item(unpack(data)))
 end
 
--- main init fn that skinned items require.
--- e.g. GlassicAPI.BasicInitFn(inst, "cane_oops")
--- e.g. GlassicAPI.BasicInitFn(inst, "moonglasspickaxe_northern", "glasspickaxe_northern")
----@param skinname string
----@param override_build string
--- override_build is not required.
+-- The common init fn for skinned prefabs.
 GlassicAPI.BasicInitFn = function(inst)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
