@@ -1,19 +1,15 @@
-local function loc(t)
-    t.zht = t.zht or t.zh
-    return t[locale] or t.en
-end
-
-local function zh_en(a, b)
-    return loc({
-        zh = a,
-        en = b
-    })
+local function zheng(zh, en)
+    local LOC = {
+        zh = zh,
+        zht = zh,
+    }
+    return LOC[locale] or en
 end
 
 version = "4.1.1"
 name = "Glassic API"
-author = "Civi, Tony, U.N. Owen, LSSSS"
-changelog = zh_en([[
+author = zheng("鸭子乐园", "Ducklantis")
+changelog = zheng([[
 - 优化一处代码逻辑。
 
 - 修复文件缺失的问题。
@@ -26,9 +22,9 @@ changelog = zh_en([[
 - Fix a crash with "Mods In Menu" enabled.
 - Migrate example items and skins to "Night Stories" mod.
 ]])
-description = zh_en("版本: ", "Version: ") .. version ..
-    zh_en("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
-    zh_en("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
+description = zheng("版本: ", "Version: ") .. version ..
+    zheng("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
+    zheng("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
 
 priority = 2147483647
 
