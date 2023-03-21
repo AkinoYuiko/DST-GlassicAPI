@@ -475,7 +475,7 @@ end
 GlassicAPI.MakePOTFromStrings = function(file, strings)
     file:write("msgid \"\"\n")
     file:write("msgstr \"\"\n")
-    file:write("\"Application: Dont' Starve\\n\"")
+    file:write("\"Application: Don't Starve Together\\n\"")
     file:write("\n")
     file:write("\"POT Version: 2.0\\n\"")
     file:write("\n")

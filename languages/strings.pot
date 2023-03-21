@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Application: Dont' Starve\n"
+"Application: Don't Starve Together\n"
 "POT Version: 2.0\n"
 
 #. STRINGS.SKIN_TAG_CATEGORIES.COLLECTION.GLASSIC
