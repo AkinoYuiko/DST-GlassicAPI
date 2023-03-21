@@ -6,21 +6,13 @@ local function zheng(zh, en)
     return LOC[locale] or en
 end
 
-version = "4.1.1"
+version = "4.2"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
-- 优化一处代码逻辑。
-
-- 修复文件缺失的问题。
-- 修复一处代码逻辑问题。
-- 本API不再包含示例道具和皮肤，如需学习请参考【暗夜故事集】里面的写法
+- 更新GlassicAPI.InitCharacterAssets，现在强制要求crafting_menu_avatars
 ]], [[
-- Tweak code logic.
-
-- Fix missing anim.
-- Fix a crash with "Mods In Menu" enabled.
-- Migrate example items and skins to "Night Stories" mod.
+- Update GlassicAPI.InitCharacterAssets. Now crafting menu avatar is required.
 ]])
 description = zheng("版本: ", "Version: ") .. version ..
     zheng("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
