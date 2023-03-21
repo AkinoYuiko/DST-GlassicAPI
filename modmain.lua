@@ -57,14 +57,13 @@ end
 ------------------------------------------------------------------------------------------------------------
 
 -- InitCharacterAssets helps you init assets that a mod character needs.
--- e.g. GlassicAPI.InitCharacterAssets("civi", "male", Assets, true)
+-- e.g. GlassicAPI.InitCharacterAssets("civi", "male", Assets)
 -- set 'assets_table' to Assets.
--- if your mod character has crafting menu icon, set 'has_crafting_menu' to true
+-- crafting menu avatar is required since GA 4.2
 ---@param chat_name string
 ---@param gender string
 ---@param assets_table table
----@param has_crafting_menu boolean
-GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table, has_crafting_menu)
+GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name.."_none.xml"))
     table.insert(assets_table, Asset("ATLAS", "images/names_"..char_name..".xml"))
@@ -72,9 +71,7 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table, 
     table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
     table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
-    if has_crafting_menu then
-        table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
-    end
+    table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
 
     ENV.AddModCharacter(char_name, char_gender)
 end
@@ -117,7 +114,7 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 
--- use in skins' initfn most.
+-- use in skins' init_fn most.
 -- before basic init, you need to specify skins' floating swap_data to make the anim switch looks normal.
 ---@param swap_data table
 GlassicAPI.SetFloatData = function(inst, swap_data)
@@ -128,7 +125,7 @@ end
 
 GlassicAPI.UpdateFloaterAnim = function(inst)
     local floater = inst.components.floater
-    if floater and floater:IsFloating() and not (floater.wateranim or floater.landanim) then
+    if floater and floater:IsFloating() and not (floater.wateranim or floater.landanim) then -- IA Compatible :angri:
         floater:SwitchToDefaultAnim(true)
         floater:SwitchToFloatAnim()
     end
@@ -155,7 +152,8 @@ local function set_onquip_skin_item(symbol, symbol_override, frame)
 end
 
 -- Set OverrideItemSkinSymbol for official items that has no skin.
--- This is an altanative way to hack'in official items without skins.
+-- This is an altanative way to hack into official items without skins.
+-- For modded prefabs, you don't need to use this.
 ---@param name string prefab_name
 ---@param data table {symbol, symbol_override, frame}
 --[[e.g.
@@ -173,6 +171,12 @@ GlassicAPI.SetOnequipSkinItem = function(name, data)
 end
 
 -- The common init fn for skinned prefabs.
+-- usage:
+--   CreatePrefabskin("skin_name", {
+--       ...,
+--       init_fn = GlassicAPI.BasicInitFn,
+--       ...,
+--   })
 GlassicAPI.BasicInitFn = function(inst)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
@@ -187,7 +191,8 @@ end
 -- all actions require component. to avoid compatibility issues, it's better that we use a new component to set actions.
 -- GlassicAPI.ShellComponent helps you create such a component.
 -- e.g. "scripts/components/glasssocket.lua"
--- usage: return GlassicAPI.ShellComponent
+-- usage:
+--     return GlassicAPI.ShellComponent
 GlassicAPI.ShellComponent = Class(function(self, inst)
     self.inst = inst
 end)
@@ -209,7 +214,7 @@ local function rebuild_techtree(name)
     end
 end
 
--- custom tech may allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
+-- custom tech allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
 -- e.g. GlassicAPI.AddTech("FRIENDSHIPRING")
 ---@param name string
 GlassicAPI.AddTech = function(name)
