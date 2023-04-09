@@ -503,7 +503,7 @@ ENV.GlassicAPI = GlassicAPI
 
 local main_files = {
     "strings",
-    "prefabskin",
+    "glassicrarity",
 }
 
 for i = 1, #main_files do
