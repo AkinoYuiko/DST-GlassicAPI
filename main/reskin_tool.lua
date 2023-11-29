@@ -1,21 +1,8 @@
 local AddPrefabPostInit = AddPrefabPostInit
 GLOBAL.setfenv(1, GLOBAL)
 
-local function ga_can_cast_fn(doer, target, pos)
-
-    local prefab_to_skin = target.prefab
-    local is_beard = false
-
-    if table.contains( GetActiveCharacterList(), prefab_to_skin ) then -- Changed DST_CHARACTERLIST to GetActiveCharacterList()
-        --We found a player, check if it's us
-        if doer.userid == target.userid and target.components.beard ~= nil and target.components.beard.is_skinnable then
-            prefab_to_skin = target.prefab .. "_beard"
-            is_beard = true
-        else
-            return false
-        end
-    end
-
+local function validate_modchar_beard(doer, target)
+    local prefab_to_skin = target.prefab .. "_beard"
     if PREFAB_SKINS[prefab_to_skin] ~= nil then
         for _,item_type in pairs(PREFAB_SKINS[prefab_to_skin]) do
             if TheInventory:CheckClientOwnership(doer.userid, item_type) then
@@ -24,8 +11,7 @@ local function ga_can_cast_fn(doer, target, pos)
         end
     end
 
-    --Is there a skin to turn off?
-    local curr_skin = is_beard and target.components.beard.skinname or target.skinname
+    local curr_skin = target.components.beard.skinname
     if curr_skin ~= nil then
         return true
     end
@@ -36,6 +22,16 @@ end
 AddPrefabPostInit("reskin_tool", function(inst)
     if not TheWorld.ismastersim then return end
     if inst.components.spellcaster then
-        inst.components.spellcaster:SetCanCastFn(ga_can_cast_fn)
+        local can_cast_fn = inst.components.spellcaster.can_cast_fn
+        inst.components.spellcaster:SetCanCastFn(function(doer, target, ...)
+            local prefab_to_skin = target.prefab
+            if table.contains(MODCHARACTERLIST, target.prefab) then
+                if doer.userid == target.userid and target.components.beard and target.components.beard.is_skinnable then
+                    return validate_modchar_beard(doer, target)
+                end
+                return false
+            end
+            return can_cast_fn(doer, target, ...)
+        end)
     end
 end)
