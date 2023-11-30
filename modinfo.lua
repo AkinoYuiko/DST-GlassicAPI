@@ -6,13 +6,13 @@ local function zheng(zh, en)
     return LOC[locale] or en
 end
 
-version = "4.2"
+version = "4.2.1"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
-- 更新GlassicAPI.InitCharacterAssets，现在强制要求crafting_menu_avatars
+- 调整了reskin_tool的can_cast_fn的后处理写法。
 ]], [[
-- Update GlassicAPI.InitCharacterAssets. Now crafting menu avatar is required.
+- Rewrite "can_cast_fn" in "main/reskin_tool".
 ]])
 description = zheng("版本: ", "Version: ") .. version ..
     zheng("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
