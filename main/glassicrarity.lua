@@ -1,4 +1,5 @@
 table.insert(Assets, Asset("ANIM", "anim/glassicrarities.zip"))
+table.insert(PreloadAssets, Asset("ANIM", "anim/glassicrarities.zip"))
 GLOBAL.setfenv(1, GLOBAL)
 
 -- Glassic rarity EXAMPLE

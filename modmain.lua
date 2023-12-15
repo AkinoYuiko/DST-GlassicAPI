@@ -1,5 +1,6 @@
 Assets = {}
 PrefabFiles = {}
+PreloadAssets = {}
 
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
@@ -25,7 +26,7 @@ end
 -- It's suitable for a atlas that contains mulitiple images.
 -- The root folder is "MODROOT/images"
 -- e.g. GlassicAPI.RegisterItemAtlas("inventoryimages", Assets) will import "MODROOT/images/inventoryimges.xml" and register every element inside.
--- set 'assets_table' to Assets.
+-- must set 'assets_table' to Assets.
 ---@param atlas_path string
 ---@param assets_table table
 GlassicAPI.RegisterItemAtlas = function(atlas_path, assets_table)
@@ -57,8 +58,8 @@ end
 ------------------------------------------------------------------------------------------------------------
 
 -- InitCharacterAssets helps you init assets that a mod character needs.
--- e.g. GlassicAPI.InitCharacterAssets("civi", "male", Assets)
--- set 'assets_table' to Assets.
+-- e.g. GlassicAPI.InitCharacterAssets("civi", "DUCK", Assets)
+-- must set 'assets_table' to Assets.
 -- crafting menu avatar is required since GA 4.2
 ---@param chat_name string
 ---@param gender string
