@@ -507,6 +507,10 @@ local main_files = {
     "glassicrarity",
 }
 
+if IsRail() then
+    error("Ban WeGame");
+end
+
 for i = 1, #main_files do
     ENV.modimport("main/" .. main_files[i])
 end
