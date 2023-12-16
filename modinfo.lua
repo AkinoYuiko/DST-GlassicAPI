@@ -6,16 +6,22 @@ local function zheng(zh, en)
     return LOC[locale] or en
 end
 
-version = "4.2.1"
+version = "4.2.2"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
+- 官方皮肤不会被视为模组皮肤了。
+
+最近更新：
 - 调整了reskin_tool的can_cast_fn的后处理写法。
 ]], [[
+- Official skins are now ignored by "AddModSkin" fn.
+
+Recent Changes:
 - Rewrite "can_cast_fn" in "main/reskin_tool".
 ]])
 description = zheng("版本: ", "Version: ") .. version ..
-    zheng("\n\n更新内容:\n", "\n\nChangelog:\n") .. changelog .. "\n" ..
+    zheng("\n\n更新内容:\n", "\n\nChanges:\n") .. changelog .. "\n" ..
     zheng("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
 
 priority = 2147483647
