@@ -5,6 +5,13 @@ local ALL_MOD_SKINS = {}
 local HEADSKIN_CHARACTERS = {}
 local OVERRIDE_RARITY_DATA = {}
 local CHARACTER_EXCLUSIVE_SKINS = {}
+local OFFICIAL_PREFAB_SKINS = {}
+
+for prefab, skins in pairs(PREFAB_SKINS) do
+    for _, skin in pairs(skins) do
+        OFFICIAL_PREFAB_SKINS[skin] = true
+    end
+end
 
 local function get_player_from_id(id)
     if type(id) == "table" then -- If it's an entity
@@ -21,32 +28,33 @@ local function get_mod_skins()
     return shallowcopy(ALL_MOD_SKINS)
 end
 
-local function add_mod_skin(skin_name, test_fn)
-    ALL_MOD_SKINS[skin_name] = test_fn or true
+local function add_mod_skin(skin, test_fn)
+    if OFFICIAL_PREFAB_SKINS[skin] then return end
+    ALL_MOD_SKINS[skin] = test_fn or true
 end
 
-local function remove_mod_skin(skin_name)
-    ALL_MOD_SKINS[skin_name] = nil
+local function remove_mod_skin(skin)
+    ALL_MOD_SKINS[skin] = nil
 end
 
-local function validate_mod_skin(skin_name, userid)
-    local test_fn = ALL_MOD_SKINS[skin_name]
+local function validate_mod_skin(skin, userid)
+    local test_fn = ALL_MOD_SKINS[skin]
     if userid then
         local player = get_player_from_id(userid)
-        local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
+        local characters = CHARACTER_EXCLUSIVE_SKINS[skin]
         if player and characters then
             return table.contains(characters, player.prefab)
         end
     end
-    return FunctionOrValue(test_fn, skin_name, userid)
+    return FunctionOrValue(test_fn, skin, userid)
 end
 
-local function set_character_exlusive_skin(skin_name, characters)
-    CHARACTER_EXCLUSIVE_SKINS[skin_name] = type(characters) == "string" and {characters} or characters
+local function set_character_exlusive_skin(skin, characters)
+    CHARACTER_EXCLUSIVE_SKINS[skin] = type(characters) == "string" and {characters} or characters
 end
 
-local function does_character_have_skin(skin_name, character)
-    local characters = CHARACTER_EXCLUSIVE_SKINS[skin_name]
+local function does_character_have_skin(skin, character)
+    local characters = CHARACTER_EXCLUSIVE_SKINS[skin]
     if characters then
         character = type(character) == "table" and character.prefab or character
         if character then
@@ -297,8 +305,6 @@ local function set_rarity(rarity, order, color, override_symbol, override_build)
         OVERRIDE_RARITY_DATA[rarity] = nil
     end
 end
-
-
 
 GlassicAPI.SkinHandler =
 {
