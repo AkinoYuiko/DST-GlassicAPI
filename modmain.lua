@@ -218,9 +218,11 @@ end
 -- custom tech allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
 -- e.g. GlassicAPI.AddTech("FRIENDSHIPRING")
 ---@param name string
-GlassicAPI.AddTech = function(name)
+GlassicAPI.AddTech = function(name, bonus_available)
     table.insert(TechTree.AVAILABLE_TECH, name)
-    table.insert(TechTree.BONUS_TECH, name)
+    if bonus_available then
+       table.insert(TechTree.BONUS_TECH, name)
+    end
     rebuild_techtree(name)
 end
 
