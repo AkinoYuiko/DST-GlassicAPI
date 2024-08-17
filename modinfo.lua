@@ -10,14 +10,16 @@ version = "4.2.3"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
-- 官方皮肤不会被视为模组皮肤了。
+- 为GlassicAPI.AddTech增加了一个传入参数.
 
 最近更新：
+- 官方皮肤不会被视为模组皮肤了。
 - 调整了reskin_tool的can_cast_fn的后处理写法。
 ]], [[
-- Official skins are now ignored by "AddModSkin" fn.
+- Add 2rd param for GlassicAPI.AddTech.
 
 Recent Changes:
+- Official skins are now ignored by "AddModSkin" fn.
 - Rewrite "can_cast_fn" in "main/reskin_tool".
 ]])
 description = zheng("版本: ", "Version: ") .. version ..
