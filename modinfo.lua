@@ -6,7 +6,7 @@ local function zheng(zh, en)
     return LOC[locale] or en
 end
 
-version = "4.2.2"
+version = "4.2.3"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
