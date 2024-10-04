@@ -87,22 +87,6 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 
--- testfn for SkinHandler, try on your own.
--- GlassicAPI.SetExclusiveToPlayer = function(name)
-    -- return true
-    -- return function(skin_name, userid)
-    --     local player = GlassicAPI.SkinHandler.GetPlayerFromID(userid) or ThePlayer
-    --     return player and player:HasTag(tag)
-    -- end
--- end
-
--- GlassicAPI.SetExclusiveToPlayers = function(table)
-    -- return true
---     return function(player)
---         return not player or table.contains(table, player.prefab)
---     end
--- end
-
 GlassicAPI.SetExclusiveToTag = function(tag)
     return function(skin_name, userid)
         local player = GlassicAPI.SkinHandler.GetPlayerFromID(userid) or ThePlayer
@@ -172,12 +156,13 @@ GlassicAPI.SetOnequipSkinItem = function(name, data)
 end
 
 -- The common init fn for skinned prefabs.
--- usage:
---   CreatePrefabskin("skin_name", {
---       ...,
---       init_fn = GlassicAPI.BasicInitFn,
---       ...,
---   })
+--[[usage:
+    CreatePrefabskin("skin_name", {
+        ...,
+        init_fn = GlassicAPI.BasicInitFn,
+        ...,
+    })
+--]]
 GlassicAPI.BasicInitFn = function(inst)
     if inst.components.placer == nil and not TheWorld.ismastersim then return end
 
