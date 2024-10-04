@@ -5,14 +5,12 @@ charset = utf-8
 end_of_line = lf
 indent_size = 4
 indent_style = space
-insert_final_newline = true
 
 [*.lua]
+insert_final_newline = true
 trim_trailing_whitespace = true
 
 [*.{xml,xsd}]
-max_line_length = off
 indent_size = 2
-indent_style = space
-insert_final_newline = false
+max_line_length = off
 trim_trailing_whitespace = true
