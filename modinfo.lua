@@ -1,9 +1,9 @@
 local function zheng(zh, en)
-    local LOC = {
-        zh = zh,
-        zht = zh,
-    }
-    return LOC[locale] or en
+	local LOC = {
+		zh = zh,
+		zht = zh,
+	}
+	return LOC[locale] or en
 end
 
 version = "4.2.3"
@@ -23,8 +23,8 @@ Recent Changes:
 - Rewrite "can_cast_fn" in "main/reskin_tool".
 ]])
 description = zheng("版本: ", "Version: ") .. version ..
-    zheng("\n\n更新内容:\n", "\n\nChanges:\n") .. changelog .. "\n" ..
-    zheng("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
+	zheng("\n\n更新内容:\n", "\n\nChanges:\n") .. changelog .. "\n" ..
+	zheng("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
 
 priority = 2147483647
 
@@ -37,5 +37,5 @@ icon = "modicon.tex"
 
 folder_name = folder_name or "workshop-"
 if not folder_name:find("workshop-") then
-    name = name .. " - DEV"
+	name = name .. " - DEV"
 end
