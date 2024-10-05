@@ -1,2 +1,1 @@
-*       text=auto eol=lf
-*.lua   text eol=lf filter=tabspace
+*.lua	text	eol=lf
