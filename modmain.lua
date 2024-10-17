@@ -1,3 +1,8 @@
+--[[
+	Follow extra rules if you want to contain any codes of Glassic API in your DST mod:
+	1. You must not publish your mod to WeGame.
+	2. You must make your mods compatible with Glassic API.
+--]]
 Assets = {}
 PrefabFiles = {}
 PreloadAssets = {}
