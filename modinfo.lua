@@ -6,19 +6,21 @@ local function zheng(zh, en)
 	return LOC[locale] or en
 end
 
-version = "4.2.3"
+version = "4.2.4"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
-- 为GlassicAPI.AddTech增加了一个传入参数.
+- AnimState.GetSkinBuild现在会回落到Entity.GetSkinBuild。
 
 最近更新：
+- 为GlassicAPI.AddTech增加了一个传入参数。
 - 官方皮肤不会被视为模组皮肤了。
 - 调整了reskin_tool的can_cast_fn的后处理写法。
 ]], [[
-- Add 2rd param for GlassicAPI.AddTech.
+- AnimState.GetSkinBuild will now fallback to Entity.GetSkinBuild.
 
 Recent Changes:
+- Add 2rd param for GlassicAPI.AddTech.
 - Official skins are now ignored by "AddModSkin" fn.
 - Rewrite "can_cast_fn" in "main/reskin_tool".
 ]])
