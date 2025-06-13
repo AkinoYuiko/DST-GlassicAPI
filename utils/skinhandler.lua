@@ -112,28 +112,28 @@ end
 local anim_state_to_entity = {}
 
 local function clean_up_mapping(inst)
-    if inst.AnimState then
-        anim_state_to_entity[inst.AnimState] = nil
-    end
+	if inst.AnimState then
+		anim_state_to_entity[inst.AnimState] = nil
+	end
 end
 
 local add_anim_state = Entity.AddAnimState
 function Entity:AddAnimState(...)
-    local anim_state = add_anim_state(self, ...)
+	local anim_state = add_anim_state(self, ...)
 
-    local guid = self:GetGUID()
-    local inst = Ents[guid]
-    anim_state_to_entity[anim_state] = inst
-    inst:ListenForEvent("onremove", clean_up_mapping)
+	local guid = self:GetGUID()
+	local inst = Ents[guid]
+	anim_state_to_entity[anim_state] = inst
+	inst:ListenForEvent("onremove", clean_up_mapping)
 
-    return anim_state
+	return anim_state
 end
 
 local get_skin_build = AnimState.GetSkinBuild
 function AnimState:GetSkinBuild(...)
-    local inst = anim_state_to_entity[self]
+	local inst = anim_state_to_entity[self]
 	local skin_build = get_skin_build(self, ...)
-    return skin_build ~= "" and skin_build or inst:GetSkinBuild()
+	return skin_build ~= "" and skin_build or inst:GetSkinBuild()
 end
 
 local function generate_skin_id(name)
