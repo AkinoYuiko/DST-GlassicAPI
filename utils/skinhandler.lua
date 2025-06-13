@@ -109,6 +109,33 @@ InventoryProxy.CheckOwnershipGetLatest = function(self, item_type, ...)
 	return check_ownership_get_latest(self, item_type, ...)
 end
 
+local anim_state_to_entity = {}
+
+local function clean_up_mapping(inst)
+    if inst.AnimState then
+        anim_state_to_entity[inst.AnimState] = nil
+    end
+end
+
+local add_anim_state = Entity.AddAnimState
+function Entity:AddAnimState(...)
+    local anim_state = add_anim_state(self, ...)
+
+    local guid = self:GetGUID()
+    local inst = Ents[guid]
+    anim_state_to_entity[anim_state] = inst
+    inst:ListenForEvent("onremove", clean_up_mapping)
+
+    return anim_state
+end
+
+local get_skin_build = AnimState.GetSkinBuild
+function AnimState:GetSkinBuild(...)
+    local inst = anim_state_to_entity[self]
+	local skin_build = get_skin_build(self, ...)
+    return skin_build ~= "" and skin_build or inst:GetSkinBuild()
+end
+
 local function generate_skin_id(name)
 	if type(name) == "string" then
 		local res = 0x1505
@@ -322,5 +349,4 @@ GlassicAPI.SkinHandler =
 
 	AddModSkins					= add_mod_skins, -- Import skin data
 	SetRarity					= set_rarity,
-
 }
