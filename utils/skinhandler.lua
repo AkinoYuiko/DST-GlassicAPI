@@ -133,7 +133,9 @@ local get_skin_build = AnimState.GetSkinBuild
 function AnimState:GetSkinBuild(...)
 	local inst = anim_state_to_entity[self]
 	local skin_build = get_skin_build(self, ...)
-	return skin_build ~= "" and skin_build or inst:GetSkinBuild()
+	return (skin_build ~= "" and skin_build) or
+		(inst and inst:GetSkinBuild()) or
+		""
 end
 
 local function generate_skin_id(name)
