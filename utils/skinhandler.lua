@@ -76,11 +76,13 @@ local get_full_inventory = InventoryProxy.GetFullInventory
 InventoryProxy.GetFullInventory = function(...)
 	local items = get_full_inventory(...)
 	for skin_name in pairs(ALL_MOD_SKINS) do
-		table.insert(items, {
-			item_type = skin_name,
-			modified_time = 0,
-			item_id = "1",
-		})
+		if validate_mod_skin(skin_name, TheNet:GetUserID()) then
+			table.insert(items, {
+				item_type = skin_name,
+				modified_time = 0,
+				item_id = "1",
+			})
+		end
 	end
 	return items
 end
