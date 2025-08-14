@@ -6,21 +6,23 @@ local function zheng(zh, en)
 	return LOC[locale] or en
 end
 
-version = "4.2.5"
+version = "4.2.6"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
 changelog = zheng([[
-- 修复一处崩溃。
+- GetFullInventory增加一处条件判断。
 
 最近更新：
+- 修复一处崩溃。
 - AnimState.GetSkinBuild现在会回落到Entity.GetSkinBuild。
 - 为GlassicAPI.AddTech增加了一个传入参数。
 - 官方皮肤不会被视为模组皮肤了。
 - 调整了reskin_tool的can_cast_fn的后处理写法。
 ]], [[
-- Fix a crash.
+- Add condition in fn GetFullInventory.
 
 Recent Changes:
+- Fix a crash.
 - AnimState.GetSkinBuild will now fallback to Entity.GetSkinBuild.
 - Add 2rd param for GlassicAPI.AddTech.
 - Official skins are now ignored by "AddModSkin" fn.
