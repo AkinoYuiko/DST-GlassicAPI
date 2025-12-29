@@ -15,8 +15,7 @@ GlassicAPI = {}
 ------------------------------------------------------------------------------------------------------------
 -- Import Utils
 ------------------------------------------------------------------------------------------------------------
-local utils =
-{
+local utils = {
 	"skinhandler",
 	"slaxml",
 	"upvalueutil",
@@ -35,7 +34,7 @@ end
 ---@param atlas_path string
 ---@param assets_table table
 GlassicAPI.RegisterItemAtlas = function(atlas_path, assets_table)
-	atlas_path = resolvefilepath("images/"..(atlas_path:find(".xml") and atlas_path or atlas_path..".xml"))
+	atlas_path = resolvefilepath("images/" .. (atlas_path:find(".xml") and atlas_path or atlas_path .. ".xml"))
 
 	local images = {}
 	local file = io.open(atlas_path, "r")
@@ -44,7 +43,7 @@ GlassicAPI.RegisterItemAtlas = function(atlas_path, assets_table)
 			if name == "name" then
 				table.insert(images, value)
 			end
-		end
+		end,
 	})
 	parser:parse(file:read("*a"))
 	file:close()
@@ -70,20 +69,20 @@ end
 ---@param gender string
 ---@param assets_table table
 GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
-	table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "bigportraits/"..char_name.."_none.xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/names_"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/"..char_name..".xml"))
-	table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_"..char_name..".xml"))
+	table.insert(assets_table, Asset("ATLAS", "bigportraits/" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "bigportraits/" .. char_name .. "_none.xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/names_" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/avatars/avatar_ghost_" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/avatars/self_inspect_" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/saveslot_portraits/" .. char_name .. ".xml"))
+	table.insert(assets_table, Asset("ATLAS", "images/crafting_menu_avatars/avatar_" .. char_name .. ".xml"))
 
 	ENV.AddModCharacter(char_name, char_gender)
 end
 
 GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
-	local file = "images/"..path_to_file..".xml"
+	local file = "images/" .. path_to_file .. ".xml"
 	if assets_table then
 		table.insert(assets_table, Asset("ATLAS", file))
 	end
@@ -125,7 +124,9 @@ end
 
 local function set_onquip_skin_item(symbol, symbol_override, frame)
 	return function(inst)
-		if not TheWorld.ismastersim then return end
+		if not TheWorld.ismastersim then
+			return
+		end
 
 		local onequipfn = inst.components.equippable.onequipfn
 		if onequipfn then
@@ -169,7 +170,9 @@ end
 	})
 --]]
 GlassicAPI.BasicInitFn = function(inst)
-	if inst.components.placer == nil and not TheWorld.ismastersim then return end
+	if inst.components.placer == nil and not TheWorld.ismastersim then
+		return
+	end
 
 	inst.AnimState:SetSkin(inst:GetSkinBuild())
 	if inst.components.inventoryitem then
@@ -211,7 +214,7 @@ end
 GlassicAPI.AddTech = function(name, bonus_available)
 	table.insert(TechTree.AVAILABLE_TECH, name)
 	if bonus_available then
-	   table.insert(TechTree.BONUS_TECH, name)
+		table.insert(TechTree.BONUS_TECH, name)
 	end
 	rebuild_techtree(name)
 end
@@ -242,7 +245,7 @@ local HIDDEN_RECIPES = {}
 local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
 local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
 function CraftingMenuWidget:IsRecipeValidForSearch(name)
-	local ret = {is_recipe_valid_for_search(self, name)}
+	local ret = { is_recipe_valid_for_search(self, name) }
 	if HIDDEN_RECIPES[name] then
 		return
 	end
@@ -273,7 +276,6 @@ GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
 	local rec = Recipe2(name, ingredients, tech, config)
 
 	if not rec.is_deconstruction_recipe then
-
 		if config and config.nounlock then
 			add_recipe_to_filter(name, CRAFTING_FILTERS.CRAFTING_STATION.name)
 		end
@@ -400,13 +402,15 @@ local CHS_CODES = {
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
 	local _defaultlang = LanguageTranslator.defaultlang
 	local lang = override_lang or _defaultlang
-	if not CHS_CODES[lang] then return end
-	local filepath = base_path.."/"..CHS_CODES[lang]..".po"
-	if not resolvefilepath_soft(filepath) then
-		print("Could not find a language file matching "..filepath.." in any of the search paths.")
+	if not CHS_CODES[lang] then
 		return
 	end
-	local temp_lang = lang.."_temp"
+	local filepath = base_path .. "/" .. CHS_CODES[lang] .. ".po"
+	if not resolvefilepath_soft(filepath) then
+		print("Could not find a language file matching " .. filepath .. " in any of the search paths.")
+		return
+	end
+	local temp_lang = lang .. "_temp"
 	LanguageTranslator:LoadPOFile(filepath, temp_lang)
 	merge_internal(LanguageTranslator.languages[lang], LanguageTranslator.languages[temp_lang])
 	TranslateStringTable(STRINGS)
@@ -419,7 +423,7 @@ GlassicAPI.ConvertEscapeCharactersToString = function(str)
 	local newstr = string.gsub(str, "\\", "\\\\")
 	newstr = string.gsub(newstr, "\n", "\\n")
 	newstr = string.gsub(newstr, "\r", "\\r")
-	newstr = string.gsub(newstr, "\"", "\\\"")
+	newstr = string.gsub(newstr, '"', '\\"')
 
 	return newstr
 end
@@ -439,9 +443,9 @@ local function write_speech(file, base_strings, strings, indent)
 			local comment = base_strings and base_strings[k] and "" or "-- "
 			v = GlassicAPI.ConvertEscapeCharactersToString(v)
 			if tonumber(k) then
-				file:write(str .. comment .. "\"" .. v .. "\", \n" )
+				file:write(str .. comment .. '"' .. v .. '", \n')
 			else
-				file:write(str .. comment .. k .. " = \"" .. v .. "\", \n" )
+				file:write(str .. comment .. k .. ' = "' .. v .. '", \n')
 			end
 		end
 	end
@@ -458,24 +462,24 @@ end
 
 local function write_for_strings(base, data, file)
 	for _, k, v in sorted_pairs(data) do
-		local path = base.."."..k
+		local path = base .. "." .. k
 		if type(v) == "table" then
 			write_for_strings(path, v, file)
 		else
-			file:write('\n')
-			file:write('#. '..path..'\n')
-			file:write('msgctxt "'..path..'"\n')
-			file:write('msgid "'..GlassicAPI.ConvertEscapeCharactersToString(v)..'"\n')
+			file:write("\n")
+			file:write("#. " .. path .. "\n")
+			file:write('msgctxt "' .. path .. '"\n')
+			file:write('msgid "' .. GlassicAPI.ConvertEscapeCharactersToString(v) .. '"\n')
 			file:write('msgstr ""\n')
 		end
 	end
 end
 GlassicAPI.MakePOTFromStrings = function(file, strings)
-	file:write("msgid \"\"\n")
-	file:write("msgstr \"\"\n")
-	file:write("\"Application: Don't Starve Together\\n\"")
+	file:write('msgid ""\n')
+	file:write('msgstr ""\n')
+	file:write('"Application: Don\'t Starve Together\\n"')
 	file:write("\n")
-	file:write("\"POT Version: 2.0\\n\"")
+	file:write('"POT Version: 2.0\\n"')
 	file:write("\n")
 
 	write_for_strings("STRINGS", strings, file)
@@ -500,13 +504,15 @@ local main_files = {
 }
 
 if IsRail() then
-	error("Ban WeGame");
+	error("Ban WeGame")
 end
 
 for i = 1, #main_files do
 	ENV.modimport("main/" .. main_files[i])
 end
 
-if ENV.is_mim_enabled then return end
+if ENV.is_mim_enabled then
+	return
+end
 
 ENV.modimport("main/reskin_tool")

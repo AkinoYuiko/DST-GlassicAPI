@@ -27,7 +27,6 @@ GlassicAPI.SkinHandler.SetRarity("Glassic", 0.1, { 40 / 255, 150 / 255, 128 / 25
 --	-- #40E0D0 reserved skin colour
 -- }
 
-
 -- [[ Set Skins ]] --
 -- GlassicAPI.SkinHandler.AddModSkins({
 

@@ -9,7 +9,8 @@ end
 version = "4.2.6"
 name = "Glassic API"
 author = zheng("鸭子乐园", "Ducklantis")
-changelog = zheng([[
+changelog = zheng(
+	[[
 - GetFullInventory增加一处条件判断。
 
 最近更新：
@@ -18,7 +19,8 @@ changelog = zheng([[
 - 为GlassicAPI.AddTech增加了一个传入参数。
 - 官方皮肤不会被视为模组皮肤了。
 - 调整了reskin_tool的can_cast_fn的后处理写法。
-]], [[
+]],
+	[[
 - Add condition in fn GetFullInventory.
 
 Recent Changes:
@@ -27,10 +29,17 @@ Recent Changes:
 - Add 2rd param for GlassicAPI.AddTech.
 - Official skins are now ignored by "AddModSkin" fn.
 - Rewrite "can_cast_fn" in "main/reskin_tool".
-]])
-description = zheng("版本: ", "Version: ") .. version ..
-	zheng("\n\n更新内容:\n", "\n\nChanges:\n") .. changelog .. "\n" ..
-	zheng("“帮助你快速创建一个模组以及制作皮肤。”", "\"helps create mod and mod skins quickly.\"")
+]]
+)
+description = zheng("版本: ", "Version: ")
+	.. version
+	.. zheng("\n\n更新内容:\n", "\n\nChanges:\n")
+	.. changelog
+	.. "\n"
+	.. zheng(
+		"“帮助你快速创建一个模组以及制作皮肤。”",
+		'"helps create mod and mod skins quickly."'
+	)
 
 priority = 2147483647
 

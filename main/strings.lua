@@ -1,26 +1,21 @@
 local env = env
 GLOBAL.setfenv(1, GLOBAL)
 
-local strings =
-{
-	UI =
-	{
-		RARITY =
-		{
+local strings = {
+	UI = {
+		RARITY = {
 			Glassic = "Glassic",
 		},
 	},
-	SKIN_TAG_CATEGORIES =
-	{
-		COLLECTION =
-		{
+	SKIN_TAG_CATEGORIES = {
+		COLLECTION = {
 			GLASSIC = "Glassic Collection",
-		}
+		},
 	},
 }
 
 GlassicAPI.MergeStringsToGLOBAL(strings)
-GlassicAPI.MergeTranslationFromPO(env.MODROOT.."languages")
+GlassicAPI.MergeTranslationFromPO(env.MODROOT .. "languages")
 
 -- if env.is_mim_enabled then return end
 function UpdateGlassicStrings()

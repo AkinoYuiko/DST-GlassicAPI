@@ -29,7 +29,9 @@ local function get_mod_skins()
 end
 
 local function add_mod_skin(skin, test_fn)
-	if OFFICIAL_PREFAB_SKINS[skin] then return end
+	if OFFICIAL_PREFAB_SKINS[skin] then
+		return
+	end
 	ALL_MOD_SKINS[skin] = test_fn or true
 end
 
@@ -50,7 +52,7 @@ local function validate_mod_skin(skin, userid)
 end
 
 local function set_character_exlusive_skin(skin, characters)
-	CHARACTER_EXCLUSIVE_SKINS[skin] = type(characters) == "string" and {characters} or characters
+	CHARACTER_EXCLUSIVE_SKINS[skin] = type(characters) == "string" and { characters } or characters
 end
 
 local function does_character_have_skin(skin, character)
@@ -135,9 +137,7 @@ local get_skin_build = AnimState.GetSkinBuild
 function AnimState:GetSkinBuild(...)
 	local inst = anim_state_to_entity[self]
 	local skin_build = get_skin_build(self, ...)
-	return (skin_build ~= "" and skin_build) or
-		(inst and inst:GetSkinBuild()) or
-		""
+	return (skin_build ~= "" and skin_build) or (inst and inst:GetSkinBuild()) or ""
 end
 
 local function generate_skin_id(name)
@@ -157,7 +157,9 @@ local function init_mod_skin(ent, skin)
 	ent.skin_id = generate_skin_id(skin)
 
 	local init_fn = Prefabs[skin].init_fn
-	if init_fn then init_fn(ent) end
+	if init_fn then
+		init_fn(ent)
+	end
 end
 
 local spawn_prefab = SpawnPrefab
@@ -182,7 +184,9 @@ Sim.ReskinEntity = function(self, guid, targetskinname, reskinname, skin_id, use
 end
 
 local function apply_temp_character(base_fn, ...)
-	if IsTableEmpty(HEADSKIN_CHARACTERS) then return base_fn(...) end
+	if IsTableEmpty(HEADSKIN_CHARACTERS) then
+		return base_fn(...)
+	end
 	local added_characters = {}
 	for character in pairs(HEADSKIN_CHARACTERS) do
 		if not table.contains(DST_CHARACTERLIST, character) then
@@ -200,9 +204,13 @@ local function apply_temp_character(base_fn, ...)
 end
 
 local function apply_temp_inv_item_list(base_fn, char, ...)
-	if not char then return base_fn(...) end
+	if not char then
+		return base_fn(...)
+	end
 
-	local inv_item_list = (TUNING.GAMEMODE_STARTING_ITEMS[TheNet:GetServerGameMode()] or TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT)[string.upper(char)]
+	local inv_item_list = (
+		TUNING.GAMEMODE_STARTING_ITEMS[TheNet:GetServerGameMode()] or TUNING.GAMEMODE_STARTING_ITEMS.DEFAULT
+	)[string.upper(char)]
 	local copy = shallowcopy(inv_item_list)
 
 	if inv_item_list and #inv_item_list > 0 then
@@ -293,7 +301,7 @@ local function add_mod_skins(data)
 		end
 		for _, skin_data in ipairs(prefab_skins) do
 			local skin_name = type(skin_data) == "table" and skin_data.name or skin_data
-			if is_character(base_prefab) and skin_name ~= base_prefab.."_none" then
+			if is_character(base_prefab) and skin_name ~= base_prefab .. "_none" then
 				if not SKIN_AFFINITY_INFO[base_prefab] then
 					SKIN_AFFINITY_INFO[base_prefab] = {}
 				end
@@ -330,27 +338,26 @@ local function set_rarity(rarity, order, color, override_symbol, override_build)
 	if override_symbol or override_build then
 		OVERRIDE_RARITY_DATA[rarity] = {
 			symbol = override_symbol,
-			build = override_build
+			build = override_build,
 		}
 	else
 		OVERRIDE_RARITY_DATA[rarity] = nil
 	end
 end
 
-GlassicAPI.SkinHandler =
-{
-	GetModSkins					= get_mod_skins,
-	AddModSkin					= add_mod_skin,
-	RemoveModSkin				= remove_mod_skin,
-	IsModSkin					= validate_mod_skin, -- Backward compatible
-	IsValidModSkin				= validate_mod_skin, -- Backward compatible
-	ValidateModSkin				= validate_mod_skin,
+GlassicAPI.SkinHandler = {
+	GetModSkins = get_mod_skins,
+	AddModSkin = add_mod_skin,
+	RemoveModSkin = remove_mod_skin,
+	IsModSkin = validate_mod_skin, -- Backward compatible
+	IsValidModSkin = validate_mod_skin, -- Backward compatible
+	ValidateModSkin = validate_mod_skin,
 
-	GetPlayerFromID				= get_player_from_id,
-	SetCharacterExclusiveSkin	= set_character_exlusive_skin,
-	DoesCharacterHaveSkin		= does_character_have_skin,
-	DoesCharacterHasSkin		= does_character_have_skin, -- Backward compatible
+	GetPlayerFromID = get_player_from_id,
+	SetCharacterExclusiveSkin = set_character_exlusive_skin,
+	DoesCharacterHaveSkin = does_character_have_skin,
+	DoesCharacterHasSkin = does_character_have_skin, -- Backward compatible
 
-	AddModSkins					= add_mod_skins, -- Import skin data
-	SetRarity					= set_rarity,
+	AddModSkins = add_mod_skins, -- Import skin data
+	SetRarity = set_rarity,
 }

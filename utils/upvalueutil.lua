@@ -22,20 +22,24 @@ local function GetUpvalue(fn, path)
 	for var in path:gmatch("[^%.]+") do
 		prv = fn
 		fn, i = GetUpvalueHelper(fn, var)
-		if not fn then break end
+		if not fn then
+			break
+		end
 	end
 	return fn, i, prv
 end
 
 local function SetUpvalue(start_fn, path, new_fn)
 	local fn, fn_i, scope_fn = GetUpvalue(start_fn, path)
-	if not fn_i then print("Didn't find "..path.." from", start_fn) return end
+	if not fn_i then
+		print("Didn't find " .. path .. " from", start_fn)
+		return
+	end
 	debug.setupvalue(scope_fn, fn_i, new_fn)
 end
 
-GlassicAPI.UpvalueUtil =
-{
+GlassicAPI.UpvalueUtil = {
 	parant = modname,
 	GetUpvalue = GetUpvalue,
-	SetUpvalue = SetUpvalue
+	SetUpvalue = SetUpvalue,
 }
