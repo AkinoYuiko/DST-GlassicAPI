@@ -1,3 +1,4 @@
 .DS_Store
 .manifest
 glassic_api.code-workspace
+.luarc.json
