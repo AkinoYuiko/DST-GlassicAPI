@@ -2,3 +2,4 @@
 .manifest
 glassic_api.code-workspace
 .luarc.json
+.emmyrc.json
