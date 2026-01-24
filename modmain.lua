@@ -7,6 +7,7 @@ Assets = {}
 PrefabFiles = {}
 PreloadAssets = {}
 
+---@diagnostic disable undefined-global
 local ENV = env
 GLOBAL.setfenv(1, GLOBAL)
 
@@ -81,6 +82,8 @@ GlassicAPI.InitCharacterAssets = function(char_name, char_gender, assets_table)
 	ENV.AddModCharacter(char_name, char_gender)
 end
 
+---@param path_to_file string
+---@param assets_table table
 GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
 	local file = "images/" .. path_to_file .. ".xml"
 	if assets_table then
@@ -89,8 +92,9 @@ GlassicAPI.InitMinimapAtlas = function(path_to_file, assets_table)
 	ENV.AddMinimapAtlas(file)
 end
 
-------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
+---@param tag string
 GlassicAPI.SetExclusiveToTag = function(tag)
 	return function(skin_name, userid)
 		local player = GlassicAPI.SkinHandler.GetPlayerFromID(userid) or ThePlayer
@@ -101,7 +105,7 @@ GlassicAPI.SetExclusiveToTag = function(tag)
 	end
 end
 
-------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 -- use in skins' init_fn most.
 -- before basic init, you need to specify skins' floating swap_data to make the anim switch looks normal.
@@ -122,6 +126,8 @@ end
 
 ------------------------------------------------------------------------------------------------------------
 
+---@param symbol string
+---@param symbol_override string
 local function set_onquip_skin_item(symbol, symbol_override, frame)
 	return function(inst)
 		if not TheWorld.ismastersim then
@@ -193,6 +199,7 @@ end)
 
 ------------------------------------------------------------------------------------------------------------
 
+---@param name string
 local TechTree = require("techtree")
 local function rebuild_techtree(name)
 	TECH.NONE = TechTree.Create()
@@ -211,6 +218,7 @@ end
 -- custom tech allows you to build custom prototyper or allows muliti prototypers to bonus a tech simultaneously.
 -- e.g. GlassicAPI.AddTech("FRIENDSHIPRING")
 ---@param name string
+---@param bonus_available? boolean
 GlassicAPI.AddTech = function(name, bonus_available)
 	table.insert(TechTree.AVAILABLE_TECH, name)
 	if bonus_available then
@@ -221,6 +229,8 @@ end
 
 -- custom prototyper trees.
 -- e.g. GlassicAPI.AddPrototyperTrees("DUMMYSCIENCE", {DUMMYTECH = 2})
+---@param name string
+---@param t table
 GlassicAPI.AddPrototyperTrees = function(name, t)
 	TUNING.PROTOTYPER_TREES[name] = TechTree.Create(t)
 end
@@ -230,6 +240,9 @@ end
 -- GlassicAPI.MergeTechBonus("MOON_ALTAR_FULL", "FRIENDSHIPRING", 2)
 -- GlassicAPI.MergeTechBonus("OBSIDIAN_BENCH", "FRIENDSHIPRING", 2)
 -- allows muliti prototypers to bonus a tech simultaneously.
+---@param target string
+---@param name string
+---@param level number
 GlassicAPI.MergeTechBonus = function(target, name, level)
 	scheduler:ExecuteInTime(0, function()
 		if TUNING.PROTOTYPER_TREES[target] then
@@ -241,6 +254,7 @@ end
 ------------------------------------------------------------------------------------------------------------
 
 -- set a recipe not listed in search filter or "EVERYTHING".
+---@param name string
 local HIDDEN_RECIPES = {}
 local CraftingMenuWidget = require("widgets/redux/craftingmenu_widget")
 local is_recipe_valid_for_search = CraftingMenuWidget.IsRecipeValidForSearch
@@ -269,6 +283,11 @@ end
 -- a smarter way to add a mod recipe, and you don't need to think about filters too much.
 -- also, with confog.hidden, you can set your recipe no searching or in "EVERYTHING" filter.
 -- same format as AddRecipe2
+---@param name string
+---@param ingredients table
+---@param tech table
+---@param config? table
+---@param filters? table
 GlassicAPI.AddRecipe = function(name, ingredients, tech, config, filters)
 	init_recipe_print("AddRecipe", name)
 	require("recipe")
@@ -350,9 +369,9 @@ local function try_sorting(a, b, filter_type, offset)
 end
 
 -- a quick way to sort recipes before or after current recipes.
----@param a string - the recipe name that you want to sort
----@param b string - the target recipe name that we base on.
----@param filter_type string
+---@param a string -- the recipe name that you want to sort
+---@param b string -- the target recipe name that we base on.
+---@param filter_type? string
 -- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem") will sort "darkcrystal" after "purplegem" in all filters that "purplegem" is in.
 -- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "MAGIC") will only sort "darkcrystal" after "purplegem" in "MAGIC" filter.
 -- e.g. GlassicAPI.RecipeSortAfter("darkcrystal", "purplegem", "TOOLS") will only sort "darkcrystal" to the last in "TOOLS" because "purplegem" is not in "TOOLS".
@@ -362,6 +381,9 @@ GlassicAPI.RecipeSortBefore = function(a, b, filter_type)
 	try_sorting(a, b, filter_type, 0)
 end
 
+---@param a string
+---@param b string
+---@param filter_type? string
 GlassicAPI.RecipeSortAfter = function(a, b, filter_type)
 	try_sorting(a, b, filter_type, 1)
 end
@@ -388,6 +410,10 @@ local function merge_internal(target, strings, no_override)
 		end
 	end
 end
+
+---@param strings table
+---@param custom_field? table
+---@param no_override? boolean
 GlassicAPI.MergeStringsToGLOBAL = function(strings, custom_field, no_override)
 	merge_internal(custom_field or STRINGS, strings, no_override)
 end
@@ -399,6 +425,8 @@ local CHS_CODES = {
 	cht = "chinese_t",
 	sc = "chinese_s",
 }
+---@param base_path string
+---@param override_lang? string
 GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
 	local _defaultlang = LanguageTranslator.defaultlang
 	local lang = override_lang or _defaultlang
@@ -419,6 +447,7 @@ GlassicAPI.MergeTranslationFromPO = function(base_path, override_lang)
 end
 
 -- Basically LanguageTranslator.ConvertEscapeCharactersToString, but replace "\"s first
+---@param str string
 GlassicAPI.ConvertEscapeCharactersToString = function(str)
 	local newstr = string.gsub(str, "\\", "\\\\")
 	newstr = string.gsub(newstr, "\n", "\\n")
@@ -450,6 +479,9 @@ local function write_speech(file, base_strings, strings, indent)
 		end
 	end
 end
+---@param base_strings table
+---@param file string
+---@param source? string
 GlassicAPI.MergeSpeechFile = function(base_strings, file, source)
 	local speech = require(source or "speech_wilson")
 	file:write("return {\n")
@@ -474,6 +506,9 @@ local function write_for_strings(base, data, file)
 		end
 	end
 end
+
+---@param file string
+---@param strings table of strings
 GlassicAPI.MakePOTFromStrings = function(file, strings)
 	file:write('msgid ""\n')
 	file:write('msgstr ""\n')
