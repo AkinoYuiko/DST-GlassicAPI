@@ -536,6 +536,7 @@ ENV.GlassicAPI = GlassicAPI
 local main_files = {
 	"strings",
 	"glassicrarity",
+	"common_action",
 }
 
 if IsRail() then
