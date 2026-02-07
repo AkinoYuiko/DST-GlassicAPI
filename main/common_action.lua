@@ -10,10 +10,10 @@ COMMON_ACTION.str = "COMMON_ACTION"
 AddAction(COMMON_ACTION)
 
 local actionhandler = ActionHandler(COMMON_ACTION, function(inst, bufferedaction)
-	if bufferedaction.invobject and bufferedaction.invobject.components.actioncommon then
-		return bufferedaction.invobject.components.actioncommon:GetActionState()
-	elseif bufferedaction.target and bufferedaction.target.components.actioncommon then
-		return bufferedaction.target.components.actioncommon:GetActionState()
+	if bufferedaction.invobject and bufferedaction.invobject.components.commonaction then
+		return bufferedaction.invobject.components.commonaction:GetActionState()
+	elseif bufferedaction.target and bufferedaction.target.components.commonaction then
+		return bufferedaction.target.components.commonaction:GetActionState()
 	end
 	return "dolongaction"
 end)
